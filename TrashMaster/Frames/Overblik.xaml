@@ -1,0 +1,86 @@
+﻿<Page x:Class="TrashMaster.Frames.Overblik"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TrashMaster.Frames"
+      mc:Ignorable="d" 
+      Height="590" Width="1270"
+      Title="Overblik">
+
+    <!-- THEGRID -->
+    <Grid>
+        <StackPanel Orientation="Vertical">
+
+            <DataGrid x:Name="Overblik_GRID" Height="540" Width="1250" Margin="1"  Background="Transparent"            
+                      SelectionMode="Single"
+                      FontSize="13"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"        
+                      VerticalScrollBarVisibility="Auto"
+                      AutoGenerateColumns="True"
+                      ItemsSource="{Binding}" 
+                      MouseLeftButtonUp="IsItemSelected"
+                      VerticalAlignment="Top" 
+                      Visibility="Visible"
+                      HorizontalAlignment="Left">
+
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Tilføj Affaldsdata" Click="Tilføj_Click" />
+                        <MenuItem Header="Rediger Affaldsdata" Click="Rediger_Click" />
+                        <MenuItem Header="Slet Affaldsdata" Click="Slet_Click" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+
+            </DataGrid>
+
+            <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
+
+                <!-- Tilføj Affaldsdata -->
+                <Button HorizontalContentAlignment="Center" Width="170" Height="30" Margin="0,0,0,0" Click="Tilføj_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Register_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Tilføj Affaldsdata" Margin="7,0,0,0" />
+                    </StackPanel>
+                </Button>
+
+                <!-- Rediger Affaldsdata -->
+                <Button x:Name="Button_Rediger" IsEnabled="False" HorizontalContentAlignment="Center" Width="170" Height="30" Margin="5,0,0,0" Click="Rediger_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Edit_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Rediger Affaldsdata" Margin="7,0,0,0" />
+                    </StackPanel>
+                </Button>
+
+                <!-- Slet Affaldsdata -->
+                <Button  x:Name="Button_Slet" IsEnabled="False"  HorizontalContentAlignment="Center" Width="170" Height="30" Margin="5,0,0,0" Click="Slet_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Delete_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Slet Affaldsdata" Margin="7,0,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Gem til fil -->
+                <Button HorizontalContentAlignment="Center" Width="170" Height="30" Margin="5,0,0,0" Click="Gem_Fil_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Save_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Gem til fil" Margin="7,0,0,0" />
+                    </StackPanel>
+                </Button>
+
+                <!-- Åben fil -->
+                <Button HorizontalContentAlignment="Center" Width="163" Height="30" Margin="5,0,0,0" Click="Åben_Fil_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/OpenFile_Icon.png" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Åben fil" Margin="7,5,0,0"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+
+</Page>
