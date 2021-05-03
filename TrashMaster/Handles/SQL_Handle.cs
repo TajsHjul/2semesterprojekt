@@ -70,10 +70,12 @@ namespace TrashMaster.Handles
         {
             SqlConnection connection = new SqlConnection(connectionString);
 
-            string fullSQLquery = String.Format("UPDATE " + tablename + " SET Mængde = '{0}', Måleenhed = '{1}', Affaldskategori = '{2)', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = '{5}', Dato = '{6}' WHERE Id = '{7}'",
-            trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, trash.Dato, rowId);
+            //string fullSQLquery = String.Format("UPDATE " + tablename + " SET Mængde = '{0}', Måleenhed = '{1}', Affaldskategori = '{2)', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = '{5}' WHERE TrashId = '{7}'",
+            //trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, rowId);
 
-            //string fullSQLquery = String.Format("UPDATE " + dboTable + " SET Mængde = 1111, Måleenhed = 2, Affaldskategori = '3', Affaldsbeskrivelse = '4', Ansvarlig = '5', VirksomhedID = 6, Dato = '7' WHERE Id = 23");
+            string fullSQLquery = String.Format("UPDATE TRASH SET Mængde = '{0}', Måleenhed = '{1}', Affaldskategori = '{2}', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = '{5}', Dato = CAST('{6}' AS smalldatetime) WHERE TrashId = '{7}'",
+                trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, trash.Dato, rowId);
+
 
             try
             {
@@ -82,7 +84,7 @@ namespace TrashMaster.Handles
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
                 MessageBox.Show("Row has been edited and saved to database.");
-            }
+        }
 
             catch (Exception ex)
             {

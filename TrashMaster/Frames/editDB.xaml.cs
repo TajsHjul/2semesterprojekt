@@ -65,11 +65,11 @@ namespace TrashMaster.Frames
 
                 //editDB metode, som gør brug af UPDATE SQL Query.
                 SQL_Handle.EditDB(dbEdit, "Trash", Convert.ToInt32(textbox_Id.Text));
-            }
+        }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-        }
+}
     }
 }

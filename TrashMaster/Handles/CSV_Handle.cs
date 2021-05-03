@@ -108,7 +108,7 @@ namespace TrashMaster.Handles
             {
                 //Instantier sfd + parametre
                 SaveFileDialog sfd = new SaveFileDialog();
-                sfd.DefaultExt = ".jpg";
+                sfd.DefaultExt = ".csv";
                 sfd.Filter = "CSV Files (*.csv)|*.csv";
 
                 //Vis sfd og få bool på visning
