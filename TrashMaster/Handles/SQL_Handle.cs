@@ -1,0 +1,157 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+
+namespace TrashMaster.Handles
+{
+    class SQL_Handle : Trash
+    {
+        private static readonly string connectionString = @"Server = trashmaster.database.windows.net; Database = trashmaster1; User Id = extuser01; Password = GNUpluslinux!;";
+
+        //sender SQL query til DB uden return
+        public static void SqlQuery(string fullSQLquery)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(fullSQLquery, connection);
+                using (SqlDataReader reader = command.ExecuteReader()) { }
+                MessageBox.Show("Succesfull SqlQuery Executed.");
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+        }
+
+        // Tilføj 'Trash' til db med 'Trash' som parameter.
+
+        public static void AddToDB(Trash trash, string tablename)
+        {
+
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string fullSQLquery = String.Format("INSERT INTO " + tablename + " (Mængde, Måleenhed, Affaldskategori, Affaldsbeskrivelse, Ansvarlig, VirksomhedID) " +
+                "VALUES ({0}, {1}, {2}, '{3}', '{4}', '{5}', {6}, '{7}')", trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID);
+
+            try
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(fullSQLquery, connection);
+                using (SqlDataReader reader = command.ExecuteReader()) { }
+                MessageBox.Show("Succesfully added to database.");
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+        }
+
+        public static void EditDB(Trash trash, string tablename)
+        {
+            //SqlConnection connection = new SqlConnection(connectionString);
+
+            //string fullSQLquery = String.Format("UPDATE " + tablename + " SET Mængde = {0}, Måleenhed = {1}, Affaldskategori = '{2)', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = {5}, Dato = '{6}' WHERE Id = {7}",
+            //trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, trash.Dato, trash.Id);
+
+            ////string fullSQLquery = String.Format("UPDATE " + dboTable + " SET Mængde = 1111, Måleenhed = 2, Affaldskategori = '3', Affaldsbeskrivelse = '4', Ansvarlig = '5', VirksomhedID = 6, Dato = '7' WHERE Id = 23");
+
+            //try
+            //{
+            //    connection.Open();
+
+            //    SqlCommand command = new SqlCommand(fullSQLquery, connection);
+            //    using (SqlDataReader reader = command.ExecuteReader()) { }
+            //    MessageBox.Show("Row has been edited and saved to database.");
+            //}
+
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+            //finally
+            //{
+            //    if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            //}
+        }
+
+        //Fjern fra DB med ID (unik) parameter
+        public static void RemoveFromDB(int id, string tablename)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string fullSQLquery = String.Format("DELETE FROM dbo." + tablename + " WHERE Id = {0}", id);
+
+            try
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(fullSQLquery, connection);
+                using (SqlDataReader reader = command.ExecuteReader()) { }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+        }
+
+        //Tager SQL query som første parameter og returnerer resultatet som DataTable.DefaultView (kan bruges som Datacontext7Itemssource etc).
+        public static object QueryToSource(string fullSQLquery)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+
+                //Create DataTable and populate it with sqlQuery results
+                DataTable dt = new DataTable();
+                using (connection)
+                {
+                    using (SqlCommand cmd = new SqlCommand(fullSQLquery, connection))
+                    {
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+                        }
+                    }
+                }
+
+                return dt.DefaultView;
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return "";
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+        }
+    }
+}

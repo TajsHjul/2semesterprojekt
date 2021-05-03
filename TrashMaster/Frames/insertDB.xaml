@@ -1,0 +1,65 @@
+﻿<Page x:Class="TrashMaster.Frames.insertDB"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TrashMaster.Frames"
+      mc:Ignorable="d" 
+      d:DesignHeight="250" d:DesignWidth="1100"
+      Title="insertDB">
+
+    <Grid>
+        <StackPanel Orientation="Vertical">
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Height="50">
+
+                <!--<StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Id" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="textbox_Id" Width="70" Height="21"/>
+                </StackPanel>-->
+
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Mængde" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="textbox_Mængde" Width="70" Height="21"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Måleenhed" HorizontalAlignment="Center"/>
+                    <ComboBox Name="cmbMåleenhed" Height="21">
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Affaldskategori" HorizontalAlignment="Center"/>
+                    <ComboBox Name="cmbAffaldskategori" Height="21">
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Affaldsbeskrivelse" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="textbox_Affaldsbeskrivelse" Width="70" Height="21"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Ansvarlig" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="textbox_Ansvarlig" Width="70" Height="21"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="VirksomhedID" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="textbox_VirksomhedID" Width="70" Height="21"/>
+                </StackPanel>
+
+                <!--<StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Dato" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="textbox_Dato" Width="70" Height="21"/>
+                </StackPanel>-->
+
+            </StackPanel>
+
+            <Button x:Name="insertToDB" Content="Tilføj" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="80" Click="Tilføj_Click"/>
+
+        </StackPanel>
+
+    </Grid>
+</Page>

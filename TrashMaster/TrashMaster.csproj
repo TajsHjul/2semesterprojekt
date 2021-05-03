@@ -55,6 +55,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Frames\editDB.xaml.cs">
+      <DependentUpon>editDB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Frames\insertDB.xaml.cs">
+      <DependentUpon>insertDB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Frames\Overblik.xaml.cs">
+      <DependentUpon>Overblik.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Frames\removeDB.xaml.cs">
+      <DependentUpon>removeDB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Handles\CSV_Handle.cs" />
+    <Compile Include="Handles\SQL_Handle.cs" />
+    <Compile Include="Trash.cs" />
+    <Page Include="Frames\editDB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Frames\insertDB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Frames\Overblik.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Frames\removeDB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -97,5 +128,15 @@
   <ItemGroup>
     <Resource Include="1595795349375.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Delete_Icon.png" />
+    <Resource Include="Icons\Edit_Icon.png" />
+    <Resource Include="Icons\Graph_Icon.png" />
+    <Resource Include="Icons\OpenFile_Icon.png" />
+    <Resource Include="Icons\Overview_Icon.png" />
+    <Resource Include="Icons\Register_Icon.png" />
+    <Resource Include="Icons\Save_Icon.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

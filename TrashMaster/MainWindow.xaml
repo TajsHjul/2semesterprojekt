@@ -5,9 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrashMaster"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="720" Width="1280" ResizeMode="NoResize" Background="#e8e8e8">
     <Grid>
-        <Image Margin="108,10,100,84" Source="1595795349375.jpg" Stretch="Fill"/>
+        <StackPanel Orientation="Vertical">
 
+            <!-- MenuPunkter -->
+            <StackPanel Orientation="Horizontal" Margin="10">
+
+                <!-- Overblik -->
+                <Button HorizontalContentAlignment="Center" Width="150" Height="45" Margin="14,0,0,0" Click="Overblik_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Overview_Icon.png" Height="40" Width="40" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,4,0,5"/>
+                        <TextBlock Text="Overblik" Margin="7,7,0,0" FontWeight="Bold" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Graf -->
+                <Button HorizontalContentAlignment="Center" Width="150" Height="45" Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Graph_Icon.png" Height="35" Width="40" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,4,0,5"/>
+                        <TextBlock Text="Graf" Margin="7,7,0,0" FontWeight="Bold" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+
+            <!-- MainWindow Frame -->
+            <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+                <Frame x:Name="MainNavigationFrame" Height="590" Width="1250" Margin="5" NavigationUIVisibility="Hidden"/>
+            </Border>
+
+        </StackPanel>
     </Grid>
 </Window>
