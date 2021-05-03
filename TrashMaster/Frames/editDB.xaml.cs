@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,7 @@ namespace TrashMaster.Frames
 
         private void Rediger_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
                 //lav Trash object baseret på felterne i editDB page.
@@ -58,11 +60,11 @@ namespace TrashMaster.Frames
                     Affaldsbeskrivelse = textbox_Affaldsbeskrivelse.Text,
                     Ansvarlig = textbox_Ansvarlig.Text,
                     VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text),
-                    Dato = textbox_Dato.Text,
+                    Dato = DateTime.Parse(textbox_Dato.Text)
                 };
 
                 //editDB metode, som gør brug af UPDATE SQL Query.
-                SQL_Handle.EditDB(dbEdit, "asdTable");
+                SQL_Handle.EditDB(dbEdit, "Trash", Convert.ToInt32(textbox_Id.Text));
             }
             catch (Exception ex)
             {

@@ -31,7 +31,7 @@
 
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="Affaldskategori" HorizontalAlignment="Center"/>
-                    <ComboBox Name="cmbAffaldskategori" Height="21">
+                    <ComboBox Name="cmbAffaldskategori" Height="21" Width="100">
 
                     </ComboBox>
 
@@ -39,12 +39,12 @@
 
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="Affaldsbeskrivelse" HorizontalAlignment="Center"/>
-                    <TextBox x:Name="textbox_Affaldsbeskrivelse" Width="70" Height="21"/>
+                    <TextBox x:Name="textbox_Affaldsbeskrivelse" Width="100" Height="21"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="Ansvarlig" HorizontalAlignment="Center"/>
-                    <TextBox x:Name="textbox_Ansvarlig" Width="70" Height="21"/>
+                    <TextBox x:Name="textbox_Ansvarlig" Width="100" Height="21"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="5">
@@ -54,7 +54,7 @@
 
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="Dato" HorizontalAlignment="Center"/>
-                    <TextBox x:Name="textbox_Dato" Width="70" Height="21"/>
+                    <TextBox x:Name="textbox_Dato" Width="100" Height="21"/>
                 </StackPanel>
 
             </StackPanel>

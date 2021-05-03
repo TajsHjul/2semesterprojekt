@@ -32,16 +32,15 @@ namespace TrashMaster.Frames
         {
             try
             {
+                //Id tilføjes automatisk i DB - Dato har en standardvalue på DateTime.Now (sat i Trash klasse).
                 Trash dbInsert = new Trash
                 {
-                    //Id = Convert.ToInt32(textbox_Id.Text),
                     Mængde = Convert.ToDecimal(textbox_Mængde.Text),
                     Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), cmbMåleenhed.Text),
                     Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), cmbAffaldskategori.Text),
                     Affaldsbeskrivelse = textbox_Affaldsbeskrivelse.Text,
                     Ansvarlig = textbox_Ansvarlig.Text,
                     VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text),
-                    //Dato = textbox_Dato.Text,
                 };
 
                 SQL_Handle.AddToDB(dbInsert, "Trash");

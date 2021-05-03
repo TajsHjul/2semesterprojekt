@@ -14,7 +14,7 @@ namespace TrashMaster
         public string Affaldsbeskrivelse { get; set; }
         public string Ansvarlig { get; set; }
         public int VirksomhedID { get; set; }
-        public string Dato { get; set; }
+        public DateTime Dato { get; set; }
 
         public enum måleenhed
         {
@@ -43,10 +43,10 @@ namespace TrashMaster
             Affaldsbeskrivelse = "N/A";
             Ansvarlig = "N/A";
             VirksomhedID = 0;
-            Dato = DateTime.Now.ToString();
+            Dato = DateTime.Now;
         }
 
-        public Trash(decimal mængde, måleenhed måleenhed, affaldskategori affaldskategori, string affaldsbeskrivelse, string ansvarlig, int virksomhedid, string dato)
+        public Trash(decimal mængde, måleenhed måleenhed, affaldskategori affaldskategori, string affaldsbeskrivelse, string ansvarlig, int virksomhedid, DateTime dato)
         {
             Mængde = mængde;
             Måleenhed = måleenhed;
