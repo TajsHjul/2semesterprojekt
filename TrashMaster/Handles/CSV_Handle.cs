@@ -47,10 +47,11 @@ namespace TrashMaster.Handles
         //Læser .CSV fil og håndterer dataintegritet - returnerer resultat som liste //unfin
         public static List<CSV_Handle> ReadCSVFile(string filePath)
         {
-            var lines = File.ReadAllLines(filePath);
+            string [] lines = File.ReadAllLines(filePath);
 
-            var data = from l in lines.Skip(1)
+            IEnumerable<CSV_Handle> data = from l in lines.Skip(1)
                        let split = l.Split(',')
+
                        select new CSV_Handle
                        {
                            Id = int.Parse(split[0]),
@@ -86,7 +87,7 @@ namespace TrashMaster.Handles
                     string filename = ofd.FileName;
 
                     //ReadCSVFile metode fra samme klasse (CSV_Handle)
-                    object Tres = CSV_Handle.ReadCSVFile(filename);
+                    object Tres = ReadCSVFile(filename);
                     return Tres;
                 }
                 else

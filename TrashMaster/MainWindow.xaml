@@ -10,7 +10,7 @@
         <StackPanel Orientation="Vertical">
 
             <!-- MenuPunkter -->
-            <StackPanel Orientation="Horizontal" Margin="10">
+            <StackPanel x:Name="MenuHeader" Orientation="Horizontal" Margin="10">
 
                 <!-- Overblik -->
                 <Button HorizontalContentAlignment="Center" Width="150" Height="45" Margin="14,0,0,0" Click="Overblik_Click">
