@@ -9,6 +9,12 @@
       Title="Login">
 
     <Grid>
+        <!-- Gøgl -->
+        <Grid.Background>
+            <ImageBrush ImageSource="/1595795349375.jpg" />
+        </Grid.Background>
+        <!-- Gøgl -->
+
         <StackPanel Orientation="Vertical">
 
             <StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">
