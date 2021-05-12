@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace TrashMaster.Handles
@@ -44,8 +40,8 @@ namespace TrashMaster.Handles
 
             SqlConnection connection = new SqlConnection(connectionString);
 
-            string fullSQLquery = String.Format("INSERT INTO " + tablename + " (Mængde, Måleenhed, Affaldskategori, Affaldsbeskrivelse, Ansvarlig, VirksomhedID) " +
-                "VALUES ({0}, {1}, {2}, '{3}', '{4}', '{5}', {6}, '{7}')", trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID);
+            string fullSQLquery = String.Format("INSERT INTO " + tablename + " (Mængde, Måleenhed, Affaldskategori, Affaldsbeskrivelse, Ansvarlig, VirksomhedID, Dato) " +
+                "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}')", trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, trash.Dato);
 
             try
             {
@@ -53,7 +49,7 @@ namespace TrashMaster.Handles
 
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
-                MessageBox.Show("Succesfully added to database.");
+                MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
             }
 
             catch (Exception ex)
@@ -66,40 +62,16 @@ namespace TrashMaster.Handles
             }
         }
 
-        public static void EditDB(Trash trash, string tablename)
-        {
-            //SqlConnection connection = new SqlConnection(connectionString);
-
-            //string fullSQLquery = String.Format("UPDATE " + tablename + " SET Mængde = {0}, Måleenhed = {1}, Affaldskategori = '{2)', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = {5}, Dato = '{6}' WHERE Id = {7}",
-            //trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, trash.Dato, trash.Id);
-
-            ////string fullSQLquery = String.Format("UPDATE " + dboTable + " SET Mængde = 1111, Måleenhed = 2, Affaldskategori = '3', Affaldsbeskrivelse = '4', Ansvarlig = '5', VirksomhedID = 6, Dato = '7' WHERE Id = 23");
-
-            //try
-            //{
-            //    connection.Open();
-
-            //    SqlCommand command = new SqlCommand(fullSQLquery, connection);
-            //    using (SqlDataReader reader = command.ExecuteReader()) { }
-            //    MessageBox.Show("Row has been edited and saved to database.");
-            //}
-
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-            //finally
-            //{
-            //    if (connection != null && connection.State == ConnectionState.Open) connection.Close();
-            //}
-        }
-
-        //Fjern fra DB med ID (unik) parameter
-        public static void RemoveFromDB(int id, string tablename)
+        public static void EditDB(Trash trash, string tablename, int rowId)
         {
             SqlConnection connection = new SqlConnection(connectionString);
 
-            string fullSQLquery = String.Format("DELETE FROM dbo." + tablename + " WHERE Id = {0}", id);
+            //string fullSQLquery = String.Format("UPDATE " + tablename + " SET Mængde = '{0}', Måleenhed = '{1}', Affaldskategori = '{2)', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = '{5}' WHERE TrashId = '{7}'",
+            //trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, rowId);
+
+            string fullSQLquery = String.Format("UPDATE TRASH SET Mængde = '{0}', Måleenhed = '{1}', Affaldskategori = '{2}', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = '{5}', Dato = CAST('{6}' AS smalldatetime) WHERE TrashId = '{7}'",
+                trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, trash.Dato, rowId);
+
 
             try
             {
@@ -107,6 +79,36 @@ namespace TrashMaster.Handles
 
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
+                MessageBox.Show("Dataen er nu redigeret og gemt til databasen.");
+        }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+        }
+
+        //Fjern fra DB med ID (unik) parameter
+        public static void RemoveFromDB(int id, string tablename)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+
+            //"id" på datagrid hedder "TrashID" i databasen.
+            string fullSQLquery = String.Format("DELETE FROM dbo." + tablename + " WHERE TrashID = {0}", id);
+
+            try
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(fullSQLquery, connection);
+                using (SqlDataReader reader = command.ExecuteReader()) { }
+
+                MessageBox.Show("Affaldsdata med id: " + id + " er nu slettet fra databasen.");
             }
 
             catch (Exception ex)

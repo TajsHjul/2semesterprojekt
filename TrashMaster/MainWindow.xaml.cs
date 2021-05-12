@@ -33,7 +33,7 @@ namespace TrashMaster
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             //start-side
-            MainNavigationFrame.Content = new Overblik();
+            MainNavigationFrame.Content = new Login();
         }
 
         //Naviger to 'Overblik' siden.
