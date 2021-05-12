@@ -58,6 +58,9 @@
     <Compile Include="Frames\editDB.xaml.cs">
       <DependentUpon>editDB.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Frames\showGraph.xaml.cs">
+      <DependentUpon>showGraph.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Frames\insertDB.xaml.cs">
       <DependentUpon>insertDB.xaml</DependentUpon>
     </Compile>
@@ -74,6 +77,10 @@
     <Compile Include="Handles\SQL_Handle.cs" />
     <Compile Include="Trash.cs" />
     <Page Include="Frames\editDB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Frames\showGraph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
