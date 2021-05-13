@@ -23,7 +23,8 @@
                       MouseLeftButtonUp="IsItemSelected"
                       VerticalAlignment="Top" 
                       Visibility="Visible"
-                      HorizontalAlignment="Left">
+                      HorizontalAlignment="Left"
+                      >
 
                 <DataGrid.ContextMenu>
                     <ContextMenu>
@@ -66,14 +67,6 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Icons/Save_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <TextBlock Text="Gem til fil" Margin="7,0,0,0" />
-                    </StackPanel>
-                </Button>
-
-                <!-- Åben fil -->
-                <Button HorizontalContentAlignment="Center" Width="163" Height="30" Margin="5,0,0,0" Click="Åben_Fil_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Icons/OpenFile_Icon.png" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Åben fil" Margin="7,5,0,0"/>
                     </StackPanel>
                 </Button>
 

@@ -1,26 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
     /// <summary>
-    /// Interaction logic for Overblik.xaml
+    /// Skrevet af Edgar
     /// </summary>
+    /// 
     public partial class Overblik : Page
     {
         public Overblik()
@@ -35,7 +27,7 @@ namespace TrashMaster.Frames
         private void Tilføj_Click(object sender, RoutedEventArgs e)
         {
             insertDB idb = new insertDB();
-            ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = idb;
+            ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = idb; 
         }
 
         //Sætter editDB som frame content.
@@ -46,7 +38,7 @@ namespace TrashMaster.Frames
 
             try
             {
-                //gem valgte række fra mainGrid som DataRowView. Elementerne er nu tilgængelige vha. datarow index.
+                //gem valgte række fra Grid som DataRowView. Elementerne er nu tilgængelige vha. datarow index.
                 DataRowView dataRow = (DataRowView)Overblik_GRID.SelectedItems[0];
 
                 //indsæt værdierne fra dataRow (kopi af valgte element fra mainGrid) i 'editDBwindow' felterne til redigering.
@@ -94,6 +86,7 @@ namespace TrashMaster.Frames
                 int cellValueId = Convert.ToInt32(dataRow.Row.ItemArray[0]);
 
                 //prompt bruger om sletning af valgte række - hvis ja, kør removefromdb metode.
+
                 MessageBoxResult result = MessageBox.Show("Slet valgte affaldsdata tilhørende Id: " + cellValueId.ToString() + " ?", "Slet Affaldsdata", MessageBoxButton.YesNo);
                 switch (result)
                 {
@@ -132,7 +125,7 @@ namespace TrashMaster.Frames
         }
 
         //Gør rediger+slet knapperne utilgængelige hvis en række ikke er valgt.
-        private void IsItemSelected(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void IsItemSelected(object sender, MouseButtonEventArgs e)
         {
             if (Overblik_GRID.SelectedItems.Count > 0)
             {

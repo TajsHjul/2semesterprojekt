@@ -9,6 +9,7 @@ namespace TrashMaster
     class Trash
     {
         public decimal Mængde { get; set; }
+
         public måleenhed Måleenhed { get; set; }
         public affaldskategori Affaldskategori { get; set; }
         public string Affaldsbeskrivelse { get; set; }
@@ -18,9 +19,14 @@ namespace TrashMaster
 
         public enum måleenhed
         {
-            Kg = 1,
-            Meter = 2,
-            Colli = 3
+            Colli, 
+            Stk, 
+            Ton,
+            Kilogram,
+            Gram,
+            M3,
+            Liter,
+            Hektoliter
         }
         public enum affaldskategori
         {
@@ -38,7 +44,7 @@ namespace TrashMaster
         public Trash()
         {
             Mængde = 0.0M;
-            Måleenhed = måleenhed.Kg;
+            Måleenhed = måleenhed.Kilogram;
             Affaldskategori = affaldskategori.Batterier;
             Affaldsbeskrivelse = "N/A";
             Ansvarlig = "N/A";
