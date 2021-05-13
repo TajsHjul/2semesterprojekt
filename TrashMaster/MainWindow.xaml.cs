@@ -83,7 +83,6 @@ namespace TrashMaster
             {
                 case MessageBoxResult.Yes:
 
-
                     //Threading for opdatering af GUI element
                     this.Dispatcher.Invoke(() =>
                     {
