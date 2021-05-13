@@ -126,8 +126,14 @@ namespace TrashMaster.Handles
                 //Marker alle celler og eksporter til valgte sfd path (sfd.FileName);
                 if (resultSFD == true)
                 {
-                    string filename = sfd.FileName;
 
+                    //(A)Hvis selectionmode er sat til single, set til Extended så 'SelectAllCells' metoden bliver tilgængelige. Sæt derefter tilbage til Single.
+                    if( gridName.SelectionMode != (DataGridSelectionMode)SelectionMode.Extended)
+                    {
+                        gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Extended;
+                    }
+
+                    string filename = sfd.FileName;
                     gridName.SelectAllCells();
                     gridName.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                     ApplicationCommands.Copy.Execute(null, gridName);
@@ -135,7 +141,8 @@ namespace TrashMaster.Handles
                     String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
                     File.AppendAllText(filename, resultX, UnicodeEncoding.UTF8);
 
-
+                    //(A)Sat tilbage til Single
+                    gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Single;
 
                     //MessageBox.Show("Din fil er blevet gemt.\n\n" + sfd.FileName.ToString());
                 }
