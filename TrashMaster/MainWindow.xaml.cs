@@ -42,5 +42,11 @@ namespace TrashMaster
             Overblik overblik = new Overblik();
             MainNavigationFrame.Content = overblik;
         }
+
+        private void showGraph_Click(object sender, RoutedEventArgs e)
+        {
+            showGraph presentGraph = new showGraph();
+            MainNavigationFrame.Content = presentGraph;
+        }
     }
 }

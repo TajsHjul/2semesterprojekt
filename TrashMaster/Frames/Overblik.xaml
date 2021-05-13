@@ -13,7 +13,7 @@
         <StackPanel Orientation="Vertical">
 
             <DataGrid x:Name="Overblik_GRID" Height="540" Width="1250" Margin="1"  Background="Transparent"            
-                      SelectionMode="Single"
+                      SelectionMode="Extended"
                       FontSize="13"
                       IsReadOnly="True"
                       CanUserAddRows="False"        
@@ -23,7 +23,9 @@
                       MouseLeftButtonUp="IsItemSelected"
                       VerticalAlignment="Top" 
                       Visibility="Visible"
-                      HorizontalAlignment="Left">
+                      HorizontalAlignment="Left"
+                      >
+
 
                 <DataGrid.ContextMenu>
                     <ContextMenu>

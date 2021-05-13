@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="TrashMaster.UserControls.Graph"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TrashMaster.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="540" d:DesignWidth="1270">
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            
+            <StackPanel Background="HotPink" Orientation="Vertical" VerticalAlignment="Center" Width="960">
+
+                <Canvas x:Name="canGraph" Background="Pink" 
+                 Width="820" Height="400"
+                VerticalAlignment="Top" HorizontalAlignment="Center" Margin="60"/>
+                <Button Content="Show Graf" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="20" Click="Button_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="50">
+                <Button x:Name="maaleenhed1" Width="210" Content="Colli" Click="Colli_click"/>
+                <Button x:Name="maaleenhed2" Width="210" Content="Stk" Click="stk_Click"/>
+                <Button x:Name="maaleenhed3" Width="210" Content="Vægt" Click="Thicc_Click"/>
+                <Button x:Name="maaleenhed4" Width="210" Content="Volumen" Click="Volumen_Click"/>
+                <StackPanel x:Name="Row1" Orientation="Horizontal">
+                    <Button x:Name="affaldskategori1" Height="60" Width="70" Content="Batterier" IsEnabled="False"/>
+                    <Button x:Name="affaldskategori2" Height="60" Width="70" Content="Biler" IsEnabled="False" Click="visBil_Click"/>
+                    <Button x:Name="affaldskategori3" Height="60" Width="70" Content="Elektronik" IsEnabled="False"/>
+                </StackPanel>
+                <StackPanel  x:Name="Row2" Orientation="Horizontal">
+                    <Button x:Name="affaldskategori4" Height="60" Width="70" Content="Impreg. Træ" IsEnabled="False"/>
+                    <Button x:Name="affaldskategori5" Height="60" Width="70" Content="Inventar" IsEnabled="False"/>
+                    <Button x:Name="affaldskategori6" Height="60" Width="70" Content="Organisk" IsEnabled="False"/>
+                </StackPanel>
+                <StackPanel  x:Name="Row3" Orientation="Horizontal">
+                    <Button x:Name="affaldskategori7" Height="60" Width="70" Content="Pap og Papir" IsEnabled="False"/>
+                    <Button x:Name="affaldskategori8" Height="60" Width="70" Content="Plast Emb." IsEnabled="False"/>
+                    <Button x:Name="affaldskategori9" Height="60" Width="70" Content="PVC" IsEnabled="False"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+        </StackPanel>
+    </StackPanel>
+    
+</UserControl>

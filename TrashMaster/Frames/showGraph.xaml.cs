@@ -12,17 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TrashMaster.UserControls;
 
 namespace TrashMaster.Frames
 {
     /// <summary>
     /// Interaction logic for Graph.xaml
     /// </summary>
-    public partial class Graph : Page
+    public partial class showGraph : Page
     {
-        public Graph()
+        public showGraph()
         {
             InitializeComponent();
         }
+
+        
+
+        
+
     }
 }

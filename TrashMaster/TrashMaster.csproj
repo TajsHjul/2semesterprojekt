@@ -76,6 +76,10 @@
     <Compile Include="Handles\CSV_Handle.cs" />
     <Compile Include="Handles\SQL_Handle.cs" />
     <Compile Include="Trash.cs" />
+    <Compile Include="UserControls\Graph.xaml.cs">
+      <DependentUpon>Graph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\GraphLogic.cs" />
     <Page Include="Frames\editDB.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -112,6 +116,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\Graph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -151,6 +159,8 @@
     <Resource Include="Icons\Register_Icon.png" />
     <Resource Include="Icons\Save_Icon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\hmm.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
