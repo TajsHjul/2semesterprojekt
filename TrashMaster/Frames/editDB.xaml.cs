@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
     /// <summary>
-    /// Interaction logic for editDB.xaml
+    /// Skrevet af Edgar
     /// </summary>
     public partial class editDB : Page
     {

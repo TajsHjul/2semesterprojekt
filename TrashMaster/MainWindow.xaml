@@ -24,7 +24,15 @@
                 <Button HorizontalContentAlignment="Center" Width="150" Height="45" Margin="20,0,0,0">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Icons/Graph_Icon.png" Height="35" Width="40" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,4,0,5"/>
-                        <TextBlock Text="Graf" Margin="7,7,0,0" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock Text="Graf" Margin="7,8,0,0" FontWeight="Bold" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Filhåndtering -->
+                <Button HorizontalContentAlignment="Center" Width="170" Height="45" Margin="20,0,0,0" Click="Filhåndtering_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Filhåndtering_Icon.png" Height="28" Width="40" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,8,0,5"/>
+                        <TextBlock Text="Filhåndtering" Margin="7,7,0,0" FontWeight="Bold" FontSize="16"/>
                     </StackPanel>
                 </Button>
 

@@ -5,6 +5,9 @@ using System.Windows;
 
 namespace TrashMaster.Handles
 {
+    /// <summary>
+    /// Skrevet af Edgar
+    /// </summary>
     class SQL_Handle : Trash
     {
         private static readonly string connectionString = @"Server = trashmaster.database.windows.net; Database = trashmaster1; User Id = extuser01; Password = GNUpluslinux!;";
@@ -33,7 +36,7 @@ namespace TrashMaster.Handles
             }
         }
 
-        // Tilføj 'Trash' til db med 'Trash' som parameter.
+        // Tilføj til db med 'Trash' som parameter.
 
         public static void AddToDB(Trash trash, string tablename)
         {
