@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace TrashMaster.Handles
 {
@@ -152,8 +153,6 @@ namespace TrashMaster.Handles
                 MessageBox.Show(ex.Message);
             }
         }
-
-
 
         //custom error som efterspørger dataintegritet hvis ikke den overholdes af .csv filen.
         public static string csvStructError()

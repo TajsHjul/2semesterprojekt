@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using TrashMaster.Frames;
+using TrashMaster.Handles;
 
 namespace TrashMaster
 {
@@ -12,6 +14,9 @@ namespace TrashMaster
         public MainWindow()
         {
             InitializeComponent();
+
+            //FileWatcher
+            FSWatcher();
 
             //window placement
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -32,6 +37,70 @@ namespace TrashMaster
         {
             Filhåndtering filhåndtering = new Filhåndtering();
             MainNavigationFrame.Content = filhåndtering;
+        }
+
+        public void FSWatcher()
+        {
+            // Sørg for at der er oprettet en mappe 'C:\Dropzone' på din maskine -- TO DO create dropzone automatisk
+            string dropzoneFolder = @"C:\Dropzone";
+
+            //Lav dropzone mappe hvis den ikke allerede findes.
+            if (Directory.Exists(dropzoneFolder) == false)
+            {
+                Directory.CreateDirectory(dropzoneFolder);
+            }
+
+            FileSystemWatcher watcher = new FileSystemWatcher();
+            watcher.Path = dropzoneFolder;
+
+
+            // Vi holder øje med følgende ændringer til filerne i mappen.
+            watcher.NotifyFilter = NotifyFilters.Attributes
+                                 | NotifyFilters.CreationTime
+                                 | NotifyFilters.DirectoryName
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.Security
+                                 | NotifyFilters.Size;
+
+            // Kigger kun efter .csv-filer.
+            watcher.Filter = "*.csv";
+
+            //Tilfoejer event handlers.
+            //Specificerer hvad der goeres naar en fil aendres, skabes eller slettes.
+            watcher.Created += OnCreated;
+
+            //Starter overvågningen
+            watcher.EnableRaisingEvents = true;
+        }
+
+        private void OnCreated(object sender, FileSystemEventArgs e)
+        {
+            //Prompt bruger 'OnCreated' event
+            MessageBoxResult result = MessageBox.Show("Ny .csv fil: " + e.FullPath + " er blevet registreret i Dropzone.\nVil du åbne denne fil?", "Dropzone", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+
+                    //Threading for opdatering af GUI element
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //Naviger til filhåndtering
+                        Filhåndtering filhåndtering = new Filhåndtering();
+                        MainNavigationFrame.Content = filhåndtering;
+
+                        //Sæt dataContext (Grid ItemsSource til return af CSV.Handle.ReadCSVFile() - returnerer en List<Trash>).
+                        DataContext = CSV_Handle.ReadCSVFile(e.FullPath);
+                    });
+
+                    break;
+
+                    //blankt pt
+                case MessageBoxResult.No:
+                    break;
+            }
         }
     }
 }

@@ -86,6 +86,7 @@ namespace TrashMaster.Frames
                 int cellValueId = Convert.ToInt32(dataRow.Row.ItemArray[0]);
 
                 //prompt bruger om sletning af valgte række - hvis ja, kør removefromdb metode.
+
                 MessageBoxResult result = MessageBox.Show("Slet valgte affaldsdata tilhørende Id: " + cellValueId.ToString() + " ?", "Slet Affaldsdata", MessageBoxButton.YesNo);
                 switch (result)
                 {

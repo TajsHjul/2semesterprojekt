@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,9 +9,6 @@ using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
-    /// <summary>
-    /// Skrevet af: Edgar
-    /// </summary>
     public partial class Filhåndtering : Page
     {
         public Filhåndtering()
@@ -30,6 +28,7 @@ namespace TrashMaster.Frames
             CSV_Handle.ExportCSV(Filhåndtering_GRID);
         }
 
+        //-v-v-v-v--vTEST TEST TEST TEST-v-v-v-v--v-v-v//
         private void CSVTEST(object sender, RoutedEventArgs e)
         {
             try
@@ -39,9 +38,6 @@ namespace TrashMaster.Frames
                 var selected = (Trash)Filhåndtering_GRID.SelectedItems;
 
                 MessageBox.Show(selected.Mængde.ToString());
-
-
-
 
             }
             catch (Exception ex)
