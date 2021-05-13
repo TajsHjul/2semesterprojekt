@@ -20,7 +20,7 @@
 
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="Mængde" HorizontalAlignment="Center"/>
-                    <TextBox x:Name="textbox_Mængde" Width="70" Height="21"/>
+                    <TextBox x:Name="textbox_Mængde" Width="70" Height="21" PreviewTextInput="textbox_Mængde_OnlyNumbersPlease"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="5">
@@ -47,7 +47,7 @@
 
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="VirksomhedID" HorizontalAlignment="Center"/>
-                    <TextBox x:Name="textbox_VirksomhedID" Width="70" Height="21"/>
+                    <TextBox x:Name="textbox_VirksomhedID" Width="70" Height="21" PreviewTextInput="textbox_VirksomhedID_OnlyNumbersPlease"/>
                 </StackPanel>
 
                 <!--<StackPanel Orientation="Vertical" Margin="5">

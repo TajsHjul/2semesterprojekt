@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using TrashMaster.Handles;
@@ -34,12 +35,28 @@ namespace TrashMaster.Frames
 
                 SQL_Handle.AddToDB(dbInsert, "Trash");
 
+                MessageBox.Show(dbInsert.Mængde.ToString());
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        //Kun tal og punktum i 'Mængde' box.
+        private void textbox_Mængde_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9.]+");
+        }
+
+        //Kun tal i 'VirksomhedID' box.
+        private void textbox_VirksomhedID_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
     }
 }

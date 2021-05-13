@@ -9,6 +9,7 @@ namespace TrashMaster
     class Trash
     {
         public decimal Mængde { get; set; }
+
         public måleenhed Måleenhed { get; set; }
         public affaldskategori Affaldskategori { get; set; }
         public string Affaldsbeskrivelse { get; set; }
