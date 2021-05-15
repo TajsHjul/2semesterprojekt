@@ -25,19 +25,24 @@ namespace TrashMaster
 
             //start-side
             MainNavigationFrame.Content = new Login();
+            textblock_Overblik.TextDecorations = TextDecorations.Underline;
 
         }
 
-        //Naviger til 'Overblik' siden.
+        //Naviger til 'Overblik' siden, understreg menupunkt.
         private void Overblik_Click(object sender, RoutedEventArgs e)
         {
             MainNavigationFrame.Content = new Overblik();
+            textblock_Overblik.TextDecorations = TextDecorations.Underline;
+            textblock_Filhåndtering.TextDecorations = null;
         }
 
-        //Naviger til 'Filhåndtering' siden.
+        //Naviger til 'Filhåndtering' siden, understreg menupunkt.
         private void Filhåndtering_Click(object sender, RoutedEventArgs e)
         {
             MainNavigationFrame.Content = new Filhåndtering();
+            textblock_Filhåndtering.TextDecorations = TextDecorations.Underline;
+            textblock_Overblik.TextDecorations = null;
         }
 
         //Log ud
