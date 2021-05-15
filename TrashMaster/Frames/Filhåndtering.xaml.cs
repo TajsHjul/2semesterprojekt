@@ -9,11 +9,16 @@ using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
+    /// <summary>
+    /// Skrevet af: Edgar
+    /// </summary>
     public partial class Filhåndtering : Page
     {
         public Filhåndtering()
         {
             InitializeComponent();
+
+            DataContext = CSV_Handle.ReadCSVFile(@"D:\BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\TestMappe\YAAP.csv");
         }
 
         //Åben .csv fil
@@ -28,58 +33,35 @@ namespace TrashMaster.Frames
             CSV_Handle.ExportCSV(Filhåndtering_GRID);
         }
 
-        //-v-v-v-v--vTEST TEST TEST TEST-v-v-v-v--v-v-v//
-        private void CSVTEST(object sender, RoutedEventArgs e)
+        public void Tilføj_Valgte(object sender, RoutedEventArgs e)
         {
-            try
+            foreach (Trash item in Filhåndtering_GRID.SelectedItems)
             {
-                DataRowView dataRow = (DataRowView)Filhåndtering_GRID.SelectedItems[0];
-
-                var selected = (Trash)Filhåndtering_GRID.SelectedItems;
-
-                MessageBox.Show(selected.Mængde.ToString());
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                SQL_Handle.AddToDB(item, "Trash", true);
             }
 
+            MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
+        }
+        public void Tilføj_Alle(object sender, RoutedEventArgs e)
+        {
+            //Tilføj valgte rækker til db
+            Filhåndtering_GRID.SelectAllCells();
 
+            foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+            {
+                SQL_Handle.AddToDB(item, "Trash", true);
+            }
 
+            MessageBox.Show("Alle rækkerne er blevet tilføjet til databasen.");
+        }
 
-            //try
-            //{
-            //Ammount of Rows
-            //for (int i = 0; i < Filhåndtering_GRID.SelectedItems.Count; i++)
-            //{
-            //    DataRowView dataRow = (DataRowView)Filhåndtering_GRID.SelectedItems[i];
-
-                //Each cell in row
-                //for (int j = 0; j < dataRow.Row.ItemArray.Length; j++)
-                //{
-                //    Trash trash = new Trash
-                //    {
-                //        Mængde = Convert.ToDecimal(dataRow.Row.ItemArray[0]),
-                //        Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), (string)dataRow.Row.ItemArray[1]),
-                //        Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), (string)dataRow.Row.ItemArray[2]),
-                //        Affaldsbeskrivelse = Convert.ToString(dataRow.Row.ItemArray[3]),
-                //        Ansvarlig = Convert.ToString(dataRow.Row.ItemArray[4]),
-                //        VirksomhedID = Convert.ToInt32(dataRow.Row.ItemArray[5]),
-                //        Dato = Convert.ToDateTime(dataRow.Row.ItemArray[6])
-                //    };
-
-                //    //SQL_Handle.AddToDB(trash, "Trash");
-                //}
-            //}
-
-            //MessageBox.Show("legit sick");
-            //}
-
-            //catch(Exception ex)
-            //{
-            //    MessageBox.Show("k");
-            //}
+        //Gør tilføj knapperne utilgængelige hvis en række ikke er valgt.
+        private void IsItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            if (Filhåndtering_GRID.SelectedItems.Count > 0)
+            {
+                Button_Tilføj_Valgte.IsEnabled = true;
+            }
         }
     }
 }

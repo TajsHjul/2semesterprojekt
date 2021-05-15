@@ -164,5 +164,14 @@
   <ItemGroup>
     <Resource Include="Icons\LoadingCircleIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\LogOut_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\AllRows_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\SelectedRows_Icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

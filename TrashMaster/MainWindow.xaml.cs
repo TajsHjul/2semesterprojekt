@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using TrashMaster.Frames;
 using TrashMaster.Handles;
+using TrashMaster.Misc;
 
 namespace TrashMaster
 {
@@ -22,22 +24,43 @@ namespace TrashMaster
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             //start-side
-            MainNavigationFrame.Content = new Overblik();
+            MainNavigationFrame.Content = new Login();
+
         }
 
         //Naviger til 'Overblik' siden.
         private void Overblik_Click(object sender, RoutedEventArgs e)
         {
-            Overblik overblik = new Overblik();
-            MainNavigationFrame.Content = overblik;
+            MainNavigationFrame.Content = new Overblik();
         }
 
         //Naviger til 'Filhåndtering' siden.
         private void Filhåndtering_Click(object sender, RoutedEventArgs e)
         {
-            Filhåndtering filhåndtering = new Filhåndtering();
-            MainNavigationFrame.Content = filhåndtering;
+            MainNavigationFrame.Content = new Filhåndtering();
         }
+
+        //Log ud
+        private void LogUd_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Log ud?\nHåndtering af affaldsdata vil blive utilgængeligt.", "Bekræft log ud", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+                    //log use
+                    Login.LogUse(DateTime.Now.ToString());
+
+                    //naviger to login page
+                    MainNavigationFrame.Content = new Login();
+                    break;
+
+                //blankt pt
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+
 
         public void FSWatcher()
         {

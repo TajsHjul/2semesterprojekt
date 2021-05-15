@@ -154,6 +154,5 @@ namespace TrashMaster.Frames
                 Button_Slet.IsEnabled = true;
             }
         }
-
     }
 }

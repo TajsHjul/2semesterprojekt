@@ -36,6 +36,16 @@
                     </StackPanel>
                 </Button>
 
+                <!-- Log ud -->
+                <DockPanel Width="710">
+                    <Button HorizontalContentAlignment="Center" Width="120" Height="45" Margin="20,0,0,0" Click="LogUd_Click" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Icons/LogOut_Icon.png" Height="35" Width="30" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,8,0,2"/>
+                            <TextBlock Text="Log ud" Margin="2,7,0,0" FontWeight="Bold" FontSize="16"/>
+                        </StackPanel>
+                    </Button>
+                </DockPanel>
+
             </StackPanel>
 
             <!-- MainWindow Frame -->

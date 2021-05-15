@@ -20,40 +20,6 @@ namespace TrashMaster.Handles
     {
         public static string currentFile { get; set; }
 
-        //Datastruktur for CSV import/eksport
-        //public int Id { get; set; }
-        //public decimal Mængde { get; set; }
-        //public måleenhed Måleenhed { get; set; }
-        //public affaldskategori Affaldskategori { get; set; }
-        //public string Affaldsbeskrivelse { get; set; }
-        //public string Ansvarlig { get; set; }
-        //public int VirksomhedID { get; set; }
-        //public DateTime Dato { get; set; }
-
-        //public enum måleenhed
-        //{
-        //    Colli,
-        //    Stk,
-        //    Ton,
-        //    Kilogram,
-        //    Gram,
-        //    M3,
-        //    Liter,
-        //    Hektoliter
-        //}
-        //public enum affaldskategori
-        //{
-        //    Batterier,
-        //    Biler,
-        //    Elektronikaffald,
-        //    ImprægneretTræ,
-        //    Inventar,
-        //    OrganiskAffald,
-        //    Papogpapir,
-        //    Plastemballager,
-        //    PVC
-        //}
-
         //Læser .CSV fil og håndterer dataintegritet - returnerer resultat som liste //unfin
         public static List<Trash> ReadCSVFile(string filePath)
         {
@@ -63,7 +29,6 @@ namespace TrashMaster.Handles
                        let split = l.Split(',')
                        select new Trash
                        {
-                           //Id = int.Parse(split[0]),
                            Mængde = decimal.Parse(split[0]),
                            Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), split[1]),
                            Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), split[2]),
@@ -94,20 +59,18 @@ namespace TrashMaster.Handles
                 if (resultOFD == true)
                 {
                     string filename = ofd.FileName;
-
                     //ReadCSVFile metode fra samme klasse (CSV_Handle)
                     return ReadCSVFile(filename);
-
                 }
                 else
                 {
-                    return "";
+                    return null;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + csvStructError());
-                return "";
+                return null;
             }
         }
 
@@ -160,7 +123,6 @@ namespace TrashMaster.Handles
             string csvStructError =
                 "\n\nDet valgte dokuments struktur stemmer ikke overens med denne applikations forventninger." +
                     "\n\nApplikationen forventer følgende hovedkolonner med tilhørende dataintegritet:" +
-                    "\n\nId + int" +
                     "\nMængde + decimal" +
                     "\nMåleenhed + [Kg, Meter, Colli]" +
                     "\nAffaldskategori + [Batterier, Biler, Elektronikaffald, ImprægneretTræ, Inventar, OrganisskAffald, Papogpapir, PlastEmballager, PVC]" +

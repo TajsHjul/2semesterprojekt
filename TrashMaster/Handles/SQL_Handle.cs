@@ -38,7 +38,7 @@ namespace TrashMaster.Handles
 
         // Tilføj til db med 'Trash' som parameter.
 
-        public static void AddToDB(Trash trash, string tablename)
+        public static void AddToDB(Trash trash, string tablename, bool multiple)
         {
 
             SqlConnection connection = new SqlConnection(connectionString);
@@ -52,7 +52,11 @@ namespace TrashMaster.Handles
 
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
-                MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
+
+                if (multiple == false)
+                {
+                    MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
+                }
             }
 
             catch (Exception ex)
@@ -64,6 +68,7 @@ namespace TrashMaster.Handles
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
         }
+
 
         public static void EditDB(Trash trash, string tablename, int rowId)
         {
