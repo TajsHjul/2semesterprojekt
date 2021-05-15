@@ -124,7 +124,7 @@ namespace TrashMaster.Handles
                 "\n\nDet valgte dokuments struktur stemmer ikke overens med denne applikations forventninger." +
                     "\n\nApplikationen forventer følgende hovedkolonner med tilhørende dataintegritet:" +
                     "\nMængde + decimal" +
-                    "\nMåleenhed + [Kg, Meter, Colli]" +
+                    "\nMåleenhed + [Colli, Stk, Ton, Kilogram, Gram, M3, Liter, Hektoliter]" +
                     "\nAffaldskategori + [Batterier, Biler, Elektronikaffald, ImprægneretTræ, Inventar, OrganisskAffald, Papogpapir, PlastEmballager, PVC]" +
                     "\nAffaldsbeskrivelse + string" +
                     "\nAnsvarlig + string" +

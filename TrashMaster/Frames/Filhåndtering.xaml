@@ -43,7 +43,7 @@
                         ToolTip="Tilføjer alle rækker til databasen.">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Icons/AllRows_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Tilføj alle rækker" Margin="7,5,0,0"/>
+                        <TextBlock Text="Tilføj alle rækker" Margin="7,1,0,0"/>
                     </StackPanel>
                 </Button>
 
@@ -52,7 +52,7 @@
                         ToolTip="Tilføjer kun valgte rækker til databasen. Hold CTRL nede for at vælge flere enkelte rækker">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Icons/SelectedRows_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Tilføj valgte rækker" Margin="7,5,0,0"/>
+                        <TextBlock Text="Tilføj valgte rækker" Margin="7,1,0,0"/>
                     </StackPanel>
                 </Button>
 
