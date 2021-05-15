@@ -118,10 +118,31 @@ namespace TrashMaster.Frames
         }
 
         //Threading for opdatering af grid.
+        //Vis LoadingCircle 
         private async void UpdateGrid(DataGrid gridName, string tableName)
         {
             DataContext = await RTU_Get_UpTime();
-            Task<object> RTU_Get_UpTime() { return Task.Run(() => { Thread.Sleep(1000); return SQL_Handle.QueryToSource("SELECT * FROM dbo." + tableName); }); }
+            Task<object> RTU_Get_UpTime() { return Task.Run(() => {
+
+                //Threading for opdatering af GUI element
+                this.Dispatcher.Invoke(() =>
+                {
+                    LoadingCircle.Visibility = Visibility.Visible;
+                });
+
+                Thread.Sleep(1000);
+
+                //Threading for opdatering af GUI element
+                this.Dispatcher.Invoke(() =>
+                {
+                    LoadingCircle.Visibility = Visibility.Collapsed;
+                });
+
+                return SQL_Handle.QueryToSource("SELECT * FROM dbo." + tableName); 
+                
+            });
+
+            }
         }
 
         //Gør rediger+slet knapperne utilgængelige hvis en række ikke er valgt.
@@ -133,6 +154,5 @@ namespace TrashMaster.Frames
                 Button_Slet.IsEnabled = true;
             }
         }
-
     }
 }

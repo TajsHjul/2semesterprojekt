@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using TrashMaster.Frames;
 using TrashMaster.Handles;
+using TrashMaster.Misc;
 
 namespace TrashMaster
 {
@@ -22,22 +24,48 @@ namespace TrashMaster
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             //start-side
-            MainNavigationFrame.Content = new Overblik();
+            MainNavigationFrame.Content = new Login();
+            textblock_Overblik.TextDecorations = TextDecorations.Underline;
+
         }
 
-        //Naviger til 'Overblik' siden.
+        //Naviger til 'Overblik' siden, understreg menupunkt.
         private void Overblik_Click(object sender, RoutedEventArgs e)
         {
-            Overblik overblik = new Overblik();
-            MainNavigationFrame.Content = overblik;
+            MainNavigationFrame.Content = new Overblik();
+            textblock_Overblik.TextDecorations = TextDecorations.Underline;
+            textblock_Filhåndtering.TextDecorations = null;
         }
 
-        //Naviger til 'Filhåndtering' siden.
+        //Naviger til 'Filhåndtering' siden, understreg menupunkt.
         private void Filhåndtering_Click(object sender, RoutedEventArgs e)
         {
-            Filhåndtering filhåndtering = new Filhåndtering();
-            MainNavigationFrame.Content = filhåndtering;
+            MainNavigationFrame.Content = new Filhåndtering();
+            textblock_Filhåndtering.TextDecorations = TextDecorations.Underline;
+            textblock_Overblik.TextDecorations = null;
         }
+
+        //Log ud
+        private void LogUd_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Log ud?\nHåndtering af affaldsdata vil blive utilgængeligt.", "Bekræft log ud", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+                    //log use
+                    Login.LogUse(DateTime.Now.ToString());
+
+                    //naviger to login page
+                    MainNavigationFrame.Content = new Login();
+                    break;
+
+                //blankt pt
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+
 
         public void FSWatcher()
         {
@@ -82,7 +110,6 @@ namespace TrashMaster
             switch (result)
             {
                 case MessageBoxResult.Yes:
-
 
                     //Threading for opdatering af GUI element
                     this.Dispatcher.Invoke(() =>

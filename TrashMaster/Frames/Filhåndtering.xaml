@@ -12,7 +12,7 @@
     <Grid>
         <StackPanel Orientation="Vertical">
 
-            <DataGrid x:Name="Filhåndtering_GRID" Height="540" Width="1250" Margin="1"  Background="Transparent"            
+            <DataGrid x:Name="Filhåndtering_GRID" Height="540" Width="1235" Margin="1"  Background="Transparent"            
                       SelectionMode="Extended"
                       FontSize="13"
                       IsReadOnly="True"
@@ -20,6 +20,7 @@
                       VerticalScrollBarVisibility="Auto"
                       AutoGenerateColumns="True"
                       ItemsSource="{Binding}" 
+                      MouseLeftButtonUp="IsItemSelected"
                       VerticalAlignment="Top" 
                       Visibility="Visible"
                       HorizontalAlignment="Left"
@@ -30,27 +31,40 @@
             <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
 
                 <!-- Åben fil -->
-                <Button HorizontalContentAlignment="Center" Width="163" Height="30" Margin="5,0,0,0" Click="Åben_Fil_Click">
+                <Button HorizontalContentAlignment="Center" Width="163" Height="30" Margin="0,0,0,0" Click="Åben_Fil_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Icons/OpenFile_Icon.png" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
                         <TextBlock Text="Åben fil" Margin="7,5,0,0"/>
                     </StackPanel>
                 </Button>
 
-                <!-- Gem til fil -->
-                <Button HorizontalContentAlignment="Center" Width="170" Height="30" Margin="5,0,0,0" Click="Gem_Fil_Click">
+                <!-- CSV_TO_DB ALLE -->
+                <Button x:Name="Button_Tilføj_Alle" HorizontalContentAlignment="Center" Width="163" Height="30" Margin="5,0,0,0" Click="Tilføj_Alle"
+                        ToolTip="Tilføjer alle rækker til databasen.">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/Icons/Save_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Gem til fil" Margin="7,0,0,0" />
+                        <Image Source="/Icons/AllRows_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Tilføj alle rækker" Margin="7,1,0,0"/>
                     </StackPanel>
                 </Button>
 
-                <!-- CSV_TO_DB -->
-                <Button HorizontalContentAlignment="Center" Width="163" Height="30" Margin="5,0,0,0" Click="CSVTEST">
+                <!-- CSV_TO_DB Valgte -->
+                <Button x:Name="Button_Tilføj_Valgte" IsEnabled="False" HorizontalContentAlignment="Center" Width="163" Height="30" Margin="5,0,0,0" Click="Tilføj_Valgte" 
+                        ToolTip="Tilføjer kun valgte rækker til databasen. Hold CTRL nede for at vælge flere enkelte rækker">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="T357" Margin="7,5,0,0"/>
+                        <Image Source="/Icons/SelectedRows_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Tilføj valgte rækker" Margin="7,1,0,0"/>
                     </StackPanel>
                 </Button>
+
+                <!-- Gem til fil -->
+                <DockPanel Width="720">
+                    <Button HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="170" Height="30" Margin="5,0,0,0" Click="Gem_Fil_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Icons/Save_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="Gem til fil" Margin="7,0,0,0" />
+                        </StackPanel>
+                    </Button>
+                </DockPanel>
 
             </StackPanel>
 

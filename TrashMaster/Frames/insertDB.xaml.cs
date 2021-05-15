@@ -33,7 +33,7 @@ namespace TrashMaster.Frames
                     VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text),
                 };
 
-                SQL_Handle.AddToDB(dbInsert, "Trash");
+                SQL_Handle.AddToDB(dbInsert, "Trash", false);
 
                 MessageBox.Show(dbInsert.Mængde.ToString());
 

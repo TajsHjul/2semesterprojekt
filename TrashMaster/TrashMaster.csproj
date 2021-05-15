@@ -75,6 +75,9 @@
     </Compile>
     <Compile Include="Handles\CSV_Handle.cs" />
     <Compile Include="Handles\SQL_Handle.cs" />
+    <Compile Include="Misc\LoadingCircle.xaml.cs">
+      <DependentUpon>LoadingCircle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Trash.cs" />
     <Page Include="Frames\editDB.xaml">
       <SubType>Designer</SubType>
@@ -112,6 +115,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Misc\LoadingCircle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -153,6 +160,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Filhåndtering_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\LoadingCircleIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\LogOut_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\AllRows_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\SelectedRows_Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
