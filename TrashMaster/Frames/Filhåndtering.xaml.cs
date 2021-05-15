@@ -17,8 +17,6 @@ namespace TrashMaster.Frames
         public Filhåndtering()
         {
             InitializeComponent();
-
-            DataContext = CSV_Handle.ReadCSVFile(@"D:\BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\TestMappe\YAAP.csv");
         }
 
         //Åben .csv fil
