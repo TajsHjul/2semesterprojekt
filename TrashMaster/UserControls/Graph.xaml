@@ -9,32 +9,32 @@
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
             
-            <StackPanel Background="HotPink" Orientation="Vertical" VerticalAlignment="Center" Width="960">
+            <StackPanel Background="Gray" Orientation="Vertical" VerticalAlignment="Center" Width="960">
 
-                <Canvas x:Name="canGraph" Background="Pink" 
+                <Canvas x:Name="canGraph" Background="LightGray" 
                  Width="820" Height="400"
                 VerticalAlignment="Top" HorizontalAlignment="Center" Margin="60"/>
-                <Button Content="Show Graf" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="20" Click="Button_Click"/>
+                <Button Content="Show Graf" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="20" Click="Button_Click" Visibility="Hidden"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="50">
-                <Button x:Name="maaleenhed1" Width="210" Content="Colli" Click="Colli_click"/>
+                <Button x:Name="maaleenhed1" Width="210" Content="Colli" Click="Colli_click" IsEnabled="False"/>
                 <Button x:Name="maaleenhed2" Width="210" Content="Stk" Click="stk_Click"/>
                 <Button x:Name="maaleenhed3" Width="210" Content="Vægt" Click="Thicc_Click"/>
                 <Button x:Name="maaleenhed4" Width="210" Content="Volumen" Click="Volumen_Click"/>
                 <StackPanel x:Name="Row1" Orientation="Horizontal">
-                    <Button x:Name="affaldskategori1" Height="60" Width="70" Content="Batterier" IsEnabled="False"/>
+                    <Button x:Name="affaldskategori1" Height="60" Width="70" Content="Batterier" IsEnabled="False" Click="visBatteri_Click"/>
                     <Button x:Name="affaldskategori2" Height="60" Width="70" Content="Biler" IsEnabled="False" Click="visBil_Click"/>
-                    <Button x:Name="affaldskategori3" Height="60" Width="70" Content="Elektronik" IsEnabled="False"/>
+                    <Button x:Name="affaldskategori3" Height="60" Width="70" Content="Elektronik" IsEnabled="False" Click="visElektronik_Click"/>
                 </StackPanel>
                 <StackPanel  x:Name="Row2" Orientation="Horizontal">
-                    <Button x:Name="affaldskategori4" Height="60" Width="70" Content="Impreg. Træ" IsEnabled="False"/>
-                    <Button x:Name="affaldskategori5" Height="60" Width="70" Content="Inventar" IsEnabled="False"/>
-                    <Button x:Name="affaldskategori6" Height="60" Width="70" Content="Organisk" IsEnabled="False"/>
+                    <Button x:Name="affaldskategori4" Height="60" Width="70" Content="Impreg. Træ" IsEnabled="False" Click="visImpreg_Click"/>
+                    <Button x:Name="affaldskategori5" Height="60" Width="70" Content="Inventar" IsEnabled="False" Click="visInventar_Click"/>
+                    <Button x:Name="affaldskategori6" Height="60" Width="70" Content="Organisk" IsEnabled="False" Click="visOrganisk_Click"/>
                 </StackPanel>
                 <StackPanel  x:Name="Row3" Orientation="Horizontal">
-                    <Button x:Name="affaldskategori7" Height="60" Width="70" Content="Pap og Papir" IsEnabled="False"/>
-                    <Button x:Name="affaldskategori8" Height="60" Width="70" Content="Plast Emb." IsEnabled="False"/>
-                    <Button x:Name="affaldskategori9" Height="60" Width="70" Content="PVC" IsEnabled="False"/>
+                    <Button x:Name="affaldskategori7" Height="60" Width="70" Content="Pap og Papir" IsEnabled="False" Click="visPapPapir_Click"/>
+                    <Button x:Name="affaldskategori8" Height="60" Width="70" Content="Plast Emb." IsEnabled="False" Click="visPlast_Click"/>
+                    <Button x:Name="affaldskategori9" Height="60" Width="70" Content="PVC" IsEnabled="False" Click="visPVC_Click"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

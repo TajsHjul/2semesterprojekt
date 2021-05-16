@@ -13,11 +13,12 @@ namespace TrashMaster.UserControls
     class GraphLogic
     {
         //GraphLogic-klassen. Tænkes at skulle stå for den "logiske" del af graf-arbejdet.
-        int xlabl = 0;
+        //int xlabl = 0;
         int holabl = 39;
+        
         List<double> snupData = new List<double>();
         private static readonly string connectionString = @"Server = trashmaster.database.windows.net; Database = trashmaster1; User Id = extuser01; Password = GNUpluslinux!;";
-        public void GenerateDatapoints()
+        public void GenerateDatapoints(string kategori)
         {
             //Skal måske bruge til at sortere indkommende data til brug i GivePointValue()
             
@@ -32,7 +33,7 @@ namespace TrashMaster.UserControls
                 connection.Open();
                 command.Connection = connection;
                 DateTime today = new DateTime();
-                command.CommandText = String.Format("SELECT Mængde FROM Trash Where Affaldskategori='Biler' ;", DateTime.Today.AddDays(-39), today);
+                command.CommandText = String.Format("SELECT Mængde FROM Trash Where Affaldskategori='"+kategori+"' ;", DateTime.Today.AddDays(-39), today);
 
                 
                 
@@ -43,7 +44,7 @@ namespace TrashMaster.UserControls
                     while (reader.Read())
 
                     {
-                        snupData.Add(Convert.ToDouble(reader[0])*50);
+                        snupData.Add(Convert.ToDouble(reader[0])*20);
                     }
                     
                     //Her kan der evt. tilføjes en removerange
@@ -77,9 +78,10 @@ namespace TrashMaster.UserControls
             //Metode til generering af Y-akse labels. Ved ikke helt om den er nødvendig
             return null;
         }
+        
         public double GivePointValue(int dataset, double xvalue)
         {
-            GenerateDatapoints();
+            
             //Genererer lige pt tilfældige tal via Random-class. Tanken var at denne metode skulle give det ønskede yvalue baseret på et dataset og en xvalue
             int Min = 0;
             int Max = 500;
@@ -90,6 +92,11 @@ namespace TrashMaster.UserControls
             Thread.Sleep(60);
             double yvalue = randNum.Next(Min, Max);
             return snupData[Convert.ToInt32(xvalue)];
+        }
+        
+        public int SnupdataLength()
+        {
+            return snupData.Count();
         }
     }
 }
