@@ -7,8 +7,9 @@
       xmlns:uc="clr-namespace:TrashMaster.Misc"  
       mc:Ignorable="d" 
       Height="590" Width="1270"
-      Title="Overblik">
-
+      Title="Overblik"
+      >
+      
     <!-- THEGRID -->
     <Grid>
         <StackPanel Orientation="Vertical">
@@ -30,12 +31,14 @@
                       Visibility="Visible"
                       HorizontalAlignment="Left"
                       >
-
+                
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Tilføj Affaldsdata" Click="Tilføj_Click" />
                         <MenuItem Header="Rediger Affaldsdata" Click="Rediger_Click" />
                         <MenuItem Header="Slet Affaldsdata" Click="Slet_Click" />
+                        <Separator/>
+                        <MenuItem Header="Gem til fil" Click="Gem_Fil_Click" />
                     </ContextMenu>
                 </DataGrid.ContextMenu>
 

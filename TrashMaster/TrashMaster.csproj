@@ -173,5 +173,8 @@
   <ItemGroup>
     <Resource Include="Icons\SelectedRows_Icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Dropzone_Icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

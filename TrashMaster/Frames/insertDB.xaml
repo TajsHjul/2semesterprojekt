@@ -57,7 +57,7 @@
 
             </StackPanel>
 
-            <Button x:Name="insertToDB" Content="Tilføj" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="80" Click="Tilføj_Click"/>
+            <Button x:Name="Button_Tilføj" Content="Tilføj" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="80" Click="Tilføj_Click"/>
 
         </StackPanel>
 

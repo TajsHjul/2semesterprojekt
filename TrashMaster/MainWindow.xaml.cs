@@ -12,7 +12,6 @@ namespace TrashMaster
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
@@ -24,7 +23,7 @@ namespace TrashMaster
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             //start-side
-            MainNavigationFrame.Content = new Login();
+            MainNavigationFrame.Content = new Overblik();
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
 
         }
@@ -65,7 +64,6 @@ namespace TrashMaster
                     break;
             }
         }
-
 
         public void FSWatcher()
         {
