@@ -100,10 +100,13 @@ namespace TrashMaster.Handles
 
                     string filename = sfd.FileName;
                     gridName.SelectAllCells();
+
                     gridName.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                     ApplicationCommands.Copy.Execute(null, gridName);
                     gridName.UnselectAllCells();
-                    String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+                    String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue.Replace(',',';'));
+
+
                     File.AppendAllText(filename, resultX, UnicodeEncoding.UTF8);
 
                     //(A)Sat tilbage til Single

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,9 +19,6 @@ namespace TrashMaster.Frames
         public Overblik()
         {
             InitializeComponent();
-
-            //DateTime format for datagrid
-
 
             //Opdater grid på loadup.
             UpdateGrid(Overblik_GRID, "Trash");
@@ -127,6 +125,8 @@ namespace TrashMaster.Frames
             DataContext = await RTU_Get_UpTime();
             Task<object> RTU_Get_UpTime() { return Task.Run(() => {
 
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
                 //Threading for opdatering af GUI element
                 this.Dispatcher.Invoke(() =>
                 {
@@ -160,10 +160,11 @@ namespace TrashMaster.Frames
             }
         }
 
-        //Formater DateTime
+        //Formater DateTime når kolonnen genereres.
+        //Formater Decimal til sepperering med punktum.
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if (e.PropertyType == typeof(System.DateTime))
+            if (e.PropertyType == typeof(DateTime))
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm";
         }
     }
