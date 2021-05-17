@@ -47,7 +47,7 @@ namespace TrashMaster.Frames
                 edb.textbox_Id.IsReadOnly = true;
 
                 decimal cellValueMængde = Convert.ToDecimal(dataRow.Row.ItemArray[1]);
-                edb.get_Textbox_Mængde.Text = cellValueMængde.ToString();
+                edb.get_Textbox_Mængde.Text = cellValueMængde.ToString().Replace(',','.');
 
                 //selectedItem value
                 Trash.måleenhed cellValueMåleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), (string)dataRow.Row.ItemArray[2]);

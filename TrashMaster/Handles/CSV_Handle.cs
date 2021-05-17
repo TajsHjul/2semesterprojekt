@@ -82,7 +82,7 @@ namespace TrashMaster.Handles
                 //Instantier sfd + parametre
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.DefaultExt = ".csv";
-                sfd.Filter = "CSV Files (*.csv)|*.csv";
+                sfd.Filter = ".CSV Files (*.csv)|*.csv";
 
                 //Vis sfd og få bool på visning
                 Nullable<bool> resultSFD = sfd.ShowDialog();
@@ -103,7 +103,7 @@ namespace TrashMaster.Handles
                     ApplicationCommands.Copy.Execute(null, gridName);
                     gridName.UnselectAllCells();
                     String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-                    File.AppendAllText(filename, resultX, UnicodeEncoding.UTF8);
+                    File.AppendAllText(filename, resultX.Replace(';',','), UnicodeEncoding.UTF8);
 
                     //(A)Sat tilbage til Single
                     gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Single;
