@@ -26,7 +26,7 @@ namespace TrashMaster.Handles
             string [] lines = File.ReadAllLines(filePath);
 
             IEnumerable<Trash> data = from l in lines.Skip(1)
-                       let split = l.Split(',')
+                       let split = l.Split(';')
                        select new Trash
                        {
                            Mængde = decimal.Parse(split[0]),
@@ -103,7 +103,7 @@ namespace TrashMaster.Handles
                     ApplicationCommands.Copy.Execute(null, gridName);
                     gridName.UnselectAllCells();
                     String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-                    File.AppendAllText(filename, resultX.Replace(';',','), UnicodeEncoding.UTF8);
+                    File.AppendAllText(filename, resultX.Replace(',',';'), UnicodeEncoding.UTF8);
 
                     //(A)Sat tilbage til Single
                     gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Single;
