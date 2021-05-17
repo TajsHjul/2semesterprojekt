@@ -28,7 +28,6 @@
                       Drop="DragAndDropCSV"
                       >
                 
-                
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Tilføj alle rækker" x:Name="menuitem_TilføjAlleRækker" IsEnabled="False" Click="Tilføj_Alle_Click" />
