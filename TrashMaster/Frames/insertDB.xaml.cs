@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TrashMaster.Handles;
@@ -16,6 +18,8 @@ namespace TrashMaster.Frames
             InitializeComponent();
             cmbAffaldskategori.ItemsSource = Enum.GetValues(typeof(Trash.affaldskategori));
             cmbMåleenhed.ItemsSource = Enum.GetValues(typeof(Trash.måleenhed));
+
+            //Gør først 'Tilføj' knappen tilgængelig når alle kolonner er udfyldte.
         }
 
         private void Tilføj_Click(object sender, RoutedEventArgs e)
@@ -35,12 +39,10 @@ namespace TrashMaster.Frames
 
                 SQL_Handle.AddToDB(dbInsert, "Trash", false);
 
-                MessageBox.Show(dbInsert.Mængde.ToString());
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Udfyld venligst alle registreringskolonner.\n" + ex.Message);
             }
 
         }
@@ -58,5 +60,6 @@ namespace TrashMaster.Frames
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
+
     }
 }

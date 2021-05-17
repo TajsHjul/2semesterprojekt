@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,6 +25,7 @@ namespace TrashMaster.Frames
         private void Åben_Fil_Click(object sender, RoutedEventArgs e)
         {
             DataContext = CSV_Handle.ImportCSV();
+            buttonsAvailable();
         }
 
         //Eksporter alt i datagrid til .csv fil med CSV_Handle.ExportCSV(tablename) metode.
@@ -31,34 +34,82 @@ namespace TrashMaster.Frames
             CSV_Handle.ExportCSV(Filhåndtering_GRID);
         }
 
-        public void Tilføj_Valgte(object sender, RoutedEventArgs e)
+        public void Tilføj_Valgte_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+            new Thread(() =>
             {
-                SQL_Handle.AddToDB(item, "Trash", true);
-            }
+                //Threading for opdatering af GUI element
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+                    {
+                        SQL_Handle.AddToDB(item, "Trash", true);
+                    }
 
-            MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
+                    MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
+                });
+            }).Start();
+
         }
-        public void Tilføj_Alle(object sender, RoutedEventArgs e)
+        public void Tilføj_Alle_Click(object sender, RoutedEventArgs e)
         {
-            //Tilføj valgte rækker til db
-            Filhåndtering_GRID.SelectAllCells();
-
-            foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+            new Thread(() =>
             {
-                SQL_Handle.AddToDB(item, "Trash", true);
-            }
+                //Threading for opdatering af GUI element
+                this.Dispatcher.Invoke(() =>
+                {
+                    Filhåndtering_GRID.SelectAllCells();
 
-            MessageBox.Show("Alle rækkerne er blevet tilføjet til databasen.");
+                    foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+                    {
+                        SQL_Handle.AddToDB(item, "Trash", true);
+                    }
+
+                    MessageBox.Show("Alle rækkerne er blevet tilføjet til databasen.");
+                });
+            }).Start();
+
         }
 
-        //Gør tilføj knapperne utilgængelige hvis en række ikke er valgt.
+        private void Dropzone_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(@"c:\Dropzone");
+        }
+
+        //Gør 'Tilføj valgte rækker' tilgængelig når mindst én række er valgt.
         private void IsItemSelected(object sender, MouseButtonEventArgs e)
         {
             if (Filhåndtering_GRID.SelectedItems.Count > 0)
             {
                 Button_Tilføj_Valgte.IsEnabled = true;
+            }
+        }
+
+        //Drag'n'drop
+        private void DragAndDropCSV(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Note that you can have more than one file.
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var file = files[0];
+                DataContext = CSV_Handle.ReadCSVFile(file);
+
+                buttonsAvailable();
+            }
+        }
+
+        private void buttonsAvailable()
+        {
+            //gør 'tilføj alle rækker' og 'gem til fil' tilgængelig, hvis en fil er blevet indlæst til datagrid.
+            if (Filhåndtering_GRID.Items.Count != 0)
+            {
+                Button_Tilføj_Alle.IsEnabled = true;
+                Button_GemTilFil.IsEnabled = true;
+
+                menuitem_TilføjAlleRækker.IsEnabled = true;
+                menuitem_TilføjValgteRækker.IsEnabled = true;
+                menuitem_GemTilFil.IsEnabled = true;
             }
         }
     }
