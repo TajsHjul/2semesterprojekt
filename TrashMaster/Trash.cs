@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,6 @@ namespace TrashMaster
     class Trash
     {
         public decimal Mængde { get; set; }
-
         public måleenhed Måleenhed { get; set; }
         public affaldskategori Affaldskategori { get; set; }
         public string Affaldsbeskrivelse { get; set; }
@@ -49,7 +49,7 @@ namespace TrashMaster
             Affaldsbeskrivelse = "N/A";
             Ansvarlig = "N/A";
             VirksomhedID = 0;
-            Dato = DateTime.Now;
+            Dato = DateTime.UtcNow;
         }
 
         public Trash(decimal mængde, måleenhed måleenhed, affaldskategori affaldskategori, string affaldsbeskrivelse, string ansvarlig, int virksomhedid, DateTime dato)

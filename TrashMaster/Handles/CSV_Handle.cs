@@ -35,7 +35,7 @@ namespace TrashMaster.Handles
                            Affaldsbeskrivelse = split[3],
                            Ansvarlig = split[4],
                            VirksomhedID = int.Parse(split[5]),
-                           Dato = Convert.ToDateTime(split[6])
+                           Dato = DateTime.Parse(split[6])
                        };
 
             return data.ToList();
@@ -81,6 +81,7 @@ namespace TrashMaster.Handles
             {
                 //Instantier sfd + parametre
                 SaveFileDialog sfd = new SaveFileDialog();
+
                 sfd.DefaultExt = ".csv";
                 sfd.Filter = ".CSV Files (*.csv)|*.csv";
 
@@ -103,7 +104,7 @@ namespace TrashMaster.Handles
                     ApplicationCommands.Copy.Execute(null, gridName);
                     gridName.UnselectAllCells();
                     String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-                    File.AppendAllText(filename, resultX.Replace(',',';'), UnicodeEncoding.UTF8);
+                    File.AppendAllText(filename, resultX, UnicodeEncoding.UTF8);
 
                     //(A)Sat tilbage til Single
                     gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Single;

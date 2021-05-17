@@ -19,6 +19,9 @@ namespace TrashMaster.Frames
         {
             InitializeComponent();
 
+            //DateTime format for datagrid
+
+
             //Opdater grid på loadup.
             UpdateGrid(Overblik_GRID, "Trash");
         }
@@ -47,7 +50,7 @@ namespace TrashMaster.Frames
                 edb.textbox_Id.IsReadOnly = true;
 
                 decimal cellValueMængde = Convert.ToDecimal(dataRow.Row.ItemArray[1]);
-                edb.get_Textbox_Mængde.Text = cellValueMængde.ToString().Replace(',','.');
+                edb.get_Textbox_Mængde.Text = cellValueMængde.ToString();
 
                 //selectedItem value
                 Trash.måleenhed cellValueMåleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), (string)dataRow.Row.ItemArray[2]);
@@ -139,6 +142,8 @@ namespace TrashMaster.Frames
                 });
 
                 return SQL_Handle.QueryToSource("SELECT * FROM dbo." + tableName); 
+
+
                 
             });
 
@@ -153,6 +158,13 @@ namespace TrashMaster.Frames
                 Button_Rediger.IsEnabled = true;
                 Button_Slet.IsEnabled = true;
             }
+        }
+
+        //Formater DateTime
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(System.DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm";
         }
     }
 }
