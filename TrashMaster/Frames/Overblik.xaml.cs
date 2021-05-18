@@ -127,7 +127,6 @@ namespace TrashMaster.Frames
             DataContext = await RTU_Get_UpTime();
             Task<object> RTU_Get_UpTime() { return Task.Run(() => {
 
-                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
                 //Threading for opdatering af GUI element
                 this.Dispatcher.Invoke(() =>
@@ -164,8 +163,8 @@ namespace TrashMaster.Frames
         //Formater Decimal til sepperering med punktum og to decimaler
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if (e.PropertyType == typeof(DateTime))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm:ss";
+            //if (e.PropertyType == typeof(DateTime))
+            //    (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm:ss";
 
             if (e.PropertyType == typeof(Decimal))
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";

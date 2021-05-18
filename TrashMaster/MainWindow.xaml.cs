@@ -28,6 +28,7 @@ namespace TrashMaster
             MainNavigationFrame.Content = new Overblik();
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
 
+            //overkill, but one works
             CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
             CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
