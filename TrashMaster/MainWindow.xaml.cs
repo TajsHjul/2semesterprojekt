@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using TrashMaster.Frames;
 using TrashMaster.Handles;
 using TrashMaster.Misc;
+using System.Threading;
 
 namespace TrashMaster
 {
@@ -26,6 +28,11 @@ namespace TrashMaster
             MainNavigationFrame.Content = new Overblik();
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
 
+            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
+            CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US", false);
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US", false);
         }
 
         //Naviger til 'Overblik' siden, understreg menupunkt.

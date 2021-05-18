@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,14 +30,26 @@ namespace TrashMaster.Handles
                        let split = l.Split(';')
                        select new Trash
                        {
-                           Mængde = decimal.Parse(split[0]),
-                           Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), split[1]),
-                           Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), split[2]),
-                           Affaldsbeskrivelse = split[3],
-                           Ansvarlig = split[4],
-                           VirksomhedID = int.Parse(split[5]),
-                           Dato = DateTime.Parse(split[6])
+                           Id = int.Parse(split[0]),
+                           Mængde = decimal.Parse(split[1]),
+                           Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), split[2]),
+                           Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), split[3]),
+                           Affaldsbeskrivelse = split[4],
+                           Ansvarlig = split[5],
+                           VirksomhedID = int.Parse(split[6]),
+                           Dato = DateTime.Parse(split[7])
                        };
+
+            //select new Trash
+            //{
+            //    Mængde = decimal.Parse(split[0]),
+            //    Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), split[1]),
+            //    Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), split[2]),
+            //    Affaldsbeskrivelse = split[3],
+            //    Ansvarlig = split[4],
+            //    VirksomhedID = int.Parse(split[5]),
+            //    Dato = DateTime.Parse(split[6])
+            //};
 
             return data.ToList();
         }
@@ -77,6 +90,7 @@ namespace TrashMaster.Handles
         //Eksporter datagrid til .csv fil
         public static void ExportCSV(DataGrid gridName)
         {
+
             try
             {
                 //Instantier sfd + parametre
@@ -100,14 +114,12 @@ namespace TrashMaster.Handles
 
                     string filename = sfd.FileName;
                     gridName.SelectAllCells();
-
                     gridName.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                     ApplicationCommands.Copy.Execute(null, gridName);
                     gridName.UnselectAllCells();
-                    String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue.Replace(',',';'));
+                    String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
 
-
-                    File.AppendAllText(filename, resultX, UnicodeEncoding.UTF8);
+                    File.AppendAllText(filename, resultX.Replace(',',';') , UnicodeEncoding.UTF8);
 
                     //(A)Sat tilbage til Single
                     gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Single;

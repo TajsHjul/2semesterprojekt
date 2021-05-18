@@ -47,8 +47,10 @@ namespace TrashMaster.Frames
                 edb.get_Textbox_Id.Text = cellValueId.ToString();
                 edb.textbox_Id.IsReadOnly = true;
 
+                //Decimal Formatting
                 decimal cellValueMængde = Convert.ToDecimal(dataRow.Row.ItemArray[1]);
-                edb.get_Textbox_Mængde.Text = cellValueMængde.ToString();
+                string cellValueMængdeCONV = String.Format("{0:0.00}", cellValueMængde.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                edb.get_Textbox_Mængde.Text = cellValueMængdeCONV;
 
                 //selectedItem value
                 Trash.måleenhed cellValueMåleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), (string)dataRow.Row.ItemArray[2]);
@@ -68,7 +70,7 @@ namespace TrashMaster.Frames
                 edb.get_Textbox_VirksomhedID.Text = cellValueVirksomhedID.ToString();
 
                 string cellValueDato = Convert.ToString(dataRow.Row.ItemArray[7]);
-                edb.get_Textbox_Dato.Text = cellValueDato;
+                edb.get_Textbox_Dato.Text = cellValueDato.ToString();
 
             }
             catch (Exception ex)
@@ -143,8 +145,6 @@ namespace TrashMaster.Frames
 
                 return SQL_Handle.QueryToSource("SELECT * FROM dbo." + tableName); 
 
-
-                
             });
 
             }
@@ -161,11 +161,14 @@ namespace TrashMaster.Frames
         }
 
         //Formater DateTime når kolonnen genereres.
-        //Formater Decimal til sepperering med punktum.
+        //Formater Decimal til sepperering med punktum og to decimaler
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (e.PropertyType == typeof(DateTime))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm";
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm:ss";
+
+            if (e.PropertyType == typeof(Decimal))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";
         }
     }
 }
