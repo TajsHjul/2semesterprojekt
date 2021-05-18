@@ -99,6 +99,17 @@ namespace TrashMaster.Frames
             }
         }
 
+        //Formater DateTime når kolonnen genereres.
+        //Formater Decimal til sepperering med punktum.
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm";
+
+            if (e.PropertyType == typeof(Decimal))
+                (e.Column as DataGridTextColumn).Binding.StringFormat.Replace(',', '.');
+        }
+
         private void buttonsAvailable()
         {
             //gør 'tilføj alle rækker' og 'gem til fil' tilgængelig, hvis en fil er blevet indlæst til datagrid.

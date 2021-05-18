@@ -49,7 +49,7 @@ namespace TrashMaster.Frames
                     Affaldsbeskrivelse = textbox_Affaldsbeskrivelse.Text,
                     Ansvarlig = textbox_Ansvarlig.Text,
                     VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text),
-                    Dato = DateTime.Parse(textbox_Dato.Text)
+                    Dato = Convert.ToDateTime(textbox_Dato.Text)
                 };
 
                 //editDB metode, som gør brug af UPDATE SQL Query.

@@ -26,7 +26,7 @@ namespace TrashMaster.Handles
             string [] lines = File.ReadAllLines(filePath);
 
             IEnumerable<Trash> data = from l in lines.Skip(1)
-                       let split = l.Split(',')
+                       let split = l.Split(';')
                        select new Trash
                        {
                            Mængde = decimal.Parse(split[0]),
@@ -35,7 +35,7 @@ namespace TrashMaster.Handles
                            Affaldsbeskrivelse = split[3],
                            Ansvarlig = split[4],
                            VirksomhedID = int.Parse(split[5]),
-                           Dato = Convert.ToDateTime(split[6])
+                           Dato = DateTime.Parse(split[6])
                        };
 
             return data.ToList();
@@ -81,8 +81,9 @@ namespace TrashMaster.Handles
             {
                 //Instantier sfd + parametre
                 SaveFileDialog sfd = new SaveFileDialog();
+
                 sfd.DefaultExt = ".csv";
-                sfd.Filter = "CSV Files (*.csv)|*.csv";
+                sfd.Filter = ".CSV Files (*.csv)|*.csv";
 
                 //Vis sfd og få bool på visning
                 Nullable<bool> resultSFD = sfd.ShowDialog();
@@ -99,10 +100,13 @@ namespace TrashMaster.Handles
 
                     string filename = sfd.FileName;
                     gridName.SelectAllCells();
+
                     gridName.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                     ApplicationCommands.Copy.Execute(null, gridName);
                     gridName.UnselectAllCells();
-                    String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+                    String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue.Replace(',',';'));
+
+
                     File.AppendAllText(filename, resultX, UnicodeEncoding.UTF8);
 
                     //(A)Sat tilbage til Single

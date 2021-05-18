@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -124,6 +125,8 @@ namespace TrashMaster.Frames
             DataContext = await RTU_Get_UpTime();
             Task<object> RTU_Get_UpTime() { return Task.Run(() => {
 
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
                 //Threading for opdatering af GUI element
                 this.Dispatcher.Invoke(() =>
                 {
@@ -139,6 +142,8 @@ namespace TrashMaster.Frames
                 });
 
                 return SQL_Handle.QueryToSource("SELECT * FROM dbo." + tableName); 
+
+
                 
             });
 
@@ -153,6 +158,14 @@ namespace TrashMaster.Frames
                 Button_Rediger.IsEnabled = true;
                 Button_Slet.IsEnabled = true;
             }
+        }
+
+        //Formater DateTime når kolonnen genereres.
+        //Formater Decimal til sepperering med punktum.
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm";
         }
     }
 }
