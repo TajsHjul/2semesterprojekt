@@ -38,11 +38,9 @@ namespace TrashMaster.Frames
 
         private void Rediger_Click(object sender, RoutedEventArgs e)
         {
-            //convert to SQL
-            string msStartDt = textbox_Dato.Text;
-            var str = DateTime.ParseExact(msStartDt, "M/dd/yyyy hh:mm:ss tt",
-                                          CultureInfo.InvariantCulture).ToString("M.dd.yyyy HH:mm:ss");
-
+            //convert textbox_Dato to SQL accepted format.
+            string textboxDate = textbox_Dato.Text;
+            var textboxDateConv = DateTime.ParseExact(textboxDate, "dd/M/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture).ToString("M.dd.yyyy HH:mm:ss");
 
             try
             {
@@ -55,7 +53,7 @@ namespace TrashMaster.Frames
                     Affaldsbeskrivelse = textbox_Affaldsbeskrivelse.Text,
                     Ansvarlig = textbox_Ansvarlig.Text,
                     VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text),
-                    Dato = Convert.ToDateTime(str)
+                    Dato = Convert.ToDateTime(textboxDateConv)
             };
 
                 //editDB metode, som gør brug af UPDATE SQL Query.
