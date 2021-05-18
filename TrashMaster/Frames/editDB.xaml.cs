@@ -40,7 +40,7 @@ namespace TrashMaster.Frames
         {
             //convert textbox_Dato to SQL accepted format.
             string textboxDate = textbox_Dato.Text;
-            var textboxDateConv = DateTime.ParseExact(textboxDate, "dd/M/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture).ToString("M.dd.yyyy HH:mm:ss");
+            var textboxDateConv = DateTime.ParseExact(textboxDate, "M/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture).ToString("M.dd.yyyy HH:mm:ss");
 
             try
             {

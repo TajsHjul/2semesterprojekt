@@ -103,11 +103,11 @@ namespace TrashMaster.Frames
         //Formater Decimal til sepperering med punktum og to decimaler
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if (e.PropertyType == typeof(DateTime))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm";
+            //if (e.PropertyType == typeof(DateTime))
+            //    (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm";
 
-            if (e.PropertyType == typeof(Decimal))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";
+            //if (e.PropertyType == typeof(Decimal))
+            //    (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";
         }
 
         private void buttonsAvailable()

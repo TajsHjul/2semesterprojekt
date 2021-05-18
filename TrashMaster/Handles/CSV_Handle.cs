@@ -40,17 +40,6 @@ namespace TrashMaster.Handles
                            Dato = DateTime.Parse(split[7])
                        };
 
-            //select new Trash
-            //{
-            //    Mængde = decimal.Parse(split[0]),
-            //    Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), split[1]),
-            //    Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), split[2]),
-            //    Affaldsbeskrivelse = split[3],
-            //    Ansvarlig = split[4],
-            //    VirksomhedID = int.Parse(split[5]),
-            //    Dato = DateTime.Parse(split[6])
-            //};
-
             return data.ToList();
         }
 
