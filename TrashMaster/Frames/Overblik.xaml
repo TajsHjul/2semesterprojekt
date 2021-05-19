@@ -25,13 +25,14 @@
                       CanUserAddRows="False"        
                       VerticalScrollBarVisibility="Auto"
                       AutoGenerateColumns="True"
-                      AutoGeneratingColumn="OnAutoGeneratingColumn"
-                      ItemsSource="{Binding}" 
+                      
+                                            ItemsSource="{Binding}" 
                       MouseLeftButtonUp="IsItemSelected"
                       VerticalAlignment="Top" 
                       Visibility="Visible"
                       HorizontalAlignment="Left"
                       
+                      AutoGeneratingColumn="OnAutoGeneratingColumn"                      
                       >
                 
                 <DataGrid.ContextMenu>
