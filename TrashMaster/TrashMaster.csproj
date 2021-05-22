@@ -73,12 +73,19 @@
     <Compile Include="Frames\removeDB.xaml.cs">
       <DependentUpon>removeDB.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Frames\showGraph.xaml.cs">
+      <DependentUpon>showGraph.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Handles\CSV_Handle.cs" />
     <Compile Include="Handles\SQL_Handle.cs" />
     <Compile Include="Misc\LoadingCircle.xaml.cs">
       <DependentUpon>LoadingCircle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Trash.cs" />
+    <Compile Include="UserControls\Graph.xaml.cs">
+      <DependentUpon>Graph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\GraphLogic.cs" />
     <Page Include="Frames\editDB.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,6 +110,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Frames\showGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,6 +127,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Misc\LoadingCircle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Graph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

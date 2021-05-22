@@ -73,6 +73,12 @@ namespace TrashMaster
             }
         }
 
+        private void Graf_Click(object sender, RoutedEventArgs e)
+        {
+            MainNavigationFrame.Content = new showGraph();
+            textblock_Graf.TextDecorations = TextDecorations.Underline;
+            textblock_Overblik.TextDecorations = null;
+        }
         public void FSWatcher() //Lavet af JBR
         {
             // Definerer vores mappe som der skal watches af appen
