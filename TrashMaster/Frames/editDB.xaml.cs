@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
     /// <summary>
-    /// Interaction logic for editDB.xaml
+    /// Skrevet af Edgar
     /// </summary>
     public partial class editDB : Page
     {
@@ -48,6 +38,9 @@ namespace TrashMaster.Frames
 
         private void Rediger_Click(object sender, RoutedEventArgs e)
         {
+            //convert textbox_Dato to SQL accepted format.
+            //string textboxDate = textbox_Dato.Text;
+            //var textboxDateConv = DateTime.ParseExact(textboxDate, "yyyy-MM-dd hh:mm:ss tt", CultureInfo.InvariantCulture).ToString("M.dd.yyyy HH:mm:ss");
 
             try
             {
@@ -60,8 +53,8 @@ namespace TrashMaster.Frames
                     Affaldsbeskrivelse = textbox_Affaldsbeskrivelse.Text,
                     Ansvarlig = textbox_Ansvarlig.Text,
                     VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text),
-                    Dato = DateTime.Parse(textbox_Dato.Text)
-                };
+                    Dato = Convert.ToDateTime(textbox_Dato.Text)
+            };
 
                 //editDB metode, som gør brug af UPDATE SQL Query.
                 SQL_Handle.EditDB(dbEdit, "Trash", Convert.ToInt32(textbox_Id.Text));
@@ -70,6 +63,20 @@ namespace TrashMaster.Frames
             {
                 MessageBox.Show(ex.Message);
             }
-}
+        }
+
+        //Kun tal og punktum i 'Mængde' box.
+        private void textbox_Mængde_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9.]+");
+        }
+
+        //Kun tal i 'VirksomhedID' box.
+        private void textbox_VirksomhedID_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
     }
 }

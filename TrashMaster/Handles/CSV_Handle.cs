@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,60 +10,34 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace TrashMaster.Handles
 {
+    /// <summary>
+    /// Skrevet af Edgar
+    /// </summary>
     class CSV_Handle
     {
         public static string currentFile { get; set; }
 
-        //Datastruktur for CSV import/eksport
-        public int Id { get; set; }
-        public decimal Mængde { get; set; }
-        public måleenhed Måleenhed { get; set; }
-        public affaldskategori Affaldskategori { get; set; }
-        public string Affaldsbeskrivelse { get; set; }
-        public string Ansvarlig { get; set; }
-        public int VirksomhedID { get; set; }
-        public string Dato { get; set; }
-
-        public enum måleenhed
-        {
-            Kg = 1,
-            Meter = 2,
-            Colli = 3
-        }
-        public enum affaldskategori
-        {
-            Batterier,
-            Biler,
-            Elektronikaffald,
-            ImprægneretTræ,
-            Inventar,
-            OrganiskAffald,
-            Papogpapir,
-            Plastemballager,
-            PVC
-        }
-
         //Læser .CSV fil og håndterer dataintegritet - returnerer resultat som liste //unfin
-        public static List<CSV_Handle> ReadCSVFile(string filePath)
+        public static List<Trash> ReadCSVFile(string filePath)
         {
             string [] lines = File.ReadAllLines(filePath);
 
-            IEnumerable<CSV_Handle> data = from l in lines.Skip(1)
-                       let split = l.Split(',')
-
-                       select new CSV_Handle
+            IEnumerable<Trash> data = from l in lines.Skip(1)
+                       let split = l.Split(';')
+                       select new Trash
                        {
                            Id = int.Parse(split[0]),
                            Mængde = decimal.Parse(split[1]),
-                           Måleenhed = (måleenhed)Enum.Parse(typeof(måleenhed), split[2]),
-                           Affaldskategori = (affaldskategori)Enum.Parse(typeof(affaldskategori), split[3]),
+                           Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), split[2]),
+                           Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), split[3]),
                            Affaldsbeskrivelse = split[4],
                            Ansvarlig = split[5],
                            VirksomhedID = int.Parse(split[6]),
-                           Dato = split[7]
+                           Dato = DateTime.Parse(split[7])
                        };
 
             return data.ToList();
@@ -85,32 +61,32 @@ namespace TrashMaster.Handles
                 if (resultOFD == true)
                 {
                     string filename = ofd.FileName;
-
                     //ReadCSVFile metode fra samme klasse (CSV_Handle)
-                    object Tres = ReadCSVFile(filename);
-                    return Tres;
+                    return ReadCSVFile(filename);
                 }
                 else
                 {
-                    return "";
+                    return null;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + csvStructError());
-                return "";
+                return null;
             }
         }
 
         //Eksporter datagrid til .csv fil
         public static void ExportCSV(DataGrid gridName)
         {
+
             try
             {
                 //Instantier sfd + parametre
                 SaveFileDialog sfd = new SaveFileDialog();
+
                 sfd.DefaultExt = ".csv";
-                sfd.Filter = "CSV Files (*.csv)|*.csv";
+                sfd.Filter = ".CSV Files (*.csv)|*.csv";
 
                 //Vis sfd og få bool på visning
                 Nullable<bool> resultSFD = sfd.ShowDialog();
@@ -118,16 +94,24 @@ namespace TrashMaster.Handles
                 //Marker alle celler og eksporter til valgte sfd path (sfd.FileName);
                 if (resultSFD == true)
                 {
-                    string filename = sfd.FileName;
 
+                    //(A)Hvis selectionmode er sat til single, set til Extended så 'SelectAllCells' metoden bliver tilgængelige. Sæt derefter tilbage til Single.
+                    if( gridName.SelectionMode != (DataGridSelectionMode)SelectionMode.Extended)
+                    {
+                        gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Extended;
+                    }
+
+                    string filename = sfd.FileName;
                     gridName.SelectAllCells();
                     gridName.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                     ApplicationCommands.Copy.Execute(null, gridName);
                     gridName.UnselectAllCells();
                     String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-                    File.AppendAllText(filename, resultX, UnicodeEncoding.UTF8);
 
+                    File.AppendAllText(filename, resultX.Replace(',',';') , UnicodeEncoding.UTF8);
 
+                    //(A)Sat tilbage til Single
+                    gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Single;
 
                     //MessageBox.Show("Din fil er blevet gemt.\n\n" + sfd.FileName.ToString());
                 }
@@ -144,9 +128,8 @@ namespace TrashMaster.Handles
             string csvStructError =
                 "\n\nDet valgte dokuments struktur stemmer ikke overens med denne applikations forventninger." +
                     "\n\nApplikationen forventer følgende hovedkolonner med tilhørende dataintegritet:" +
-                    "\n\nId + int" +
                     "\nMængde + decimal" +
-                    "\nMåleenhed + [Kg, Meter, Colli]" +
+                    "\nMåleenhed + [Colli, Stk, Ton, Kilogram, Gram, M3, Liter, Hektoliter]" +
                     "\nAffaldskategori + [Batterier, Biler, Elektronikaffald, ImprægneretTræ, Inventar, OrganisskAffald, Papogpapir, PlastEmballager, PVC]" +
                     "\nAffaldsbeskrivelse + string" +
                     "\nAnsvarlig + string" +
@@ -155,5 +138,7 @@ namespace TrashMaster.Handles
 
             return csvStructError;
         }
+
+
     }
 }

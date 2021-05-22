@@ -16,7 +16,7 @@
                 <Button HorizontalContentAlignment="Center" Width="150" Height="45" Margin="14,0,0,0" Click="Overblik_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Icons/Overview_Icon.png" Height="40" Width="40" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,4,0,5"/>
-                        <TextBlock Text="Overblik" Margin="7,7,0,0" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock x:Name="textblock_Overblik" Text="Overblik" Margin="7,7,0,0" FontWeight="Bold" FontSize="16"/>
                     </StackPanel>
                 </Button>
 
@@ -24,9 +24,27 @@
                 <Button HorizontalContentAlignment="Center" Width="150" Height="45" Margin="20,0,0,0" Click="showGraph_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Icons/Graph_Icon.png" Height="35" Width="40" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,4,0,5"/>
-                        <TextBlock Text="Graf" Margin="7,7,0,0" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock Text="Graf" Margin="7,8,0,0" FontWeight="Bold" FontSize="16"/>
                     </StackPanel>
                 </Button>
+
+                <!-- Filhåndtering -->
+                <Button HorizontalContentAlignment="Center" Width="170" Height="45" Margin="20,0,0,0" Click="Filhåndtering_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Filhåndtering_Icon.png" Height="28" Width="40" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,8,0,5"/>
+                        <TextBlock x:Name="textblock_Filhåndtering" Text="Filhåndtering" Margin="7,7,0,0" FontWeight="Bold" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Log ud -->
+                <DockPanel Width="710">
+                    <Button HorizontalContentAlignment="Center" Width="120" Height="45" Margin="20,0,0,0" Click="LogUd_Click" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Icons/LogOut_Icon.png" Height="35" Width="30" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,8,0,2"/>
+                            <TextBlock Text="Log ud" Margin="2,7,0,0" FontWeight="Bold" FontSize="16"/>
+                        </StackPanel>
+                    </Button>
+                </DockPanel>
 
             </StackPanel>
 

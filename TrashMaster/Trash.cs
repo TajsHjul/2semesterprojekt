@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace TrashMaster
 {
     class Trash
     {
+        public int Id { get; set; }
         public decimal Mængde { get; set; }
         public måleenhed Måleenhed { get; set; }
         public affaldskategori Affaldskategori { get; set; }
@@ -18,9 +20,14 @@ namespace TrashMaster
 
         public enum måleenhed
         {
-            Kg = 1,
-            Meter = 2,
-            Colli = 3
+            Colli, 
+            Stk, 
+            Ton,
+            Kilogram,
+            Gram,
+            M3,
+            Liter,
+            Hektoliter
         }
         public enum affaldskategori
         {
@@ -38,12 +45,12 @@ namespace TrashMaster
         public Trash()
         {
             Mængde = 0.0M;
-            Måleenhed = måleenhed.Kg;
+            Måleenhed = måleenhed.Kilogram;
             Affaldskategori = affaldskategori.Batterier;
             Affaldsbeskrivelse = "N/A";
             Ansvarlig = "N/A";
             VirksomhedID = 0;
-            Dato = DateTime.Now;
+            Dato = DateTime.UtcNow;
         }
 
         public Trash(decimal mængde, måleenhed måleenhed, affaldskategori affaldskategori, string affaldsbeskrivelse, string ansvarlig, int virksomhedid, DateTime dato)

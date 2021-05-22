@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
     /// <summary>
-    /// Interaction logic for Overblik.xaml
+    /// Skrevet af Edgar
     /// </summary>
+    /// 
     public partial class Overblik : Page
     {
         public Overblik()
@@ -35,7 +28,7 @@ namespace TrashMaster.Frames
         private void Tilføj_Click(object sender, RoutedEventArgs e)
         {
             insertDB idb = new insertDB();
-            ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = idb;
+            ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = idb; 
         }
 
         //Sætter editDB som frame content.
@@ -46,7 +39,7 @@ namespace TrashMaster.Frames
 
             try
             {
-                //gem valgte række fra mainGrid som DataRowView. Elementerne er nu tilgængelige vha. datarow index.
+                //gem valgte række fra Grid som DataRowView. Elementerne er nu tilgængelige vha. datarow index.
                 DataRowView dataRow = (DataRowView)Overblik_GRID.SelectedItems[0];
 
                 //indsæt værdierne fra dataRow (kopi af valgte element fra mainGrid) i 'editDBwindow' felterne til redigering.
@@ -54,8 +47,10 @@ namespace TrashMaster.Frames
                 edb.get_Textbox_Id.Text = cellValueId.ToString();
                 edb.textbox_Id.IsReadOnly = true;
 
+                //Decimal Formatting
                 decimal cellValueMængde = Convert.ToDecimal(dataRow.Row.ItemArray[1]);
-                edb.get_Textbox_Mængde.Text = cellValueMængde.ToString();
+                string cellValueMængdeCONV = String.Format("{0:0.00}", cellValueMængde.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                edb.get_Textbox_Mængde.Text = cellValueMængdeCONV;
 
                 //selectedItem value
                 Trash.måleenhed cellValueMåleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), (string)dataRow.Row.ItemArray[2]);
@@ -74,8 +69,10 @@ namespace TrashMaster.Frames
                 int cellValueVirksomhedID = Convert.ToInt32(dataRow.Row.ItemArray[6]);
                 edb.get_Textbox_VirksomhedID.Text = cellValueVirksomhedID.ToString();
 
+
+
                 string cellValueDato = Convert.ToString(dataRow.Row.ItemArray[7]);
-                edb.get_Textbox_Dato.Text = cellValueDato;
+                edb.get_Textbox_Dato.Text = cellValueDato.ToString();
 
             }
             catch (Exception ex)
@@ -94,6 +91,7 @@ namespace TrashMaster.Frames
                 int cellValueId = Convert.ToInt32(dataRow.Row.ItemArray[0]);
 
                 //prompt bruger om sletning af valgte række - hvis ja, kør removefromdb metode.
+
                 MessageBoxResult result = MessageBox.Show("Slet valgte affaldsdata tilhørende Id: " + cellValueId.ToString() + " ?", "Slet Affaldsdata", MessageBoxButton.YesNo);
                 switch (result)
                 {
@@ -125,14 +123,36 @@ namespace TrashMaster.Frames
         }
 
         //Threading for opdatering af grid.
+        //Vis LoadingCircle 
         private async void UpdateGrid(DataGrid gridName, string tableName)
         {
             DataContext = await RTU_Get_UpTime();
-            Task<object> RTU_Get_UpTime() { return Task.Run(() => { Thread.Sleep(1000); return SQL_Handle.QueryToSource("SELECT * FROM dbo." + tableName); }); }
+            Task<object> RTU_Get_UpTime() { return Task.Run(() => {
+
+
+                //Threading for opdatering af GUI element
+                this.Dispatcher.Invoke(() =>
+                {
+                    LoadingCircle.Visibility = Visibility.Visible;
+                });
+
+                Thread.Sleep(1000);
+
+                //Threading for opdatering af GUI element
+                this.Dispatcher.Invoke(() =>
+                {
+                    LoadingCircle.Visibility = Visibility.Collapsed;
+                });
+
+                return SQL_Handle.QueryToSource("SELECT * FROM dbo." + tableName); 
+
+            });
+
+            }
         }
 
         //Gør rediger+slet knapperne utilgængelige hvis en række ikke er valgt.
-        private void IsItemSelected(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void IsItemSelected(object sender, MouseButtonEventArgs e)
         {
             if (Overblik_GRID.SelectedItems.Count > 0)
             {
@@ -141,5 +161,15 @@ namespace TrashMaster.Frames
             }
         }
 
+        //Formater DateTime når kolonnen genereres.
+        //Formater Decimal til sepperering med punktum og to decimaler
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd hh:mm:ss tt";
+
+            if (e.PropertyType == typeof(Decimal))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";
+        }
     }
 }
