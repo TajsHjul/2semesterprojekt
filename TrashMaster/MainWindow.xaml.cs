@@ -128,5 +128,11 @@ namespace TrashMaster
                     break;
             }
         }
+
+        private void showGraph_Click(object sender, RoutedEventArgs e)
+        {
+            showGraph presentGraph = new showGraph();
+            MainNavigationFrame.Content = presentGraph;
+        }
     }
 }

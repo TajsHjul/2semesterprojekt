@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -58,8 +58,8 @@
     <Compile Include="Frames\editDB.xaml.cs">
       <DependentUpon>editDB.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Frames\Filhåndtering.xaml.cs">
-      <DependentUpon>Filhåndtering.xaml</DependentUpon>
+
+
     </Compile>
     <Compile Include="Frames\insertDB.xaml.cs">
       <DependentUpon>insertDB.xaml</DependentUpon>
@@ -79,11 +79,16 @@
       <DependentUpon>LoadingCircle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Trash.cs" />
+    <Compile Include="UserControls\Graph.xaml.cs">
+      <DependentUpon>Graph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\GraphLogic.cs" />
     <Page Include="Frames\editDB.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Frames\Filhåndtering.xaml">
+
+
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -115,7 +120,8 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Misc\LoadingCircle.xaml">
+
+
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,22 +165,8 @@
     <Resource Include="Icons\Save_Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Filhåndtering_Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\LoadingCircleIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\LogOut_Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\AllRows_Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\SelectedRows_Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\Dropzone_Icon.png" />
+
+
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
