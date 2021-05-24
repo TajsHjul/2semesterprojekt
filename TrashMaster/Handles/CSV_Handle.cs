@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.VisualBasic.FileIO;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,19 +21,15 @@ namespace TrashMaster.Handles
     /// </summary>
     class CSV_Handle
     {
-        public static string currentFile { get; set; }
-
-        //Læser .CSV fil og håndterer dataintegritet - returnerer resultat som liste //unfin
         public static List<Trash> ReadCSVFile(string filePath)
         {
 
             string [] lines = File.ReadAllLines(filePath);
 
 
-
             IEnumerable<Trash> data = from l in lines.Skip(1)
-                       let split = l.Split(',')
-                       select new Trash
+                                      let split = l.Split(',')
+            select new Trash
                        {
                            Id = int.Parse(split[0]),
                            Mængde = decimal.Parse(split[1]),
@@ -82,10 +80,6 @@ namespace TrashMaster.Handles
         //Eksporter datagrid til .csv fil
         public static void ExportCSV(DataGrid gridName)
         {
-            ////Sæt list seperator til at være ";"
-            //System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator = ";";
-
-
             try
             {
                 //Instantier sfd + parametre
@@ -93,31 +87,16 @@ namespace TrashMaster.Handles
 
                 sfd.DefaultExt = ".csv";
                 sfd.Filter = ".CSV Files (*.csv)|*.csv";
-
+                string csvPath = sfd.FileName;
                 //Vis sfd og få bool på visning
                 Nullable<bool> resultSFD = sfd.ShowDialog();
 
                 //Marker alle celler og eksporter til valgte sfd path (sfd.FileName);
                 if (resultSFD == true)
                 {
-
                     
-                    string CsvFpath = sfd.FileName;
-                    System.IO.StreamWriter csvFileWriter = new StreamWriter(CsvFpath, false);
-                    string columnHeaderText = "";
-                    int countColumn = gridName.Columns.Count - 1;
-                    if (countColumn >= 0)
-                    {
-                        columnHeaderText = (gridName.Columns[0].Header).ToString();
-                    }
-
-                    //// kolonne headers
-                    //for (int i = 1; i <= countColumn - 1; i++)
-                    //{
-                    //    columnHeaderText = "\"" + (gridName.Columns[i].Header).ToString() + "\",";
-                    //    csvFileWriter.Write(columnHeaderText);
-                    //}
-
+                    string Csvpath = sfd.FileName;
+                    System.IO.StreamWriter csvFileWriter = new StreamWriter(Csvpath, false);
 
                     // rækker
                     for (int i = 0; i <= gridName.Items.Count - 2; i++)
@@ -138,9 +117,6 @@ namespace TrashMaster.Handles
                         }
                         csvFileWriter.WriteLine(dataFromGrid);
                     }
-
-
-
                 }
             }
             catch (Exception ex)
@@ -165,7 +141,5 @@ namespace TrashMaster.Handles
 
             return csvStructError;
         }
-
-
     }
 }

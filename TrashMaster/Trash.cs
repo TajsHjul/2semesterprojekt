@@ -20,26 +20,26 @@ namespace TrashMaster
 
         public enum måleenhed
         {
-            Colli, 
-            Stk, 
-            Ton,
-            Kilogram,
-            Gram,
-            M3,
-            Liter,
-            Hektoliter
+            Colli = 1, 
+            Stk = 2, 
+            Ton = 3,
+            Kilogram = 4,
+            Gram = 5,
+            M3 = 6,
+            Liter = 7,
+            Hektoliter = 8
         }
         public enum affaldskategori
         {
-            Batterier,
-            Biler,
-            Elektronikaffald,
-            ImprægneretTræ,
-            Inventar,
-            OrganiskAffald,
-            Papogpapir,
-            Plastemballager,
-            PVC
+            Batterier = 1,
+            Biler = 2,
+            Elektronikaffald = 3,
+            ImprægneretTræ = 4,
+            Inventar = 5,
+            OrganiskAffald = 6,
+            Papogpapir = 7,
+            Plastemballager = 8,
+            PVC = 9
         }
 
         public Trash()
