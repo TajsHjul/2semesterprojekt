@@ -28,11 +28,6 @@ namespace TrashMaster.Frames
             buttonsAvailable();
         }
 
-        //Eksporter alt i datagrid til .csv fil med CSV_Handle.ExportCSV(tablename) metode.
-        private void Gem_Fil_Click(object sender, RoutedEventArgs e)
-        {
-            CSV_Handle.ExportCSV(Filhåndtering_GRID);
-        }
 
         public void Tilføj_Valgte_Click(object sender, RoutedEventArgs e)
         {
@@ -116,11 +111,9 @@ namespace TrashMaster.Frames
             if (Filhåndtering_GRID.Items.Count != 0)
             {
                 Button_Tilføj_Alle.IsEnabled = true;
-                Button_GemTilFil.IsEnabled = true;
 
                 menuitem_TilføjAlleRækker.IsEnabled = true;
                 menuitem_TilføjValgteRækker.IsEnabled = true;
-                menuitem_GemTilFil.IsEnabled = true;
             }
         }
     }
