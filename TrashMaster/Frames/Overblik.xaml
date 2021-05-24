@@ -9,7 +9,7 @@
       Height="590" Width="1270"
       Title="Overblik"
       >
-      
+    <!-- Skrevet af Edgar-->
     <!-- THEGRID -->
     <Grid>
         <StackPanel Orientation="Vertical">

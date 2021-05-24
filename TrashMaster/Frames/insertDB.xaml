@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="250" d:DesignWidth="1100"
       Title="insertDB">
-
+    <!-- Skrevet af Edgar-->
     <Grid>
         <StackPanel Orientation="Vertical">
 

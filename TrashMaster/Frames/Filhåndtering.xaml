@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       Height="590" Width="1270"
       Title="Filhåndtering">
-
+    <!-- Skrevet af Edgar-->
     <!-- THEGRID -->
     <Grid>
         <StackPanel Orientation="Vertical">

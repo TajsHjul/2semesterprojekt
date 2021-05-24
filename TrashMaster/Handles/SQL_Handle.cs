@@ -136,7 +136,7 @@ namespace TrashMaster.Handles
 
             try
             {
-
+                connection.Open();
                 //Create DataTable and populate it with sqlQuery results
                 DataTable dt = new DataTable();
                 using (connection)

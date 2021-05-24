@@ -34,6 +34,7 @@ namespace TrashMaster
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US", false);
             CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US", false);
+
         }
 
         //Naviger til 'Overblik' siden, understreg menupunkt.
@@ -73,6 +74,8 @@ namespace TrashMaster
             }
         }
 
+
+        //Skrevet af Janus
         public void FSWatcher()
         {
             // Sørg for at der er oprettet en mappe 'C:\Dropzone' på din maskine -- TO DO create dropzone automatisk

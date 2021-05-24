@@ -24,10 +24,13 @@ namespace TrashMaster.Handles
         //Læser .CSV fil og håndterer dataintegritet - returnerer resultat som liste //unfin
         public static List<Trash> ReadCSVFile(string filePath)
         {
+
             string [] lines = File.ReadAllLines(filePath);
 
+
+
             IEnumerable<Trash> data = from l in lines.Skip(1)
-                       let split = l.Split(';')
+                       let split = l.Split(',')
                        select new Trash
                        {
                            Id = int.Parse(split[0]),
@@ -79,6 +82,9 @@ namespace TrashMaster.Handles
         //Eksporter datagrid til .csv fil
         public static void ExportCSV(DataGrid gridName)
         {
+            ////Sæt list seperator til at være ";"
+            //System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator = ";";
+
 
             try
             {
@@ -95,25 +101,46 @@ namespace TrashMaster.Handles
                 if (resultSFD == true)
                 {
 
-                    //(A)Hvis selectionmode er sat til single, set til Extended så 'SelectAllCells' metoden bliver tilgængelige. Sæt derefter tilbage til Single.
-                    if( gridName.SelectionMode != (DataGridSelectionMode)SelectionMode.Extended)
+                    
+                    string CsvFpath = sfd.FileName;
+                    System.IO.StreamWriter csvFileWriter = new StreamWriter(CsvFpath, false);
+                    string columnHeaderText = "";
+                    int countColumn = gridName.Columns.Count - 1;
+                    if (countColumn >= 0)
                     {
-                        gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Extended;
+                        columnHeaderText = (gridName.Columns[0].Header).ToString();
                     }
 
-                    string filename = sfd.FileName;
-                    gridName.SelectAllCells();
-                    gridName.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-                    ApplicationCommands.Copy.Execute(null, gridName);
-                    gridName.UnselectAllCells();
-                    String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+                    //// kolonne headers
+                    //for (int i = 1; i <= countColumn - 1; i++)
+                    //{
+                    //    columnHeaderText = "\"" + (gridName.Columns[i].Header).ToString() + "\",";
+                    //    csvFileWriter.Write(columnHeaderText);
+                    //}
 
-                    File.AppendAllText(filename, resultX.Replace(',',';') , UnicodeEncoding.UTF8);
 
-                    //(A)Sat tilbage til Single
-                    gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Single;
+                    // rækker
+                    for (int i = 0; i <= gridName.Items.Count - 2; i++)
+                    {
+                        string dataFromGrid = "";
 
-                    //MessageBox.Show("Din fil er blevet gemt.\n\n" + sfd.FileName.ToString());
+
+                        for (int j = 0; j <= gridName.Columns.Count - 1; j++)
+                        {
+                            if (j == 0)
+                            {
+                                dataFromGrid = "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
+                            }
+                            else
+                            {
+                                dataFromGrid = dataFromGrid + ',' + "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
+                            }
+                        }
+                        csvFileWriter.WriteLine(dataFromGrid);
+                    }
+
+
+
                 }
             }
             catch (Exception ex)
