@@ -88,7 +88,7 @@ namespace TrashMaster.Handles
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
                 MessageBox.Show("Dataen er nu redigeret og gemt til databasen.");
-        }
+            }
 
             catch (Exception ex)
             {

@@ -1,18 +1,11 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace TrashMaster.Handles
 {
@@ -25,10 +18,10 @@ namespace TrashMaster.Handles
         {
 
             string [] lines = File.ReadAllLines(filePath);
-
-
             IEnumerable<Trash> data = from l in lines.Skip(1)
-                                      let split = l.Split(',')
+
+                                      //200iq play
+                                      let split = l.TrimStart('"').TrimEnd('"').Split(new[] { "\",\"" } , StringSplitOptions.None)
             select new Trash
                        {
                            Id = int.Parse(split[0]),
@@ -106,6 +99,7 @@ namespace TrashMaster.Handles
 
                         for (int j = 0; j <= gridName.Columns.Count - 1; j++)
                         {
+
                             if (j == 0)
                             {
                                 dataFromGrid = "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
