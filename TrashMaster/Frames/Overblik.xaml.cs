@@ -69,9 +69,6 @@ namespace TrashMaster.Frames
                 int cellValueVirksomhedID = Convert.ToInt32(dataRow.Row.ItemArray[6]);
                 edb.get_Textbox_VirksomhedID.Text = cellValueVirksomhedID.ToString();
 
-                string cellValueDato = Convert.ToString(dataRow.Row.ItemArray[7]);
-                edb.get_Textbox_Dato.Text = cellValueDato.ToString();
-
             }
             catch (Exception ex)
             {
@@ -163,7 +160,7 @@ namespace TrashMaster.Frames
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (e.PropertyType == typeof(DateTime))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd hh:mm:ss";
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy:MM:dd hh:mm";
 
             if (e.PropertyType == typeof(Decimal))
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";

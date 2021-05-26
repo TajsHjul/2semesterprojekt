@@ -24,6 +24,7 @@ namespace TrashMaster.Frames
         //Åben .csv fil
         private void Åben_Fil_Click(object sender, RoutedEventArgs e)
         {
+
             DataContext = CSV_Handle.ImportCSV();
             buttonsAvailable();
         }
@@ -31,39 +32,37 @@ namespace TrashMaster.Frames
 
         public void Tilføj_Valgte_Click(object sender, RoutedEventArgs e)
         {
-            new Thread(() =>
+            try
             {
-                //Threading for opdatering af GUI element
-                this.Dispatcher.Invoke(() =>
+                foreach (Trash item in Filhåndtering_GRID.SelectedItems)
                 {
-                    foreach (Trash item in Filhåndtering_GRID.SelectedItems)
-                    {
-                        SQL_Handle.AddToDB(item, "Trash", true);
-                    }
+                    SQL_Handle.AddToDB(item, "Trash", true);
+                }
 
-                    MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
-                });
-            }).Start();
-
+                MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         public void Tilføj_Alle_Click(object sender, RoutedEventArgs e)
         {
-            new Thread(() =>
+            try
             {
-                //Threading for opdatering af GUI element
-                this.Dispatcher.Invoke(() =>
+                Filhåndtering_GRID.SelectAllCells();
+
+                foreach (Trash item in Filhåndtering_GRID.SelectedItems)
                 {
-                    Filhåndtering_GRID.SelectAllCells();
+                    SQL_Handle.AddToDB(item, "Trash", true);
+                }
 
-                    foreach (Trash item in Filhåndtering_GRID.SelectedItems)
-                    {
-                        SQL_Handle.AddToDB(item, "Trash", true);
-                    }
-
-                    MessageBox.Show("Alle rækkerne er blevet tilføjet til databasen.");
-                });
-            }).Start();
-
+                MessageBox.Show("Alle rækkerne er blevet tilføjet til databasen.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Dropzone_Click(object sender, RoutedEventArgs e)
@@ -98,7 +97,7 @@ namespace TrashMaster.Frames
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (e.PropertyType == typeof(DateTime))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd hh:mm:ss";
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy:MM:dd HH:mm";
 
             if (e.PropertyType == typeof(Decimal))
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";

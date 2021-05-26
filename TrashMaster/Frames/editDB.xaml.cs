@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using TrashMaster.Handles;
@@ -25,7 +26,6 @@ namespace TrashMaster.Frames
         public TextBox get_Textbox_Affaldsbeskrivelse { get { return textbox_Affaldsbeskrivelse; } }
         public TextBox get_Textbox_Ansvarlig { get { return textbox_Ansvarlig; } }
         public TextBox get_Textbox_VirksomhedID { get { return textbox_VirksomhedID; } }
-        public TextBox get_Textbox_Dato { get { return textbox_Dato; } }
 
         public editDB()
         {
@@ -34,6 +34,11 @@ namespace TrashMaster.Frames
             //sæt itemssource for comboboxes til enum(s) fra Trash klasse.
             cmbAffaldskategori.ItemsSource = Enum.GetValues(typeof(Trash.affaldskategori));
             cmbMåleenhed.ItemsSource = Enum.GetValues(typeof(Trash.måleenhed));
+
+            CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            newCulture.DateTimeFormat.ShortDatePattern = "yyyy:MM:dd HH:mm";
+            newCulture.DateTimeFormat.DateSeparator = ":";
+            Thread.CurrentThread.CurrentCulture = newCulture;
         }
 
         private void Rediger_Click(object sender, RoutedEventArgs e)
@@ -52,8 +57,7 @@ namespace TrashMaster.Frames
                     Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), cmbAffaldskategori.Text),
                     Affaldsbeskrivelse = textbox_Affaldsbeskrivelse.Text,
                     Ansvarlig = textbox_Ansvarlig.Text,
-                    VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text),
-                    Dato = Convert.ToDateTime(textbox_Dato.Text)
+                    VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text)
             };
 
                 //editDB metode, som gør brug af UPDATE SQL Query.

@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -16,11 +18,15 @@ namespace TrashMaster.Handles
     {
         public static List<Trash> ReadCSVFile(string filePath)
         {
-
-            string [] lines = File.ReadAllLines(filePath);
+            //Sæt cultureInfo for parsing af expected datetime
+            //CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            //newCulture.DateTimeFormat.ShortDatePattern = "yyyy:MM:dd HH:mm";
+            //newCulture.DateTimeFormat.DateSeparator = ":";
+            //Thread.CurrentThread.CurrentCulture = newCulture;
+            string[] lines = File.ReadAllLines(filePath);
             IEnumerable<Trash> data = from l in lines.Skip(1)
 
-                                      //200iq play
+                                      //dabigsplit
                                       let split = l.TrimStart('"').TrimEnd('"').Split(new[] { "\",\"" } , StringSplitOptions.None)
             select new Trash
                        {
@@ -32,7 +38,7 @@ namespace TrashMaster.Handles
                            Ansvarlig = split[5],
                            VirksomhedID = int.Parse(split[6]),
                            Dato = DateTime.Parse(split[7])
-                       };
+                      };
 
             return data.ToList();
         }
@@ -106,7 +112,16 @@ namespace TrashMaster.Handles
                             }
                             else
                             {
-                                dataFromGrid = dataFromGrid + ',' + "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
+                                //notworking
+                                if (((DataRowView)gridName.Items[i]).Row.ItemArray[j].GetType() == typeof(Trash.affaldskategori))
+                                {
+
+                                    dataFromGrid = dataFromGrid + ',' + "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
+                                }
+                                else
+                                {
+                                    dataFromGrid = dataFromGrid + ',' + "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
+                                }
                             }
                         }
                         csvFileWriter.WriteLine(dataFromGrid);
@@ -125,13 +140,14 @@ namespace TrashMaster.Handles
             string csvStructError =
                 "\n\nDet valgte dokuments struktur stemmer ikke overens med denne applikations forventninger." +
                     "\n\nApplikationen forventer følgende hovedkolonner med tilhørende dataintegritet:" +
+                    "\nID + Int" +
                     "\nMængde + decimal" +
-                    "\nMåleenhed + [Colli, Stk, Ton, Kilogram, Gram, M3, Liter, Hektoliter]" +
-                    "\nAffaldskategori + [Batterier, Biler, Elektronikaffald, ImprægneretTræ, Inventar, OrganisskAffald, Papogpapir, PlastEmballager, PVC]" +
+                    "\nMåleenhed + enum [Colli/1, Stk/2, Ton/3, Kilogram/4, Gram/5, M3/6, Liter/7, Hektoliter/8]" +
+                    "\nAffaldskategori + enum [Batterier/1, Biler/2, Elektronikaffald/3, ImprægneretTræ/4, Inventar/5, OrganisskAffald/6, Papogpapir/7, PlastEmballager/8, PVC/9]" +
                     "\nAffaldsbeskrivelse + string" +
                     "\nAnsvarlig + string" +
                     "\nVirksomhedID + int" +
-                    "\nDato + string";
+                    "\nDato + DateTime";
 
             return csvStructError;
         }
