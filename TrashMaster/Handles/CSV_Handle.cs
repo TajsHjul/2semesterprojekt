@@ -18,11 +18,6 @@ namespace TrashMaster.Handles
     {
         public static List<Trash> ReadCSVFile(string filePath)
         {
-            //Sæt cultureInfo for parsing af expected datetime
-            //CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            //newCulture.DateTimeFormat.ShortDatePattern = "yyyy:MM:dd HH:mm";
-            //newCulture.DateTimeFormat.DateSeparator = ":";
-            //Thread.CurrentThread.CurrentCulture = newCulture;
             string[] lines = File.ReadAllLines(filePath);
             IEnumerable<Trash> data = from l in lines.Skip(1)
 
@@ -98,18 +93,37 @@ namespace TrashMaster.Handles
 
                     //Skriver alle rækker til fil
 
-                    //antal rækker
+                    //loop antallet af rækker   
                     for (int i = 0; i <= gridName.Items.Count - 2; i++)
                     {
                         string dataFromGrid = "";
 
-                        //antal kolonner
+                 
+                        //loop antallet af kolonner
                         for (int j = 0; j <= gridName.Columns.Count - 1; j++)
                         {
+                            //
                             if (j == 0)
                             {
                                 dataFromGrid = "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
                             }
+
+                            //De to næste else-if statements konverterer string værdien af de tilsvarende enums til den numeriske værdi i csv filen
+                            else if (j == 2)
+                            {
+                                string enumStringValue = (string)((DataRowView)gridName.Items[i]).Row.ItemArray[j];
+                                Trash.måleenhed enhedConv = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), enumStringValue);
+                                int bigCONVOenhed = (int)enhedConv;
+                                dataFromGrid = dataFromGrid + ',' + "\"" + bigCONVOenhed + "\"";
+                            }
+                            else if (j == 3)
+                            {
+                                string enumStringValue = (string)((DataRowView)gridName.Items[i]).Row.ItemArray[j];
+                                Trash.affaldskategori enhedConv = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), enumStringValue);
+                                int bigCONVOaffald = (int)enhedConv;
+                                dataFromGrid = dataFromGrid + ',' + "\"" + bigCONVOaffald + "\"";
+                            }
+                            //default
                             else
                             {
                                 dataFromGrid = dataFromGrid + ',' + "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";

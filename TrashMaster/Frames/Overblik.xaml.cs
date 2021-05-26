@@ -31,7 +31,7 @@ namespace TrashMaster.Frames
             ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = idb; 
         }
 
-        //Sætter editDB som frame content.
+        //Sætter editDB som frame content med værdierne fra den valgte række
         private void Rediger_Click(object sender, RoutedEventArgs e)
         {
             editDB edb = new editDB();
@@ -160,7 +160,7 @@ namespace TrashMaster.Frames
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (e.PropertyType == typeof(DateTime))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy:MM:dd hh:mm";
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy:MM:dd HH:mm";
 
             if (e.PropertyType == typeof(Decimal))
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";
