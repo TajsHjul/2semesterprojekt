@@ -35,6 +35,11 @@ namespace TrashMaster
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US", false);
             CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US", false);
 
+            //CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            //newCulture.DateTimeFormat.ShortDatePattern = "yyyy:MM:dd HH:mm";
+            //newCulture.DateTimeFormat.DateSeparator = ":";
+            //Thread.CurrentThread.CurrentCulture = newCulture;
+
         }
 
         //Naviger til 'Overblik' siden, understreg menupunkt.

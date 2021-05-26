@@ -90,42 +90,35 @@ namespace TrashMaster.Handles
                 //Vis sfd og få bool på visning
                 Nullable<bool> resultSFD = sfd.ShowDialog();
 
-                //Marker alle celler og eksporter til valgte sfd path (sfd.FileName);
                 if (resultSFD == true)
                 {
                     
                     string Csvpath = sfd.FileName;
                     System.IO.StreamWriter csvFileWriter = new StreamWriter(Csvpath, false);
 
-                    // rækker
+                    //Skriver alle rækker til fil
+
+                    //antal rækker
                     for (int i = 0; i <= gridName.Items.Count - 2; i++)
                     {
                         string dataFromGrid = "";
 
-
+                        //antal kolonner
                         for (int j = 0; j <= gridName.Columns.Count - 1; j++)
                         {
-
                             if (j == 0)
                             {
                                 dataFromGrid = "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
                             }
                             else
                             {
-                                //notworking
-                                if (((DataRowView)gridName.Items[i]).Row.ItemArray[j].GetType() == typeof(Trash.affaldskategori))
-                                {
-
-                                    dataFromGrid = dataFromGrid + ',' + "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
-                                }
-                                else
-                                {
-                                    dataFromGrid = dataFromGrid + ',' + "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
-                                }
+                                dataFromGrid = dataFromGrid + ',' + "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
                             }
                         }
                         csvFileWriter.WriteLine(dataFromGrid);
                     }
+                    csvFileWriter.Flush();
+                    csvFileWriter.Close();
                 }
             }
             catch (Exception ex)

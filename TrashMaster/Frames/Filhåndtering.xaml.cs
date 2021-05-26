@@ -24,7 +24,6 @@ namespace TrashMaster.Frames
         //Åben .csv fil
         private void Åben_Fil_Click(object sender, RoutedEventArgs e)
         {
-
             DataContext = CSV_Handle.ImportCSV();
             buttonsAvailable();
         }

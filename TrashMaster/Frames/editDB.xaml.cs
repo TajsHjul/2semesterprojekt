@@ -34,11 +34,6 @@ namespace TrashMaster.Frames
             //sæt itemssource for comboboxes til enum(s) fra Trash klasse.
             cmbAffaldskategori.ItemsSource = Enum.GetValues(typeof(Trash.affaldskategori));
             cmbMåleenhed.ItemsSource = Enum.GetValues(typeof(Trash.måleenhed));
-
-            CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            newCulture.DateTimeFormat.ShortDatePattern = "yyyy:MM:dd HH:mm";
-            newCulture.DateTimeFormat.DateSeparator = ":";
-            Thread.CurrentThread.CurrentCulture = newCulture;
         }
 
         private void Rediger_Click(object sender, RoutedEventArgs e)
