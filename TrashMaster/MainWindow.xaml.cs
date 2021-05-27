@@ -84,10 +84,16 @@ namespace TrashMaster
         }
 
 
-        //Skrevet af Janus
-        public void FSWatcher()
+        private void Graf_Click(object sender, RoutedEventArgs e)
+
         {
-            // Sørg for at der er oprettet en mappe 'C:\Dropzone' på din maskine -- TO DO create dropzone automatisk
+            MainNavigationFrame.Content = new showGraph();
+            textblock_Graf.TextDecorations = TextDecorations.Underline;
+            textblock_Overblik.TextDecorations = null;
+        }
+        public void FSWatcher() //Lavet af JBR
+        {
+            // Definerer vores mappe som der skal watches af appen
             string dropzoneFolder = @"C:\Dropzone";
 
             //Lav dropzone mappe hvis den ikke allerede findes.
@@ -97,18 +103,11 @@ namespace TrashMaster
             }
 
             FileSystemWatcher watcher = new FileSystemWatcher();
+
             watcher.Path = dropzoneFolder;
 
-
-            // Vi holder øje med følgende ændringer til filerne i mappen.
-            watcher.NotifyFilter = NotifyFilters.Attributes
-                                 | NotifyFilters.CreationTime
-                                 | NotifyFilters.DirectoryName
-                                 | NotifyFilters.FileName
-                                 | NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.Security
-                                 | NotifyFilters.Size;
+            // Vi holder øje med et nyt filename i mappen Dropzone, der kunne i realiteten addes andre parametre
+            watcher.NotifyFilter = NotifyFilters.FileName;
 
             // Kigger kun efter .csv-filer.
             watcher.Filter = "*.csv";
@@ -124,7 +123,7 @@ namespace TrashMaster
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
             //Prompt bruger 'OnCreated' event
-            MessageBoxResult result = MessageBox.Show("Ny .csv fil: " + e.FullPath + " er blevet registreret i Dropzone.\nVil du åbne denne fil?", "Dropzone", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Ny .CSV fil: " + e.FullPath + " er blevet registreret i Dropzone.\nVil du åbne denne fil?", "Dropzone", MessageBoxButton.YesNo);
             switch (result)
             {
                 case MessageBoxResult.Yes:
