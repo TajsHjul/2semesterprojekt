@@ -21,7 +21,7 @@ namespace TrashMaster
             //FileWatcher
             FSWatcher();
 
-            //test
+            //test123
 
             //window placement
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
