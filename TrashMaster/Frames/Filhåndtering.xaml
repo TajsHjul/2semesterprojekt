@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       Height="590" Width="1270"
       Title="Filhåndtering">
-
+    <!-- Skrevet af Edgar-->
     <!-- THEGRID -->
     <Grid>
         <StackPanel Orientation="Vertical">
@@ -36,7 +36,6 @@
                         <Separator />
                         <MenuItem Header="Åben fil" Click="Åben_Fil_Click" />
                         <MenuItem Header="Dropzone" Click="Dropzone_Click" />
-                        <MenuItem Header="Gem til fil" x:Name="menuitem_GemTilFil" IsEnabled="False" Click="Gem_Fil_Click" />
                     </ContextMenu>
                 </DataGrid.ContextMenu>
 
@@ -79,14 +78,7 @@
                 </Button>
 
                 <!-- Gem til fil -->
-                <DockPanel Width="720">
-                    <Button x:Name="Button_GemTilFil" HorizontalContentAlignment="Center" IsEnabled="False" HorizontalAlignment="Right" Width="170" Height="30" Margin="5,0,0,0" Click="Gem_Fil_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Icons/Save_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="Gem til fil" Margin="7,0,0,0" />
-                        </StackPanel>
-                    </Button>
-                </DockPanel>
+                <DockPanel Width="720"/>
 
             </StackPanel>
 

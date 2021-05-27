@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="250" d:DesignWidth="1100"
       Title="Login">
-
+    <!-- Skrevet af Edgar-->
     <Grid>
         <!-- Gøgl -->
         <Grid.Background>

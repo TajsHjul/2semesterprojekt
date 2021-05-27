@@ -44,7 +44,7 @@ namespace TrashMaster.Handles
             SqlConnection connection = new SqlConnection(connectionString);
 
             string fullSQLquery = String.Format("INSERT INTO " + tablename + " (Mængde, Måleenhed, Affaldskategori, Affaldsbeskrivelse, Ansvarlig, VirksomhedID, Dato) " +
-                "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}')", trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, trash.Dato);
+                "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', CAST '{6}' AS smalldatetime)", trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, trash.Dato);
 
             try
             {
@@ -74,11 +74,8 @@ namespace TrashMaster.Handles
         {
             SqlConnection connection = new SqlConnection(connectionString);
 
-            //string fullSQLquery = String.Format("UPDATE " + tablename + " SET Mængde = '{0}', Måleenhed = '{1}', Affaldskategori = '{2)', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = '{5}' WHERE TrashId = '{7}'",
-            //trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, rowId);
-
-            string fullSQLquery = String.Format("UPDATE TRASH SET Mængde = '{0}', Måleenhed = '{1}', Affaldskategori = '{2}', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = '{5}', Dato = CAST('{6}' AS smalldatetime) WHERE TrashId = '{7}'",
-                trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, trash.Dato, rowId);
+            string fullSQLquery = String.Format("UPDATE TRASH SET Mængde = '{0}', Måleenhed = '{1}', Affaldskategori = '{2}', Affaldsbeskrivelse = '{3}', Ansvarlig = '{4}', VirksomhedID = '{5}' WHERE TrashId = '{6}'",
+                trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, rowId);
 
 
             try
@@ -88,7 +85,7 @@ namespace TrashMaster.Handles
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
                 MessageBox.Show("Dataen er nu redigeret og gemt til databasen.");
-        }
+            }
 
             catch (Exception ex)
             {
@@ -136,7 +133,7 @@ namespace TrashMaster.Handles
 
             try
             {
-
+                connection.Open();
                 //Create DataTable and populate it with sqlQuery results
                 DataTable dt = new DataTable();
                 using (connection)

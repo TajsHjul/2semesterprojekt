@@ -8,7 +8,9 @@
         Title="MainWindow" Height="720" Width="1280" ResizeMode="NoResize" Background="#e8e8e8">
     <Grid>
         <StackPanel Orientation="Vertical">
-
+<!-- Skrevet af Edgar-->
+            
+            
             <!-- MenuPunkter -->
             <StackPanel x:Name="MenuHeader" Orientation="Horizontal" Margin="10">
 

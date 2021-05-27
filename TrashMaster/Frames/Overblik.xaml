@@ -9,7 +9,7 @@
       Height="590" Width="1270"
       Title="Overblik"
       >
-      
+    <!-- Skrevet af Edgar-->
     <!-- THEGRID -->
     <Grid>
         <StackPanel Orientation="Vertical">
@@ -78,7 +78,7 @@
                     <Button HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="170" Height="30" Margin="5,0,0,0" Click="Gem_Fil_Click">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Icons/Save_Icon.png" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="Gem til fil" Margin="7,0,0,0" />
+                            <TextBlock Text="Eksportér til csv" Margin="7,0,0,0" />
                         </StackPanel>
                     </Button>
                 </DockPanel>

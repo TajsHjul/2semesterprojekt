@@ -5,12 +5,9 @@ using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace TrashMaster.Handles
 {
@@ -19,16 +16,14 @@ namespace TrashMaster.Handles
     /// </summary>
     class CSV_Handle
     {
-        public static string currentFile { get; set; }
-
-        //Læser .CSV fil og håndterer dataintegritet - returnerer resultat som liste //unfin
         public static List<Trash> ReadCSVFile(string filePath)
         {
-            string [] lines = File.ReadAllLines(filePath);
-
+            string[] lines = File.ReadAllLines(filePath);
             IEnumerable<Trash> data = from l in lines.Skip(1)
-                       let split = l.Split(';')
-                       select new Trash
+
+                                      //dabigsplit
+                                      let split = l.TrimStart('"').TrimEnd('"').Split(new[] { "\",\"" } , StringSplitOptions.None)
+            select new Trash
                        {
                            Id = int.Parse(split[0]),
                            Mængde = decimal.Parse(split[1]),
@@ -38,7 +33,7 @@ namespace TrashMaster.Handles
                            Ansvarlig = split[5],
                            VirksomhedID = int.Parse(split[6]),
                            Dato = DateTime.Parse(split[7])
-                       };
+                      };
 
             return data.ToList();
         }
@@ -79,7 +74,6 @@ namespace TrashMaster.Handles
         //Eksporter datagrid til .csv fil
         public static void ExportCSV(DataGrid gridName)
         {
-
             try
             {
                 //Instantier sfd + parametre
@@ -87,33 +81,58 @@ namespace TrashMaster.Handles
 
                 sfd.DefaultExt = ".csv";
                 sfd.Filter = ".CSV Files (*.csv)|*.csv";
-
+                string csvPath = sfd.FileName;
                 //Vis sfd og få bool på visning
                 Nullable<bool> resultSFD = sfd.ShowDialog();
 
-                //Marker alle celler og eksporter til valgte sfd path (sfd.FileName);
                 if (resultSFD == true)
                 {
+                    
+                    string Csvpath = sfd.FileName;
+                    System.IO.StreamWriter csvFileWriter = new StreamWriter(Csvpath, false);
 
-                    //(A)Hvis selectionmode er sat til single, set til Extended så 'SelectAllCells' metoden bliver tilgængelige. Sæt derefter tilbage til Single.
-                    if( gridName.SelectionMode != (DataGridSelectionMode)SelectionMode.Extended)
+                    //Skriver alle rækker til fil
+
+                    //loop antallet af rækker   
+                    for (int i = 0; i <= gridName.Items.Count - 2; i++)
                     {
-                        gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Extended;
+                        string dataFromGrid = "";
+
+                 
+                        //loop antallet af kolonner
+                        for (int j = 0; j <= gridName.Columns.Count - 1; j++)
+                        {
+                            //
+                            if (j == 0)
+                            {
+                                dataFromGrid = "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
+                            }
+
+                            //De to næste else-if statements konverterer string værdien af de tilsvarende enums til den numeriske værdi i csv filen
+                            else if (j == 2)
+                            {
+                                string enumStringValue = (string)((DataRowView)gridName.Items[i]).Row.ItemArray[j];
+                                Trash.måleenhed enhedConv = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), enumStringValue);
+                                int bigCONVOenhed = (int)enhedConv;
+                                dataFromGrid = dataFromGrid + ',' + "\"" + bigCONVOenhed + "\"";
+                            }
+                            else if (j == 3)
+                            {
+                                string enumStringValue = (string)((DataRowView)gridName.Items[i]).Row.ItemArray[j];
+                                Trash.affaldskategori enhedConv = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), enumStringValue);
+                                int bigCONVOaffald = (int)enhedConv;
+                                dataFromGrid = dataFromGrid + ',' + "\"" + bigCONVOaffald + "\"";
+                            }
+                            //default
+                            else
+                            {
+                                dataFromGrid = dataFromGrid + ',' + "\"" + ((DataRowView)gridName.Items[i]).Row.ItemArray[j].ToString() + "\"";
+                            }
+                        }
+                        csvFileWriter.WriteLine(dataFromGrid);
                     }
-
-                    string filename = sfd.FileName;
-                    gridName.SelectAllCells();
-                    gridName.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-                    ApplicationCommands.Copy.Execute(null, gridName);
-                    gridName.UnselectAllCells();
-                    String resultX = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-
-                    File.AppendAllText(filename, resultX.Replace(',',';') , UnicodeEncoding.UTF8);
-
-                    //(A)Sat tilbage til Single
-                    gridName.SelectionMode = (DataGridSelectionMode)SelectionMode.Single;
-
-                    //MessageBox.Show("Din fil er blevet gemt.\n\n" + sfd.FileName.ToString());
+                    csvFileWriter.Flush();
+                    csvFileWriter.Close();
                 }
             }
             catch (Exception ex)
@@ -128,17 +147,16 @@ namespace TrashMaster.Handles
             string csvStructError =
                 "\n\nDet valgte dokuments struktur stemmer ikke overens med denne applikations forventninger." +
                     "\n\nApplikationen forventer følgende hovedkolonner med tilhørende dataintegritet:" +
+                    "\nID + Int" +
                     "\nMængde + decimal" +
-                    "\nMåleenhed + [Colli, Stk, Ton, Kilogram, Gram, M3, Liter, Hektoliter]" +
-                    "\nAffaldskategori + [Batterier, Biler, Elektronikaffald, ImprægneretTræ, Inventar, OrganisskAffald, Papogpapir, PlastEmballager, PVC]" +
+                    "\nMåleenhed + enum [Colli/1, Stk/2, Ton/3, Kilogram/4, Gram/5, M3/6, Liter/7, Hektoliter/8]" +
+                    "\nAffaldskategori + enum [Batterier/1, Biler/2, Elektronikaffald/3, ImprægneretTræ/4, Inventar/5, OrganisskAffald/6, Papogpapir/7, PlastEmballager/8, PVC/9]" +
                     "\nAffaldsbeskrivelse + string" +
                     "\nAnsvarlig + string" +
                     "\nVirksomhedID + int" +
-                    "\nDato + string";
+                    "\nDato + DateTime";
 
             return csvStructError;
         }
-
-
     }
 }

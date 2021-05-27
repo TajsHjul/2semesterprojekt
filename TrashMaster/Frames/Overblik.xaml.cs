@@ -31,7 +31,7 @@ namespace TrashMaster.Frames
             ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = idb; 
         }
 
-        //Sætter editDB som frame content.
+        //Sætter editDB som frame content med værdierne fra den valgte række
         private void Rediger_Click(object sender, RoutedEventArgs e)
         {
             editDB edb = new editDB();
@@ -49,7 +49,7 @@ namespace TrashMaster.Frames
 
                 //Decimal Formatting
                 decimal cellValueMængde = Convert.ToDecimal(dataRow.Row.ItemArray[1]);
-                string cellValueMængdeCONV = String.Format("{0:0.00}", cellValueMængde.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                string cellValueMængdeCONV = String.Format("{0:0.00}", cellValueMængde.ToString());
                 edb.get_Textbox_Mængde.Text = cellValueMængdeCONV;
 
                 //selectedItem value
@@ -68,11 +68,6 @@ namespace TrashMaster.Frames
 
                 int cellValueVirksomhedID = Convert.ToInt32(dataRow.Row.ItemArray[6]);
                 edb.get_Textbox_VirksomhedID.Text = cellValueVirksomhedID.ToString();
-
-
-
-                string cellValueDato = Convert.ToString(dataRow.Row.ItemArray[7]);
-                edb.get_Textbox_Dato.Text = cellValueDato.ToString();
 
             }
             catch (Exception ex)
@@ -162,11 +157,10 @@ namespace TrashMaster.Frames
         }
 
         //Formater DateTime når kolonnen genereres.
-        //Formater Decimal til sepperering med punktum og to decimaler
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (e.PropertyType == typeof(DateTime))
-                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd hh:mm:ss tt";
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy:MM:dd HH:mm";
 
             if (e.PropertyType == typeof(Decimal))
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";

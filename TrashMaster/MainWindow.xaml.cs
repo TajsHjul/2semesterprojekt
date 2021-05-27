@@ -21,6 +21,8 @@ namespace TrashMaster
             //FileWatcher
             FSWatcher();
 
+            //test
+
             //window placement
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
@@ -28,12 +30,20 @@ namespace TrashMaster
             MainNavigationFrame.Content = new Overblik();
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
 
-            //overkill, but one works
-            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
-            CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
-            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US", false);
-            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US", false);
+            ////overkill, but one works
+            //CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
+            //CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
+            //CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US", false);
+            //CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US", false);
+
+
+            //allDemCultureSettings
+            CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            newCulture.DateTimeFormat.ShortDatePattern = "";
+            newCulture.DateTimeFormat.LongTimePattern = "yyyy:MM:dd HH:mm";
+            newCulture.DateTimeFormat.DateSeparator = ":";
+            Thread.CurrentThread.CurrentCulture = newCulture;
         }
 
         //Naviger til 'Overblik' siden, understreg menupunkt.
@@ -73,7 +83,9 @@ namespace TrashMaster
             }
         }
 
+
         private void Graf_Click(object sender, RoutedEventArgs e)
+
         {
             MainNavigationFrame.Content = new showGraph();
             textblock_Graf.TextDecorations = TextDecorations.Underline;

@@ -28,47 +28,40 @@ namespace TrashMaster.Frames
             buttonsAvailable();
         }
 
-        //Eksporter alt i datagrid til .csv fil med CSV_Handle.ExportCSV(tablename) metode.
-        private void Gem_Fil_Click(object sender, RoutedEventArgs e)
-        {
-            CSV_Handle.ExportCSV(Filhåndtering_GRID);
-        }
 
         public void Tilføj_Valgte_Click(object sender, RoutedEventArgs e)
         {
-            new Thread(() =>
+            try
             {
-                //Threading for opdatering af GUI element
-                this.Dispatcher.Invoke(() =>
+                foreach (Trash item in Filhåndtering_GRID.SelectedItems)
                 {
-                    foreach (Trash item in Filhåndtering_GRID.SelectedItems)
-                    {
-                        SQL_Handle.AddToDB(item, "Trash", true);
-                    }
+                    SQL_Handle.AddToDB(item, "Trash", true);
+                }
 
-                    MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
-                });
-            }).Start();
-
+                MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         public void Tilføj_Alle_Click(object sender, RoutedEventArgs e)
         {
-            new Thread(() =>
+            try
             {
-                //Threading for opdatering af GUI element
-                this.Dispatcher.Invoke(() =>
+                Filhåndtering_GRID.SelectAllCells();
+
+                foreach (Trash item in Filhåndtering_GRID.SelectedItems)
                 {
-                    Filhåndtering_GRID.SelectAllCells();
+                    SQL_Handle.AddToDB(item, "Trash", true);
+                }
 
-                    foreach (Trash item in Filhåndtering_GRID.SelectedItems)
-                    {
-                        SQL_Handle.AddToDB(item, "Trash", true);
-                    }
-
-                    MessageBox.Show("Alle rækkerne er blevet tilføjet til databasen.");
-                });
-            }).Start();
-
+                MessageBox.Show("Alle rækkerne er blevet tilføjet til databasen.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Dropzone_Click(object sender, RoutedEventArgs e)
@@ -100,14 +93,13 @@ namespace TrashMaster.Frames
         }
 
         //Formater DateTime når kolonnen genereres.
-        //Formater Decimal til sepperering med punktum og to decimaler
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            //if (e.PropertyType == typeof(DateTime))
-            //    (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy-MM-dd HH:mm";
+            if (e.PropertyType == typeof(DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "yyyy:MM:dd HH:mm";
 
-            //if (e.PropertyType == typeof(Decimal))
-            //    (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";
+            if (e.PropertyType == typeof(Decimal))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";
         }
 
         private void buttonsAvailable()
@@ -116,11 +108,9 @@ namespace TrashMaster.Frames
             if (Filhåndtering_GRID.Items.Count != 0)
             {
                 Button_Tilføj_Alle.IsEnabled = true;
-                Button_GemTilFil.IsEnabled = true;
 
                 menuitem_TilføjAlleRækker.IsEnabled = true;
                 menuitem_TilføjValgteRækker.IsEnabled = true;
-                menuitem_GemTilFil.IsEnabled = true;
             }
         }
     }
