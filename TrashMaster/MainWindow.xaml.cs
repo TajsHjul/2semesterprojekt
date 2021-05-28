@@ -31,13 +31,15 @@ namespace TrashMaster
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
 
             ////overkill, but one works
-            //CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
-            //CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
-            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
-            //CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US", false);
-            //CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US", false);
+            ///
+            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
+            CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US", false);
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US", false);
 
 
+            // Tajs' pc ingorerer åbenbart de 5 nedenstående linier koder :/
             //allDemCultureSettings
             CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
             newCulture.DateTimeFormat.ShortDatePattern = "";

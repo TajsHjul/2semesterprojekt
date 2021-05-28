@@ -19,7 +19,7 @@ namespace TrashMaster.Handles
         public static List<Trash> ReadCSVFile(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
-            IEnumerable<Trash> data = from l in lines.Skip(1)
+            IEnumerable<Trash> data = from l in lines
 
                                       //dabigsplit
                                       let split = l.TrimStart('"').TrimEnd('"').Split(new[] { "\",\"" } , StringSplitOptions.None)
