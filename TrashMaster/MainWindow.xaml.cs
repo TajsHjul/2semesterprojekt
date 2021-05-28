@@ -27,6 +27,7 @@ namespace TrashMaster
             //start-side
             MainNavigationFrame.Content = new Overblik();
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
+            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
             //Sætter formateringen for datetime
             CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
