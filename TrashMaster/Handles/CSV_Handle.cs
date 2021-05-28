@@ -19,7 +19,7 @@ namespace TrashMaster.Handles
         public static List<Trash> ReadCSVFile(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
-            IEnumerable<Trash> data = from l in lines.Skip(1)
+            IEnumerable<Trash> data = from l in lines
 
                                       //dabigsplit
                                       let split = l.TrimStart('"').TrimEnd('"').Split(new[] { "\",\"" } , StringSplitOptions.None)
@@ -141,12 +141,12 @@ namespace TrashMaster.Handles
             }
         }
 
-        //custom error som efterspørger dataintegritet hvis ikke den overholdes af .csv filen.
+        //custom error.
         public static string csvStructError()
         {
             string csvStructError =
                 "\n\nDet valgte dokuments struktur stemmer ikke overens med denne applikations forventninger." +
-                    "\n\nApplikationen forventer følgende hovedkolonner med tilhørende dataintegritet:" +
+                    "\n\nApplikationen forventer følgende hovedkolonner med tilhørende datatyper." +
                     "\nID + Int" +
                     "\nMængde + decimal" +
                     "\nMåleenhed + enum [Colli/1, Stk/2, Ton/3, Kilogram/4, Gram/5, M3/6, Liter/7, Hektoliter/8]" +

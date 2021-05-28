@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,11 +16,34 @@ namespace TrashMaster.Frames
     {
         public insertDB()
         {
+
             InitializeComponent();
             cmbAffaldskategori.ItemsSource = Enum.GetValues(typeof(Trash.affaldskategori));
             cmbMåleenhed.ItemsSource = Enum.GetValues(typeof(Trash.måleenhed));
 
-            //Gør først 'Tilføj' knappen tilgængelig når alle kolonner er udfyldte.
+        }
+
+        //private void LinkValues()
+        //{
+        //    switch (cmbAffaldskategori.SelectedItem)
+        //    {
+        //        case Trash.affaldskategori.Batterier:
+
+        //            //Tillad kun Ton, Kilogram og Gram - ved at ekskludere de andre måleenheder - når Batterier er valgt.
+        //            var batterier = Enum.GetValues(typeof(Trash.måleenhed)).Cast<Trash.måleenhed>()
+        //           .Except(new Trash.måleenhed[] { Trash.måleenhed.Colli, Trash.måleenhed.Stk, Trash.måleenhed.M3, Trash.måleenhed.Liter, Trash.måleenhed.Hektoliter });
+
+        //            cmbMåleenhed.ItemsSource = batterier;
+        //            break;
+
+        //        default:
+        //            break;
+        //    }
+        //}
+
+        private void cmbAffaldskategori_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //LinkValues();
         }
 
         private void Tilføj_Click(object sender, RoutedEventArgs e)

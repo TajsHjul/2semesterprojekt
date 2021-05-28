@@ -22,7 +22,9 @@
                     <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                 </Trigger>
             </Style.Triggers>
+            
+            
         </Style>
-
+        
     </Application.Resources>
 </Application>

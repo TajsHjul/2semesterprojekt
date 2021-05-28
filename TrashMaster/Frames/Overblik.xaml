@@ -23,14 +23,18 @@
                       FontSize="13"
                       IsReadOnly="True"
                       CanUserAddRows="False"        
+                      
+                      
                       VerticalScrollBarVisibility="Auto"
                       AutoGenerateColumns="True"
-                      
+                      HeadersVisibility="Column"
                                             ItemsSource="{Binding}" 
                       MouseLeftButtonUp="IsItemSelected"
                       VerticalAlignment="Top" 
                       Visibility="Visible"
                       HorizontalAlignment="Left"
+                      
+                      
                       
                       AutoGeneratingColumn="OnAutoGeneratingColumn"                      
                       >
@@ -44,6 +48,8 @@
                         <MenuItem Header="Gem til fil" Click="Gem_Fil_Click" />
                     </ContextMenu>
                 </DataGrid.ContextMenu>
+                
+                
 
             </DataGrid>
 
