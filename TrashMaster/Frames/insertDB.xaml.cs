@@ -23,27 +23,50 @@ namespace TrashMaster.Frames
 
         }
 
-        //private void LinkValues()
-        //{
-        //    switch (cmbAffaldskategori.SelectedItem)
-        //    {
-        //        case Trash.affaldskategori.Batterier:
+        private void LinkValues()
+        {
+            switch (cmbAffaldskategori.SelectedItem)
+            {
+                case Trash.affaldskategori.Batterier:
+                case Trash.affaldskategori.Elektronikaffald:
+                case Trash.affaldskategori.ImprægneretTræ:
+                case Trash.affaldskategori.Plastemballager:
+                case Trash.affaldskategori.PVC:
 
-        //            //Tillad kun Ton, Kilogram og Gram - ved at ekskludere de andre måleenheder - når Batterier er valgt.
-        //            var batterier = Enum.GetValues(typeof(Trash.måleenhed)).Cast<Trash.måleenhed>()
-        //           .Except(new Trash.måleenhed[] { Trash.måleenhed.Colli, Trash.måleenhed.Stk, Trash.måleenhed.M3, Trash.måleenhed.Liter, Trash.måleenhed.Hektoliter });
+                    //Tillad kun Ton, Kilogram og Gram - ved at ekskludere de andre måleenheder - når Batterier er valgt.
+                    var vægt = Enum.GetValues(typeof(Trash.måleenhed)).Cast<Trash.måleenhed>()
+                   .Except(new Trash.måleenhed[] { Trash.måleenhed.Colli, Trash.måleenhed.Stk, Trash.måleenhed.M3, Trash.måleenhed.Liter, Trash.måleenhed.Hektoliter });
 
-        //            cmbMåleenhed.ItemsSource = batterier;
-        //            break;
+                    cmbMåleenhed.ItemsSource = vægt;
+                    break;
+                case Trash.affaldskategori.Inventar:
+                case Trash.affaldskategori.OrganiskAffald:
+                case Trash.affaldskategori.Papogpapir:
 
-        //        default:
-        //            break;
-        //    }
-        //}
+                    //Tillad kun M3, Liter og Hektoliter - ved at ekskludere de andre måleenheder - når Inventar, Organisk Affald eller PapogPapir er valgt.
+                    var volumen = Enum.GetValues(typeof(Trash.måleenhed)).Cast<Trash.måleenhed>()
+                   .Except(new Trash.måleenhed[] { Trash.måleenhed.Colli, Trash.måleenhed.Stk, Trash.måleenhed.Ton, Trash.måleenhed.Kilogram, Trash.måleenhed.Gram });
+
+                    cmbMåleenhed.ItemsSource = volumen;
+                    break;
+                case Trash.affaldskategori.Biler:
+                
+
+                    //Tillad kun Stk - ved at ekskludere de andre måleenheder - når Biler er valgt.
+                    var antal = Enum.GetValues(typeof(Trash.måleenhed)).Cast<Trash.måleenhed>()
+                   .Except(new Trash.måleenhed[] { Trash.måleenhed.Colli, Trash.måleenhed.M3, Trash.måleenhed.Liter, Trash.måleenhed.Hektoliter, Trash.måleenhed.Ton, Trash.måleenhed.Kilogram, Trash.måleenhed.Gram });
+
+                    cmbMåleenhed.ItemsSource = antal;
+                    break;
+
+                default:
+                   break;
+            }
+        }
 
         private void cmbAffaldskategori_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //LinkValues();
+            LinkValues();
         }
 
         private void Tilføj_Click(object sender, RoutedEventArgs e)
