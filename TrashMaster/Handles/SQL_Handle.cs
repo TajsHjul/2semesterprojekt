@@ -54,8 +54,8 @@ namespace TrashMaster.Handles
 
             string fullSQLquery = String.Format("INSERT INTO " + tablename + " (Mængde, Måleenhed, Affaldskategori, Affaldsbeskrivelse, Ansvarlig, VirksomhedID) " +
                 "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')", trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID);
+            if (SQL_Handle.CheckDetID(tablename, trash.VirksomhedID) == true)
 
-            try
             {
                 connection.Open();
 
@@ -66,16 +66,11 @@ namespace TrashMaster.Handles
                 {
                     MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
                 }
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
+            else
+                MessageBox.Show("Hey yo, klaphat.\n Kun godkendte VirksomhedsID!!!");
+            
         }
 
 
@@ -87,23 +82,20 @@ namespace TrashMaster.Handles
                 trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID, rowId);
 
 
-            try
+            if (SQL_Handle.CheckDetID(tablename, trash.VirksomhedID) == true)
+
             {
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
                 MessageBox.Show("Dataen er nu redigeret og gemt til databasen.");
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
+            else
+                MessageBox.Show("Hey yo, klaphat.\n Kun godkendte VirksomhedsID!!!");
+
+
         }
 
         //Fjern fra DB med ID (unik) parameter
@@ -124,15 +116,18 @@ namespace TrashMaster.Handles
 
                 MessageBox.Show("Affaldsdata med id: " + id + " er nu slettet fra databasen.");
             }
-
-            catch (Exception ex)
+                
+            catch(Exception splep)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(Convert.ToString(splep));
             }
             finally
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
+            
+            
+
         }
 
         //Tager SQL query som første parameter og returnerer resultatet som DataTable.DefaultView (kan bruges som Datacontext7Itemssource etc).
@@ -155,10 +150,11 @@ namespace TrashMaster.Handles
                         }
                     }
                 }
-
+                
                 return dt.DefaultView;
+                
+                
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -168,6 +164,36 @@ namespace TrashMaster.Handles
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
+
+        }
+        private static bool? CheckDetID(string tablename, int vID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+
+            //"id" på datagrid hedder "TrashID" i databasen.
+            string fullSQLquery = String.Format("SELECT * FROM Virksomheder WHERE VirksomhedID= {0}", vID);
+
+            
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(fullSQLquery, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                
+                if (reader.HasRows == false)
+                {
+                    
+                         return false;
+                }
+                else
+                {
+
+                    return true;
+                }
+                
+           
+            
         }
     }
 }
