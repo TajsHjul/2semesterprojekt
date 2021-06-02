@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace TrashMaster
 {
+    /// <summary>
+    /// Skrevet af Edgar
+    /// </summary>
     class Trash
     {
         public int Id { get; set; }

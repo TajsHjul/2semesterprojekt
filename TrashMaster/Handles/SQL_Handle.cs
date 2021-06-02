@@ -12,30 +12,6 @@ namespace TrashMaster.Handles
     {
         private static readonly string connectionString = @"Server = trashmaster.database.windows.net; Database = trashmaster1; User Id = extuser01; Password = GNUpluslinux!;";
 
-        //sender SQL query til DB uden return
-        public static void SqlQuery(string fullSQLquery)
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-
-            try
-            {
-                connection.Open();
-
-                SqlCommand command = new SqlCommand(fullSQLquery, connection);
-                using (SqlDataReader reader = command.ExecuteReader()) { }
-                MessageBox.Show("Succesfull SqlQuery Executed.");
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
-            }
-        }
-
         // Tilføj til db med 'Trash' som parameter.
 
         public static void AddToDB(Trash trash, string tablename, bool multiple)

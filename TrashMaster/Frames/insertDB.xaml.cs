@@ -23,24 +23,6 @@ namespace TrashMaster.Frames
 
         }
 
-        //private void LinkValues()
-        //{
-        //    switch (cmbAffaldskategori.SelectedItem)
-        //    {
-        //        case Trash.affaldskategori.Batterier:
-
-        //            //Tillad kun Ton, Kilogram og Gram - ved at ekskludere de andre måleenheder - når Batterier er valgt.
-        //            var batterier = Enum.GetValues(typeof(Trash.måleenhed)).Cast<Trash.måleenhed>()
-        //           .Except(new Trash.måleenhed[] { Trash.måleenhed.Colli, Trash.måleenhed.Stk, Trash.måleenhed.M3, Trash.måleenhed.Liter, Trash.måleenhed.Hektoliter });
-
-        //            cmbMåleenhed.ItemsSource = batterier;
-        //            break;
-
-        //        default:
-        //            break;
-        //    }
-        //}
-
         private void cmbAffaldskategori_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //LinkValues();
