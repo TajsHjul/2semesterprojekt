@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace TrashMaster.Handles
@@ -10,7 +12,14 @@ namespace TrashMaster.Handles
     /// </summary>
     class SQL_Handle : Trash
     {
-        private static readonly string connectionString = @"Server = trashmaster.database.windows.net; Database = trashmaster1; User Id = extuser01; Password = GNUpluslinux!;";
+        private static readonly string connectionString = File.ReadAllLines(System.Environment.
+                             GetFolderPath(
+                                 Environment.SpecialFolder.CommonApplicationData
+
+                             )
+                             +
+                             "/JETtm/connstring.txt").First();
+                             
 
         //sender SQL query til DB uden return
         public static void SqlQuery(string fullSQLquery)
