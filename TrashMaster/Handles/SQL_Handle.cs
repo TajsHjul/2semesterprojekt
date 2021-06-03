@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
+using TrashMaster.Frames;
 
 namespace TrashMaster.Handles
 {
@@ -12,8 +13,47 @@ namespace TrashMaster.Handles
     {
         private static readonly string connectionString = @"Server = trashmaster.database.windows.net; Database = trashmaster1; User Id = extuser01; Password = GNUpluslinux!;";
 
-        // Tilføj til db med 'Trash' som parameter.
 
+        //Forsøg at logge ind med de givne parametre
+        public static bool TryLogin(string username, string password)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string fullSQLquery = "SELECT * FROM Users WHERE hcUsername = '" + username + "' AND hcPassword = '" + password + "'";
+
+            try
+            {
+                connection.Open();
+
+                SqlDataAdapter sda = new SqlDataAdapter(fullSQLquery, connectionString);
+                DataTable dtbl = new DataTable();
+                sda.Fill(dtbl);
+
+                if (dtbl.Rows.Count == 1)
+                {
+                    ////Hvis login godkendes, gør MenuHeader synlig og naviger bruger til Overblik siden.
+                    //((MainWindow)Application.Current.MainWindow).MenuHeader.Visibility = Visibility.Visible;
+                    //((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = new Overblik();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+
+        }
+
+        // Tilføj til db med 'Trash' som parameter.
         public static void AddToDB(Trash trash, string tablename, bool multiple)
         {
 
@@ -29,10 +69,9 @@ namespace TrashMaster.Handles
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
 
-                if (multiple == false)
-                {
+
                     MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
-                }
+
             }
 
             catch (Exception ex)

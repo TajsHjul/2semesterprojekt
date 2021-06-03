@@ -25,10 +25,5 @@ namespace TrashMaster.Frames
         {
             InitializeComponent();
         }
-
-
-
-
-
     }
 }

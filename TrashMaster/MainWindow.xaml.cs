@@ -25,7 +25,7 @@ namespace TrashMaster
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             //start-side
-            MainNavigationFrame.Content = new Overblik();
+            MainNavigationFrame.Content = new Login();
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
 
             //Sætter formateringen for datetime
@@ -76,6 +76,9 @@ namespace TrashMaster
 
                     //naviger to login page
                     MainNavigationFrame.Content = new Login();
+
+                    //vis log-besked
+                    MessageBox.Show(@"Log gemt til: C:\userLog\UserLog.txt");
                     break;
 
                 //blankt pt

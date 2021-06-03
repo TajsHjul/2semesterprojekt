@@ -31,19 +31,30 @@ namespace TrashMaster.Frames
 
         public void Tilføj_Valgte_Click(object sender, RoutedEventArgs e)
         {
-            try
+            new Thread(() =>
             {
-                foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+                this.Dispatcher.Invoke(() =>
                 {
-                    SQL_Handle.AddToDB(item, "Trash", true);
+
+                    try
+                {
+                    foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+                    {
+                        SQL_Handle.AddToDB(item, "Trash", true);
+                    }
+
+                    MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
 
-                MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
-            } 
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+                });
+
+            }).Start();
+
+
         }
         public void Tilføj_Alle_Click(object sender, RoutedEventArgs e)
         {
