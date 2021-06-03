@@ -39,6 +39,7 @@ namespace TrashMaster.Frames
         {
 
             //Kør login i ny thread
+            //Når WPF elementer skal opdateres, eller der skal hentes værdier fra disse - skal de gøres vha. Dispatcher.
             Task.Run(() =>
             {
                 this.Dispatcher.Invoke(() =>
@@ -75,7 +76,6 @@ namespace TrashMaster.Frames
                 });
 
             });
-
         }
 
 
