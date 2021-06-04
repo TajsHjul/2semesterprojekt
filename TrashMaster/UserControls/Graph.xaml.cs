@@ -23,7 +23,7 @@ namespace TrashMaster.UserControls
     public partial class Graph : UserControl
     {
         string kategori;
-
+        bool niceID ;
         // definerer max-værdier, margin og margin mellem punkterne
         const double margin = 10;
         double xmin = margin;
@@ -36,6 +36,7 @@ namespace TrashMaster.UserControls
         //ylabl og xlabl -- skal egenlig hentes fra Graphlogic-classen
         int xlabl = 0;
         int ylabl = 0;
+        string NaughtyID = "";
 
 
         public Graph()
@@ -46,76 +47,197 @@ namespace TrashMaster.UserControls
         }
         private void Colli_click(object sender, RoutedEventArgs e)
         {
-            canGraph.Children.Clear();
-            affaldskategori1.IsEnabled = false;
-            affaldskategori2.IsEnabled = false;
-            affaldskategori3.IsEnabled = false;
-            affaldskategori4.IsEnabled = false;
-            affaldskategori5.IsEnabled = false;
-            affaldskategori6.IsEnabled = false;
-            affaldskategori7.IsEnabled = false;
-            affaldskategori8.IsEnabled = false;
-            affaldskategori9.IsEnabled = false;
-            DrawYAxis("Colli ( ͡° ͜ʖ ͡°)", 0);
-            ImageBrush hmm = new ImageBrush();
-            hmm.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Icons/hmm.png", UriKind.Absolute));
-            canGraph.Background = hmm;
+            try
+            {
+                Convert.ToInt32(VirksomhedsIDinput.Text);
+                niceID = true;
+            }
+            catch
+            {
+                MessageBox.Show("Halløjsovs, det var vist ikke et ordentligt tal. Prøv igen");
+                niceID = false;
+            }
+            if (niceID != true)
+            { MessageBox.Show(NaughtyID);
+                affaldskategori1.IsEnabled = false;
+                affaldskategori2.IsEnabled = false;
+                affaldskategori3.IsEnabled = false;
+                affaldskategori4.IsEnabled = false;
+                affaldskategori5.IsEnabled = false;
+                affaldskategori6.IsEnabled = false;
+                affaldskategori7.IsEnabled = false;
+                affaldskategori8.IsEnabled = false;
+                affaldskategori9.IsEnabled = false;
+            }
+            else
+            {
+                
+                canGraph.Children.Clear();
+                affaldskategori1.IsEnabled = false;
+                affaldskategori2.IsEnabled = false;
+                affaldskategori3.IsEnabled = false;
+                affaldskategori4.IsEnabled = false;
+                affaldskategori5.IsEnabled = false;
+                affaldskategori6.IsEnabled = false;
+                affaldskategori7.IsEnabled = false;
+                affaldskategori8.IsEnabled = false;
+                affaldskategori9.IsEnabled = false;
+                DrawYAxis("Colli ( ͡° ͜ʖ ͡°)", 0);
+                ImageBrush hmm = new ImageBrush();
+                
+                canGraph.Background = hmm;
+            }
+            
 
         }
         private void stk_Click(object sender, RoutedEventArgs e)
         {
-            canGraph.Children.Clear();
-            affaldskategori1.IsEnabled = false;
-            affaldskategori2.IsEnabled = false;
-            affaldskategori3.IsEnabled = false;
-            affaldskategori4.IsEnabled = false;
-            affaldskategori5.IsEnabled = false;
-            affaldskategori6.IsEnabled = false;
-            affaldskategori7.IsEnabled = false;
-            affaldskategori8.IsEnabled = false;
-            affaldskategori9.IsEnabled = false;
+            try
+            {
+                Convert.ToInt32(VirksomhedsIDinput.Text);
+                niceID = true;
+            }
+            catch
+            {
+                MessageBox.Show("Halløjsovs, det var vist ikke et ordentligt tal. Prøv igen");
+                niceID = false;
+            }
+            if (niceID != true)
+            { MessageBox.Show(NaughtyID);
+                affaldskategori1.IsEnabled = false;
+                affaldskategori2.IsEnabled = false;
+                affaldskategori3.IsEnabled = false;
+                affaldskategori4.IsEnabled = false;
+                affaldskategori5.IsEnabled = false;
+                affaldskategori6.IsEnabled = false;
+                affaldskategori7.IsEnabled = false;
+                affaldskategori8.IsEnabled = false;
+                affaldskategori9.IsEnabled = false;
+            }
+            else
+            {
+                
+                canGraph.Children.Clear();
+                affaldskategori1.IsEnabled = false;
+                affaldskategori2.IsEnabled = false;
+                affaldskategori3.IsEnabled = false;
+                affaldskategori4.IsEnabled = false;
+                affaldskategori5.IsEnabled = false;
+                affaldskategori6.IsEnabled = false;
+                affaldskategori7.IsEnabled = false;
+                affaldskategori8.IsEnabled = false;
+                affaldskategori9.IsEnabled = false;
 
-            affaldskategori1.IsEnabled = true;
-            affaldskategori2.IsEnabled = true;
-            DrawYAxis("Stk.", 1);
+
+                affaldskategori2.IsEnabled = true;
+                DrawYAxis("Stk.", 1);
+            }
+            
         }
 
 
         private void Thicc_Click(object sender, RoutedEventArgs e)
         {
-            canGraph.Children.Clear();
-            affaldskategori1.IsEnabled = false;
-            affaldskategori2.IsEnabled = false;
-            affaldskategori3.IsEnabled = false;
-            affaldskategori4.IsEnabled = false;
-            affaldskategori5.IsEnabled = false;
-            affaldskategori6.IsEnabled = false;
-            affaldskategori7.IsEnabled = false;
-            affaldskategori8.IsEnabled = false;
-            affaldskategori9.IsEnabled = false;
-            DrawYAxis("Kg.", 100);
+            try
+            {
+                Convert.ToInt32(VirksomhedsIDinput.Text);
+
+            }
+            catch
+            {
+                niceID = true;
+                MessageBox.Show("Halløjsovs, det var vist ikke et ordentligt tal. Prøv igen");
+                niceID = false;
+            }
+            if (niceID != true)
+            { MessageBox.Show(NaughtyID);
+                affaldskategori1.IsEnabled = false;
+                affaldskategori2.IsEnabled = false;
+                affaldskategori3.IsEnabled = false;
+                affaldskategori4.IsEnabled = false;
+                affaldskategori5.IsEnabled = false;
+                affaldskategori6.IsEnabled = false;
+                affaldskategori7.IsEnabled = false;
+                affaldskategori8.IsEnabled = false;
+                affaldskategori9.IsEnabled = false;
+            }
+            else
+            {
+                
+                canGraph.Children.Clear();
+                affaldskategori1.IsEnabled = false;
+                affaldskategori2.IsEnabled = false;
+                affaldskategori3.IsEnabled = false;
+                affaldskategori4.IsEnabled = false;
+                affaldskategori5.IsEnabled = false;
+                affaldskategori6.IsEnabled = false;
+                affaldskategori7.IsEnabled = false;
+                affaldskategori8.IsEnabled = false;
+                affaldskategori9.IsEnabled = false;
+
+                affaldskategori1.IsEnabled = true;
+                affaldskategori3.IsEnabled = true;
+                affaldskategori4.IsEnabled = true;
+                affaldskategori8.IsEnabled = true;
+                affaldskategori9.IsEnabled = true;
+                DrawYAxis("Kg.", 1);
+            }
+            
         }
 
         private void Volumen_Click(object sender, RoutedEventArgs e)
         {
-            canGraph.Children.Clear();
-            affaldskategori1.IsEnabled = false;
-            affaldskategori2.IsEnabled = false;
-            affaldskategori3.IsEnabled = false;
-            affaldskategori4.IsEnabled = false;
-            affaldskategori5.IsEnabled = false;
-            affaldskategori6.IsEnabled = false;
-            affaldskategori7.IsEnabled = false;
-            affaldskategori8.IsEnabled = false;
-            affaldskategori9.IsEnabled = false;
-            DrawYAxis("Liter", 100);
+            try
+            {
+                Convert.ToInt32(VirksomhedsIDinput.Text);
+                niceID = true;
+            }
+            catch
+            {
+                MessageBox.Show("Halløjsovs, det var vist ikke et ordentligt tal. Prøv igen");
+                niceID = false;
+            }
+            if (niceID != true)
+            { MessageBox.Show(NaughtyID);
+                affaldskategori1.IsEnabled = false;
+                affaldskategori2.IsEnabled = false;
+                affaldskategori3.IsEnabled = false;
+                affaldskategori4.IsEnabled = false;
+                affaldskategori5.IsEnabled = false;
+                affaldskategori6.IsEnabled = false;
+                affaldskategori7.IsEnabled = false;
+                affaldskategori8.IsEnabled = false;
+                affaldskategori9.IsEnabled = false;
+            }
+            else
+            {
+                
+                canGraph.Children.Clear();
+                affaldskategori1.IsEnabled = false;
+                affaldskategori2.IsEnabled = false;
+                affaldskategori3.IsEnabled = false;
+                affaldskategori4.IsEnabled = false;
+                affaldskategori5.IsEnabled = false;
+                affaldskategori6.IsEnabled = false;
+                affaldskategori7.IsEnabled = false;
+                affaldskategori8.IsEnabled = false;
+                affaldskategori9.IsEnabled = false;
+
+                affaldskategori5.IsEnabled = true;
+                affaldskategori6.IsEnabled = true;
+                affaldskategori7.IsEnabled = true;
+                DrawYAxis("Kubikmeter", 1);
+                
+
+            }
+            
         }
         private void visBatteri_Click(object sender, RoutedEventArgs e)
         {
             kategori = "Batterier";
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Batteri = new GraphLogic();
-            Batteri.GenerateDatapoints(kategori);
+            Batteri.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Batteri, 1);
             maaleenhed1.IsEnabled = true;
             Button btn = sender as Button;
@@ -126,7 +248,7 @@ namespace TrashMaster.UserControls
             kategori = "Biler";
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Bil = new GraphLogic();
-            Bil.GenerateDatapoints(kategori);
+            Bil.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Bil, 2);
             Button btn = sender as Button;
             btn.Background = btn.Background == Brushes.Blue ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Blue;
@@ -137,7 +259,7 @@ namespace TrashMaster.UserControls
             kategori = "Elektronikaffald";
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Elektro = new GraphLogic();
-            Elektro.GenerateDatapoints(kategori);
+            Elektro.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Elektro, 3);
             Button btn = sender as Button;
             btn.Background = btn.Background == Brushes.Bisque ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Bisque;
@@ -148,7 +270,7 @@ namespace TrashMaster.UserControls
             kategori = "ImprægneretTræ";
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Woody = new GraphLogic();
-            Woody.GenerateDatapoints(kategori);
+            Woody.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Woody, 4);
             Button btn = sender as Button;
             btn.Background = btn.Background == Brushes.BlueViolet ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.BlueViolet;
@@ -159,7 +281,7 @@ namespace TrashMaster.UserControls
             kategori = "Inventar";
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Inventa = new GraphLogic();
-            Inventa.GenerateDatapoints(kategori);
+            Inventa.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Inventa, 5);
             Button btn = sender as Button;
             btn.Background = btn.Background == Brushes.Brown ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Brown;
@@ -170,7 +292,7 @@ namespace TrashMaster.UserControls
             kategori = "OrganiskAffald";
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Anima = new GraphLogic();
-            Anima.GenerateDatapoints(kategori);
+            Anima.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Anima, 6);
             Button btn = sender as Button;
             btn.Background = btn.Background == Brushes.BurlyWood ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.BurlyWood;
@@ -181,7 +303,7 @@ namespace TrashMaster.UserControls
             kategori = "Papogpapir";
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Pappapir = new GraphLogic();
-            Pappapir.GenerateDatapoints(kategori);
+            Pappapir.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Pappapir, 7);
             Button btn = sender as Button;
             btn.Background = btn.Background == Brushes.Coral ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Coral;
@@ -192,7 +314,7 @@ namespace TrashMaster.UserControls
             kategori = "Plastemballager";
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Plastique = new GraphLogic();
-            Plastique.GenerateDatapoints(kategori);
+            Plastique.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Plastique, 8);
             Button btn = sender as Button;
             btn.Background = btn.Background == Brushes.CornflowerBlue ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.CornflowerBlue;
@@ -203,7 +325,7 @@ namespace TrashMaster.UserControls
             kategori = "PVC";
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Pvc = new GraphLogic();
-            Pvc.GenerateDatapoints(kategori);
+            Pvc.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Pvc, 9);
             Button btn = sender as Button;
             btn.Background = btn.Background == Brushes.HotPink ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.HotPink;
@@ -214,11 +336,12 @@ namespace TrashMaster.UserControls
         {
             //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
             GraphLogic Bob = new GraphLogic();
-            Bob.GenerateDatapoints("Biler");
+            Bob.GenerateDatapoints("Biler", Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Bob, 0);
 
 
         }
+
 
         private void DrawGraph(GraphLogic graphlogic, int dataset)
         {
@@ -246,9 +369,9 @@ namespace TrashMaster.UserControls
             Brush[] brushes =
                 { Brushes.Red, Brushes.Green, Brushes.Blue, Brushes.Bisque, Brushes.BlueViolet, Brushes.Brown, Brushes.BurlyWood, Brushes.Coral, Brushes.CornflowerBlue , Brushes.HotPink};
 
-
+            int count = 0;
             PointCollection points = new PointCollection();
-            for (double x = xmin; x + 20 < graphlogic.SnupdataLength() * 20; x += step)
+            for (double x = xmin; x + 20 < 31 * 20; x += step)
             {
 
 
@@ -257,11 +380,11 @@ namespace TrashMaster.UserControls
 
 
 
-                points.Add(new Point(x, ymin - graphlogic.GivePointValue(dataset, x / step)));
-
+                points.Add(new Point(x, ymin - 2* graphlogic.GivePointValue(dataset, count)));
+                count++;
 
             }
-
+            count = 0;
             Polyline dataline = new Polyline();
             dataline.StrokeThickness = 1;
             dataline.Stroke = brushes[dataset];
@@ -292,8 +415,8 @@ namespace TrashMaster.UserControls
 
         private void DrawYAxis(string yheader, int yaxismultiplier)
         {
-
-
+            
+            
             // Laver y-axis
             GeometryGroup yaxis_geom = new GeometryGroup();
             yaxis_geom.Children.Add(new LineGeometry(new Point(xmin, 0), new Point(xmin, canGraph.Height)));

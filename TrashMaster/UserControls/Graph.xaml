@@ -14,6 +14,7 @@
                 <Canvas x:Name="canGraph" Background="LightGray" 
                  Width="820" Height="400"
                 VerticalAlignment="Top" HorizontalAlignment="Center" Margin="60"/>
+                <TextBox x:Name="VirksomhedsIDinput" Text="Indtast VirksomhedsID her..." VerticalAlignment="Bottom" HorizontalAlignment="Center" ></TextBox>
                 <Button Content="Show Graf" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="20" Click="Button_Click" Visibility="Hidden"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="50">
@@ -36,6 +37,7 @@
                     <Button x:Name="affaldskategori8" Height="60" Width="70" Content="Plast Emb." IsEnabled="False" Click="visPlast_Click"/>
                     <Button x:Name="affaldskategori9" Height="60" Width="70" Content="PVC" IsEnabled="False" Click="visPVC_Click"/>
                 </StackPanel>
+                
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal">

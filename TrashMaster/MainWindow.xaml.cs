@@ -17,6 +17,56 @@ namespace TrashMaster
         public MainWindow()
         {
             InitializeComponent();
+            //
+            string blæbtekst = "Slice me nice ( ͡~ ͜ʖ ͡° )";
+            if (File.Exists(System.Environment.
+                             GetFolderPath(
+                                 Environment.SpecialFolder.CommonApplicationData
+                                 
+                             )
+                             +
+                             "/JETtm/connstring.txt"
+                             ) == false)
+            {
+                Directory.CreateDirectory(System.Environment.
+                             GetFolderPath(
+                                 Environment.SpecialFolder.CommonApplicationData
+
+                             )
+                             +
+                             "/JETtm");
+                File.Create(System.Environment.
+                             GetFolderPath(
+                                 Environment.SpecialFolder.CommonApplicationData
+
+                             )
+                             +
+                             "/JETtm/connstring.txt"
+                             );
+
+                
+                
+            }
+
+            if (new FileInfo(System.Environment.
+                             GetFolderPath(
+                                 Environment.SpecialFolder.CommonApplicationData
+
+                             )
+                             +
+                             "/JETtm/connstring.txt"
+                             ).Length == 0)
+            {
+                MessageBox.Show(blæbtekst + "\n\nDu burde nok lige rette i connectionstring.\nDen ligger i :\n" + System.Environment.
+                             GetFolderPath(
+                                 Environment.SpecialFolder.CommonApplicationData
+
+                             )
+                             +
+                             "/JETtm/connstring.txt");
+                MessageBox.Show("Denne applikation vil nu afslutte...");
+                this.Close();
+            }
 
             //FileWatcher
             FSWatcher();

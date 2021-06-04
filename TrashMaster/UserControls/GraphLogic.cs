@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -14,14 +15,19 @@ namespace TrashMaster.UserControls
     class GraphLogic
     {
         //GraphLogic-klassen. Tænkes at skulle stå for den "logiske" del af graf-arbejdet.
-        //int xlabl = 0;
-        int holabl = 39;
-
+        
         List<double> snupData = new List<double>();
-
+        List<DateTime> snupDato = new List<DateTime>();
+        List<string> snupEnhed = new List<string>();
         //connectionstring kan evt håndteres af SQL_Handle
-        private static readonly string connectionString = @"Server = trashmaster.database.windows.net; Database = trashmaster1; User Id = extuser01; Password = GNUpluslinux!;";
-        public void GenerateDatapoints(string kategori)
+        private static readonly string connectionString = File.ReadAllLines(System.Environment.
+                             GetFolderPath(
+                                 Environment.SpecialFolder.CommonApplicationData
+
+                             )
+                             +
+                             "/JETtm/connstring.txt").First();
+        public void GenerateDatapoints(string kategori, int vid)
         {
             //Skal måske bruge til at sortere indkommende data til brug i GivePointValue()
 
@@ -35,8 +41,8 @@ namespace TrashMaster.UserControls
             {
                 connection.Open();
                 command.Connection = connection;
-                DateTime today = new DateTime();
-                command.CommandText = String.Format("SELECT Mængde FROM Trash Where Affaldskategori='" + kategori + "' ;", DateTime.Today.AddDays(-39), today);
+                DateTime thirtytoday = DateTime.Now.AddDays(-30);
+                command.CommandText = String.Format("SELECT Mængde,Dato, Måleenhed FROM Trash Where Affaldskategori='" + kategori + "' AND VirksomhedID ='" + vid + "' AND DATEDIFF(day,Dato,GETDATE()) between 0 and 31;");
 
 
 
@@ -47,7 +53,9 @@ namespace TrashMaster.UserControls
                     while (reader.Read())
 
                     {
-                        snupData.Add(Convert.ToDouble(reader[0]) * 20);
+                        snupData.Add(Convert.ToDouble(reader[0]) *10);
+                        snupDato.Add(Convert.ToDateTime(reader[1]));
+                        snupEnhed.Add(reader[2].ToString());
                     }
 
                     //Her kan der evt. tilføjes en removerange
@@ -71,9 +79,24 @@ namespace TrashMaster.UserControls
         }
         public string HoAxisLabel(int xnotch)
         {
-
+            if (snupDato.Count() != 0)
+            {
+                if (xnotch < snupDato.Count)
+                {
+                    return snupDato[xnotch].ToString().Remove(12);
+                }
+                else
+                {
+                    return snupDato[snupDato.Count() - 1].AddDays(xnotch-snupData.Count()+1).ToString().Remove(12);
+                }
+            }
+            else
+            {
+                return "_nodata_";
+            }
+            
             //Metode til generering af X-akse labels. Ved ikke helt om den er nødvendig
-            return DateTime.Today.AddDays(xnotch - holabl).ToString().Remove(10);
+            
         }
 
         public string VertAxisLabel(int ynotch)
@@ -85,16 +108,40 @@ namespace TrashMaster.UserControls
         public double GivePointValue(int dataset, double xvalue)
         {
 
-            //Genererer lige pt tilfældige tal via Random-class. Tanken var at denne metode skulle give det ønskede yvalue baseret på et dataset og en xvalue
-            int Min = 0;
-            int Max = 500;
+            if (snupData.Count > xvalue)
+            {
+                switch (snupEnhed[Convert.ToInt32(xvalue)])
+                {
+                    
+                    case "Ton":
+                        return snupData[Convert.ToInt32(xvalue)] * 1000;
+                    case "Gram":
+                        return snupData[Convert.ToInt32(xvalue)]/1000;
+                    case "Kilogram":
+                        return snupData[Convert.ToInt32(xvalue)];
+                    case "M3":
+                        return snupData[Convert.ToInt32(xvalue)];
+                    case "Hektoliter":
+                        return snupData[Convert.ToInt32(xvalue)]*10;
+                    case "Liter":
+                        return snupData[Convert.ToInt32(xvalue)]*1000;
 
-            Random randNum = new Random();
+                    default:
+                        return snupData[Convert.ToInt32(xvalue)];
 
-            //Sleep() er nødvendig med Random-class, da den ellers bare genererer de samme tal igen og igen :(
-            Thread.Sleep(60);
-            double yvalue = randNum.Next(Min, Max);
-            return snupData[Convert.ToInt32(xvalue)];
+
+
+                }
+                
+
+
+            }
+            else
+            {
+                return 0.0;
+            }
+
+
         }
 
         public int SnupdataLength()
