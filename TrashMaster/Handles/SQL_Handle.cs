@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using TrashMaster.Frames;
 
 namespace TrashMaster.Handles
 {
@@ -19,25 +20,37 @@ namespace TrashMaster.Handles
                              )
                              +
                              "/JETtm/connstring.txt").First();
-                             
 
-        //sender SQL query til DB uden return
-        public static void SqlQuery(string fullSQLquery)
+
+        //Forsøg at logge ind med de givne parametre
+        public static bool TryLogin(string username, string password)
         {
             SqlConnection connection = new SqlConnection(connectionString);
-
+            string fullSQLquery = "SELECT * FROM Users WHERE hcUsername = '" + username + "' AND hcPassword = '" + password + "'";
             try
             {
                 connection.Open();
+                SqlDataAdapter sda = new SqlDataAdapter(fullSQLquery, connectionString);
+                DataTable dtbl = new DataTable();
+                sda.Fill(dtbl);
 
-                SqlCommand command = new SqlCommand(fullSQLquery, connection);
-                using (SqlDataReader reader = command.ExecuteReader()) { }
-                MessageBox.Show("Succesfull SqlQuery Executed.");
+                if (dtbl.Rows.Count == 1)
+                {
+                    ////Hvis login godkendes, gør MenuHeader synlig og naviger bruger til Overblik siden.
+                    //((MainWindow)Application.Current.MainWindow).MenuHeader.Visibility = Visibility.Visible;
+                    //((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = new Overblik();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return false;
             }
             finally
             {
@@ -62,10 +75,9 @@ namespace TrashMaster.Handles
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
 
-                if (multiple == false)
-                {
+                
                     MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
-                }
+                
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
             else
@@ -166,6 +178,8 @@ namespace TrashMaster.Handles
             }
 
         }
+
+        //Skrevet af Tajs Hjulmann
         private static bool? CheckDetID(string tablename, int vID)
         {
             SqlConnection connection = new SqlConnection(connectionString);

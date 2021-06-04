@@ -6,7 +6,7 @@ using TrashMaster.Handles;
 namespace TrashMaster.Frames
 {
     /// <summary>
-    /// Interaction logic for removeDB.xaml
+    /// Skrevet af Edgar
     /// </summary>
     public partial class removeDB : Page
     {
