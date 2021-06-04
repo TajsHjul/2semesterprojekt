@@ -3,6 +3,12 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+using TrashMaster.Handles;
+using TrashMaster.Misc;
 
 namespace TrashMaster.Frames
 {
@@ -13,45 +19,64 @@ namespace TrashMaster.Frames
 
     public partial class Login : Page
     {
-        //hardcoded login
-        private static string hcUsername = "4ma";
-        private string hcPassword = "random";
+        private static string Username { get; set; }
+        private string Password { get; set; }
+
         public static string loginTime;
 
         public Login()
         {
             InitializeComponent();
 
-            //MenuHeader er utilgængelig/usynlig ved opstart af program, og kræver et gyldigt login at initiere.
+            //MenuHeader er utilgængelig/usynlig ved opstart af program, og kræver et gyldigt login at synliggøre.
             ((MainWindow)Application.Current.MainWindow).MenuHeader.Visibility = Visibility.Hidden;
         }
-
-        private void AttemptLogin(string username, string password)
-        {
-            //hvis parametre passer, gør interface tilgængeligt og naviger til 'Oversigt' siden. Ellers giv fejlbesked.
-            if (username == hcUsername && password == hcPassword)
-            {
-                //gem login-tidspunkt
-                loginTime = DateTime.Now.ToString();
-
-                MessageBox.Show("Login godkendt.");
-                ((MainWindow)Application.Current.MainWindow).MenuHeader.Visibility = Visibility.Visible;
-                ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = new Overblik();
-
-            }
-            else
-            {
-                textblock_Login.Foreground = Brushes.Red;
-                textblock_Login.Text = "Ugyldigt Login.";
-            }
-        }
-
         private void button_Login_Click(object sender, RoutedEventArgs e)
         {
-            //Forsøg login ved klik af 'Login' knap.
-            //Brug textbox+passwordbox som parametre
-            AttemptLogin(textbox_Username.Text, passwordbox_Password.Password.ToString());
+
+            //Kør login i ny thread
+            //Når WPF elementer skal opdateres, eller der skal hentes værdier fra disse - skal de gøres vha. Dispatcher.
+            Task.Run(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    LoadingCircle.Visibility = Visibility.Visible;
+                });
+
+                this.textbox_Username.Dispatcher.Invoke(DispatcherPriority.Normal,
+                 new Action(() => { Username = this.textbox_Username.Text; }));
+
+                this.passwordbox_Password.Dispatcher.Invoke(DispatcherPriority.Normal,
+                 new Action(() => { Password = this.passwordbox_Password.Password; }));
+
+                if (SQL_Handle.TryLogin(Username, Password) == true)
+                {
+                    //log tidspunkt for login
+                    loginTime = DateTime.Now.ToString();
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //Hvis login godkendes, gør MenuHeader synlig og naviger bruger til Overblik siden.
+                        ((MainWindow)Application.Current.MainWindow).MenuHeader.Visibility = Visibility.Visible;
+                        ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = new Overblik();
+                    });
+                }
+                else
+                {
+                    MessageBox.Show("Forkert brugernavn eller adgangskode");
+                }
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    LoadingCircle.Visibility = Visibility.Hidden;
+                });
+
+            });
         }
+
+        
+
+        
 
         //log brug af appen, metode kaldes ved logud
         public static void LogUse(string logouttime)
@@ -74,7 +99,7 @@ namespace TrashMaster.Frames
             //true for appendline (ny linje i samme fil)
             using (StreamWriter outputFile = new StreamWriter(Path.Combine(userLogFolder, fileName), true))
             {
-                outputFile.WriteLine(loginTime + "  -  " + logouttime + "\t\t " + hcUsername);
+                outputFile.WriteLine("Login\t\t\t" + " Logud\t\t" + "\tBruger\n");
             }
         }
     }

@@ -45,7 +45,8 @@ namespace TrashMaster.Frames
 
             try
             {
-                //lav Trash object baseret på felterne i editDB page.
+                //lav Trash object baseret på felterne i editDB page
+                //Disse felter sættes fra 'Overblik' vinduet 
                 Trash dbEdit = new Trash
                 {
                     Mængde = Convert.ToDecimal(textbox_Mængde.Text),

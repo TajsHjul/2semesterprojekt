@@ -4,19 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TrashMaster.Frames"
+      xmlns:uc="clr-namespace:TrashMaster.Misc"
       mc:Ignorable="d" 
       d:DesignHeight="250" d:DesignWidth="1100"
       Title="Login">
     <!-- Skrevet af Edgar-->
     <Grid>
-        <!-- Gøgl -->
-        <Grid.Background>
-            <ImageBrush ImageSource="/1595795349375.jpg" />
-        </Grid.Background>
-        <!-- Gøgl -->
-
+        
         <StackPanel Orientation="Vertical">
-
+            <!-- LoadingCircle-->
+            <uc:LoadingCircle x:Name="LoadingCircle" Visibility="Hidden"/>
+            <!-- LoadingCircle-->
             <StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">
                 <TextBlock Text="Username" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBox x:Name="textbox_Username" Width="120" Height="21"/>

@@ -16,7 +16,13 @@
                     <TextBlock Text="Id" HorizontalAlignment="Center"/>
                     <TextBox x:Name="textbox_Id" Width="70" Height="21"/>
                 </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Affaldskategori" HorizontalAlignment="Center"/>
+                    <ComboBox Name="cmbAffaldskategori" Height="21" Width="100">
 
+                    </ComboBox>
+
+                </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="Mængde" HorizontalAlignment="Center"/>
                     <TextBox x:Name="textbox_Mængde" Width="70" Height="21" />
@@ -27,14 +33,6 @@
                     <ComboBox Name="cmbMåleenhed" Height="21">
 
                     </ComboBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Vertical" Margin="5">
-                    <TextBlock Text="Affaldskategori" HorizontalAlignment="Center"/>
-                    <ComboBox Name="cmbAffaldskategori" Height="21" Width="100" SelectionChanged="cmbAffaldskategori_SelectionChanged">
-
-                    </ComboBox>
-
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="5">
