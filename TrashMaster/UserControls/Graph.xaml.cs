@@ -37,10 +37,11 @@ namespace TrashMaster.UserControls
         int xlabl = 0;
         int ylabl = 0;
         string NaughtyID = "";
-
+        bool clickbool;
 
         public Graph()
         {
+            bool clickbool = false;
             InitializeComponent();
             xmax = canGraph.Width - margin;
             ymin = canGraph.Height - margin;
@@ -54,7 +55,7 @@ namespace TrashMaster.UserControls
             }
             catch
             {
-                MessageBox.Show("Halløjsovs, det var vist ikke et ordentligt tal. Prøv igen");
+                MessageBox.Show("Indtast venligst et gyldigt virksomhedsID i textboksen\ntil venstre for grafen.");
                 niceID = false;
             }
             if (niceID != true)
@@ -99,7 +100,7 @@ namespace TrashMaster.UserControls
             }
             catch
             {
-                MessageBox.Show("Halløjsovs, det var vist ikke et ordentligt tal. Prøv igen");
+                MessageBox.Show("Indtast venligst et gyldigt virksomhedsID i textboksen\ntil venstre for grafen.");
                 niceID = false;
             }
             if (niceID != true)
@@ -136,17 +137,17 @@ namespace TrashMaster.UserControls
         }
 
 
-        private void Thicc_Click(object sender, RoutedEventArgs e)
+        private void Masse_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Convert.ToInt32(VirksomhedsIDinput.Text);
-
+                niceID = true;
             }
             catch
             {
-                niceID = true;
-                MessageBox.Show("Halløjsovs, det var vist ikke et ordentligt tal. Prøv igen");
+                
+                MessageBox.Show("Indtast venligst et gyldigt virksomhedsID i textboksen\ntil venstre for grafen.");
                 niceID = false;
             }
             if (niceID != true)
@@ -194,7 +195,7 @@ namespace TrashMaster.UserControls
             }
             catch
             {
-                MessageBox.Show("Halløjsovs, det var vist ikke et ordentligt tal. Prøv igen");
+                MessageBox.Show("Indtast venligst et gyldigt virksomhedsID i textboksen\ntil venstre for grafen.");
                 niceID = false;
             }
             if (niceID != true)
@@ -348,6 +349,12 @@ namespace TrashMaster.UserControls
             // Laver x-axis
             GeometryGroup xaxis_geom = new GeometryGroup();
             xaxis_geom.Children.Add(new LineGeometry(new Point(0, ymin), new Point(canGraph.Width, ymin)));
+            for (int i = canGraph.Children.Count - 1; i >= 0; i += -1)
+            {
+                UIElement Child = canGraph.Children[i];
+                if (Child is TextBlock)
+                    canGraph.Children.Remove(Child);
+            }
             //For-loop til generering af punkter til streger på x-aksen
             for (double x = xmin; x <= canGraph.Width - step; x += step)
             {
@@ -412,6 +419,24 @@ namespace TrashMaster.UserControls
             if (angle != 0)
                 textBlock.LayoutTransform = new RotateTransform(angle);
         }
+        private void Labelle(double x, double y, string text, Color color, double angle)
+        {
+
+            Label labl = new Label();
+
+            labl.Content = text;
+            
+            labl.Foreground = new SolidColorBrush(color);
+
+            Canvas.SetLeft(labl, x);
+
+            Canvas.SetTop(labl, y);
+
+            canGraph.Children.Add(labl);
+            // Rotate if desired.
+            if (angle != 0)
+                labl.LayoutTransform = new RotateTransform(angle);
+        }
 
         private void DrawYAxis(string yheader, int yaxismultiplier)
         {
@@ -425,12 +450,13 @@ namespace TrashMaster.UserControls
             for (double y = ymax; y <= canGraph.Height - step; y += step)
             {
                 yaxis_geom.Children.Add(new LineGeometry(new Point(xmin - margin / 2, y), new Point(xmin + margin / 2, y)));
-                Text(xmin - 3.5 * margin, ymin - y, ylabl.ToString(), Color.FromRgb(255, 255, 255), 0);
+                Labelle(xmin - 3.5 * margin, ymin - y, ylabl.ToString(), Color.FromRgb(255, 255, 255), 0);
                 ylabl += 1 * yaxismultiplier;
             }
             Text(xmin, ymax - 30, yheader, Color.FromRgb(255, 255, 255), 0);
             //Til slut tegnes der en sort linie baseret på ovenstående punkter
             Path yaxis_path = new Path();
+            
             yaxis_path.StrokeThickness = 1;
             yaxis_path.Stroke = Brushes.Black;
             yaxis_path.Data = yaxis_geom;
@@ -440,5 +466,11 @@ namespace TrashMaster.UserControls
             ylabl = 0;
         }
 
+        private void VirksomhedsIDinput_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "Indast VirksomhedsID her...")
+                txtBox.Text = string.Empty;
+        }
     }
 }
