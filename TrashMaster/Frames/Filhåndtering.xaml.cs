@@ -37,14 +37,13 @@ namespace TrashMaster.Frames
                 {
                     SQL_Handle.AddToDB(item, "Trash", true);
                 }
-
-                MessageBox.Show("De valgte rækker er blevet tilføjet til databasen");
-            } 
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
         public void Tilføj_Alle_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -55,8 +54,6 @@ namespace TrashMaster.Frames
                 {
                     SQL_Handle.AddToDB(item, "Trash", true);
                 }
-
-                MessageBox.Show("Alle rækkerne er blevet tilføjet til databasen.");
             }
             catch (Exception ex)
             {
