@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using TrashMaster.Handles;
 using TrashMaster.Misc;
+using System.Diagnostics;
 
 namespace TrashMaster.Frames
 {
@@ -33,50 +34,54 @@ namespace TrashMaster.Frames
         }
         private void button_Login_Click(object sender, RoutedEventArgs e)
         {
-
-            //Kør login i ny thread
-            //Når WPF elementer skal opdateres, eller der skal hentes værdier fra disse - skal de gøres vha. Dispatcher.
-            Task.Run(() =>
+            //Tjek om brugernavn og kodeord er indtastet
+            if (textbox_Username.Text == string.Empty || passwordbox_Password.Password == string.Empty)
             {
-                this.Dispatcher.Invoke(() =>
+                MessageBox.Show("Brugernavn og/eller adgangskode må ikke stå tomt.");
+            }
+            else
+            {
+                //Kør login i ny thread
+                //Når WPF elementer skal opdateres, eller der skal hentes værdier fra disse - skal de gøres vha. Dispatcher.
+                Task.Run(() =>
                 {
-                    LoadingCircle.Visibility = Visibility.Visible;
-                });
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        LoadingCircle.Visibility = Visibility.Visible;
+                    });
 
-                this.textbox_Username.Dispatcher.Invoke(DispatcherPriority.Normal,
-                 new Action(() => { Username = this.textbox_Username.Text; }));
+                    this.textbox_Username.Dispatcher.Invoke(DispatcherPriority.Normal,
+                     new Action(() => { Username = this.textbox_Username.Text; }));
 
-                this.passwordbox_Password.Dispatcher.Invoke(DispatcherPriority.Normal,
-                 new Action(() => { Password = this.passwordbox_Password.Password; }));
+                    this.passwordbox_Password.Dispatcher.Invoke(DispatcherPriority.Normal,
+                     new Action(() => { Password = this.passwordbox_Password.Password; }));
 
-                if (SQL_Handle.TryLogin(Username, Password) == true)
-                {
-                    //log tidspunkt for login
-                    loginTime = DateTime.Now.ToString();
+                    if (SQL_Handle.TryLogin(Username, Password) == true)
+                    {
+                        //log tidspunkt for login
+                        loginTime = DateTime.Now.ToString();
+
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            //Hvis login godkendes, gør MenuHeader synlig og naviger bruger til Overblik siden.
+                            ((MainWindow)Application.Current.MainWindow).MenuHeader.Visibility = Visibility.Visible;
+                            ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = new Overblik();
+                        });
+                    }
+                    else
+                    {
+                        MessageBox.Show("Forkert brugernavn eller adgangskode");
+                    }
 
                     this.Dispatcher.Invoke(() =>
                     {
-                        //Hvis login godkendes, gør MenuHeader synlig og naviger bruger til Overblik siden.
-                        ((MainWindow)Application.Current.MainWindow).MenuHeader.Visibility = Visibility.Visible;
-                        ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = new Overblik();
+                        LoadingCircle.Visibility = Visibility.Hidden;
                     });
-                }
-                else
-                {
-                    MessageBox.Show("Forkert brugernavn eller adgangskode");
-                }
 
-                this.Dispatcher.Invoke(() =>
-                {
-                    LoadingCircle.Visibility = Visibility.Hidden;
                 });
-
-            });
+            }
         }
 
-        
-
-        
 
         //log brug af appen, metode kaldes ved logud
         public static void LogUse(string logouttime)
@@ -101,6 +106,16 @@ namespace TrashMaster.Frames
             {
                 outputFile.WriteLine("Login\t\t\t" + " Logud\t\t" + "\tBruger\n");
             }
+        }
+
+        private void button_SkiftDB_Click(object sender, RoutedEventArgs e)
+        {
+            //Gør skjulte filer synlig (Så applikationen kan åbne connstring.txt).
+            FileInfo file = new FileInfo(@"C:\ProgramData\JETtm\connstring.txt");
+            file.Attributes = FileAttributes.Hidden;
+
+            //Åben connstring.txt
+            Process.Start(@"C:\ProgramData\JETtm\connstring.txt");
         }
     }
 }

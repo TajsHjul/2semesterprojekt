@@ -16,7 +16,6 @@ namespace TrashMaster.Handles
         private static readonly string connectionString = File.ReadAllLines(System.Environment.
                              GetFolderPath(
                                  Environment.SpecialFolder.CommonApplicationData
-
                              )
                              +
                              "/JETtm/connstring.txt").First();
@@ -25,36 +24,45 @@ namespace TrashMaster.Handles
         //Forsøg at logge ind med de givne parametre
         public static bool TryLogin(string username, string password)
         {
-            SqlConnection connection = new SqlConnection(connectionString);
-            string fullSQLquery = "SELECT * FROM Users WHERE hcUsername = '" + username + "' AND hcPassword = '" + password + "'";
+            //Test om connectionstring fra .txt er gyldig
             try
             {
-                connection.Open();
-                SqlDataAdapter sda = new SqlDataAdapter(fullSQLquery, connectionString);
-                DataTable dtbl = new DataTable();
-                sda.Fill(dtbl);
+                SqlConnection connection = new SqlConnection(connectionString);
+                string fullSQLquery = "SELECT * FROM Users WHERE hcUsername = '" + username + "' AND hcPassword = '" + password + "'";
 
-                if (dtbl.Rows.Count == 1)
+                //Hvis connectionString er gyldig:
+                try
                 {
-                    ////Hvis login godkendes, gør MenuHeader synlig og naviger bruger til Overblik siden.
-                    //((MainWindow)Application.Current.MainWindow).MenuHeader.Visibility = Visibility.Visible;
-                    //((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = new Overblik();
-                    return true;
+                    connection.Open();
+                    SqlDataAdapter sda = new SqlDataAdapter(fullSQLquery, connectionString);
+                    DataTable dtbl = new DataTable();
+                    sda.Fill(dtbl);
+
+                    if (dtbl.Rows.Count == 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+
+                catch (Exception ex)
                 {
+                    MessageBox.Show(ex.Message);
                     return false;
                 }
+                finally
+                {
+                    if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+                }
             }
-
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Den indtastede connectionstring er ikke gyldig.\nIndtast oplysningerne i det følgende format:" +
+                    "\n\nServer = SERVERNAME; Database = DBNAME; User Id = USERNAME; Password = PASSWORD;");
                 return false;
-            }
-            finally
-            {
-                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
         }
 
@@ -75,14 +83,14 @@ namespace TrashMaster.Handles
                 SqlCommand command = new SqlCommand(fullSQLquery, connection);
                 using (SqlDataReader reader = command.ExecuteReader()) { }
 
-                
-                    MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
-                
+
+                MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
+
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
             else
-                MessageBox.Show("Hey yo, klaphat.\n Kun godkendte VirksomhedsID!!!");
-            
+                MessageBox.Show("Indtast venligst et gyldigt virksomheds ID");
+
         }
 
 
@@ -105,7 +113,7 @@ namespace TrashMaster.Handles
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
             else
-                MessageBox.Show("Hey yo, klaphat.\n Kun godkendte VirksomhedsID!!!");
+                MessageBox.Show("Indtast gyldigt virksomhedsID");
 
 
         }
@@ -128,8 +136,8 @@ namespace TrashMaster.Handles
 
                 MessageBox.Show("Affaldsdata med id: " + id + " er nu slettet fra databasen.");
             }
-                
-            catch(Exception splep)
+
+            catch (Exception splep)
             {
                 MessageBox.Show(Convert.ToString(splep));
             }
@@ -137,8 +145,8 @@ namespace TrashMaster.Handles
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
-            
-            
+
+
 
         }
 
@@ -162,10 +170,10 @@ namespace TrashMaster.Handles
                         }
                     }
                 }
-                
+
                 return dt.DefaultView;
-                
-                
+
+
             }
             catch (Exception ex)
             {
@@ -188,26 +196,26 @@ namespace TrashMaster.Handles
             //"id" på datagrid hedder "TrashID" i databasen.
             string fullSQLquery = String.Format("SELECT * FROM Virksomheder WHERE VirksomhedID= {0}", vID);
 
-            
-                connection.Open();
 
-                SqlCommand command = new SqlCommand(fullSQLquery, connection);
-                SqlDataReader reader = command.ExecuteReader();
+            connection.Open();
 
-                
-                if (reader.HasRows == false)
-                {
-                    
-                         return false;
-                }
-                else
-                {
+            SqlCommand command = new SqlCommand(fullSQLquery, connection);
+            SqlDataReader reader = command.ExecuteReader();
 
-                    return true;
-                }
-                
-           
-            
+
+            if (reader.HasRows == false)
+            {
+
+                return false;
+            }
+            else
+            {
+
+                return true;
+            }
+
+
+
         }
     }
 }

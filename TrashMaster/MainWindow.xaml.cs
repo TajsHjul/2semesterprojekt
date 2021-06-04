@@ -6,6 +6,7 @@ using TrashMaster.Frames;
 using TrashMaster.Handles;
 using TrashMaster.Misc;
 using System.Threading;
+using System.Diagnostics;
 
 namespace TrashMaster
 {
@@ -17,12 +18,11 @@ namespace TrashMaster
         public MainWindow()
         {
             InitializeComponent();
-            //
-            string blæbtekst = "Slice me nice ( ͡~ ͜ʖ ͡° )";
-            if (File.Exists(System.Environment.
-                             GetFolderPath(
+
+            //Skrevet af Tajs
+            string introTekst = "Applikationen er ikke forbundet til en database. \n\nIndsæt venligst connectionstring for den ønskede database i det følgende dokument beliggende på: ";
+            if (File.Exists(System.Environment.GetFolderPath(
                                  Environment.SpecialFolder.CommonApplicationData
-                                 
                              )
                              +
                              "/JETtm/connstring.txt"
@@ -44,8 +44,8 @@ namespace TrashMaster
                              "/JETtm/connstring.txt"
                              );
 
-                
-                
+
+                //C:\ProgramData\JETm\connString.txt
             }
 
             if (new FileInfo(System.Environment.
@@ -57,16 +57,27 @@ namespace TrashMaster
                              "/JETtm/connstring.txt"
                              ).Length == 0)
             {
-                MessageBox.Show(blæbtekst + "\n\nDu burde nok lige rette i connectionstring.\nDen ligger i :\n" + System.Environment.
+                MessageBox.Show(introTekst + System.Environment.
                              GetFolderPath(
                                  Environment.SpecialFolder.CommonApplicationData
 
                              )
                              +
-                             "/JETtm/connstring.txt");
-                MessageBox.Show("Denne applikation vil nu afslutte...");
-                this.Close();
+                             "/JETtm/connstring.txt"
+                             );
+
+
+                //Gør skjulte filer synlig (Så applikationen kan åbne connstring.txt).
+                FileInfo file = new FileInfo(@"C:\ProgramData\JETtm\connstring.txt");
+                file.Attributes = FileAttributes.Hidden;
+
+                //Åben connstring.txt
+                Process.Start(@"C:\ProgramData\JETtm\connstring.txt");
+
+
             }
+
+
 
             //FileWatcher
             FSWatcher();
@@ -96,6 +107,7 @@ namespace TrashMaster
             MainNavigationFrame.Content = new Overblik();
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
             textblock_Filhåndtering.TextDecorations = null;
+            textblock_Graf.TextDecorations = null;
         }
 
         //Naviger til 'Filhåndtering' siden, understreg menupunkt.
@@ -104,6 +116,7 @@ namespace TrashMaster
             MainNavigationFrame.Content = new Filhåndtering();
             textblock_Filhåndtering.TextDecorations = TextDecorations.Underline;
             textblock_Overblik.TextDecorations = null;
+            textblock_Graf.TextDecorations = null;
         }
 
         //Naviger til 'Graf' siden, understreg menupunkt.
@@ -111,6 +124,7 @@ namespace TrashMaster
         {
             MainNavigationFrame.Content = new showGraph();
             textblock_Graf.TextDecorations = TextDecorations.Underline;
+            textblock_Filhåndtering.TextDecorations = null;
             textblock_Overblik.TextDecorations = null;
         }
 
@@ -189,7 +203,7 @@ namespace TrashMaster
 
                     break;
 
-                    //blankt pt
+                //blankt pt
                 case MessageBoxResult.No:
                     break;
             }
