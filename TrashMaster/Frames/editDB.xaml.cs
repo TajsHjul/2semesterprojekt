@@ -9,9 +9,7 @@ using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
-    /// <summary>
-    /// Skrevet af Edgar
-    /// </summary>
+    
     public partial class editDB : Page
     {
         //Gør felterne (textbox, combobox) i editDB tilgængelige med {get;). 
@@ -28,6 +26,7 @@ namespace TrashMaster.Frames
         public TextBox get_Textbox_Ansvarlig { get { return textbox_Ansvarlig; } }
         public TextBox get_Textbox_VirksomhedID { get { return textbox_VirksomhedID; } }
 
+        //Skrevet af Edgar
         public editDB()
         {
             InitializeComponent();
@@ -37,6 +36,7 @@ namespace TrashMaster.Frames
             cmbMåleenhed.ItemsSource = Enum.GetValues(typeof(Trash.måleenhed));
         }
 
+        //Skrevet af Edgar
         private void Rediger_Click(object sender, RoutedEventArgs e)
         {
             //convert textbox_Dato to SQL accepted format.
@@ -66,6 +66,7 @@ namespace TrashMaster.Frames
             }
         }
 
+        //Skrevet af Edgar
         //Kun tal og punktum i 'Mængde' box.
         private void textbox_Mængde_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
@@ -73,12 +74,15 @@ namespace TrashMaster.Frames
             e.Handled = Regex.IsMatch(e.Text, "[^0-9.]+");
         }
 
+        //Skrevet af Edgar
         //Kun tal i 'VirksomhedID' box.
         private void textbox_VirksomhedID_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
+
+        //Skrevet af Tajs
         private void LinkValues()
         {
             switch (cmbAffaldskategori.SelectedItem)
@@ -120,6 +124,7 @@ namespace TrashMaster.Frames
             }
         }
 
+        //Skrevet af Edgar
         private void cmbAffaldskategori_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LinkValues();

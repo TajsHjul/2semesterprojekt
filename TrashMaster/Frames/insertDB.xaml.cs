@@ -9,11 +9,10 @@ using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
-    /// <summary>
-    /// Skrevet af Edgar
-    /// </summary>
+  
     public partial class insertDB : Page
     {
+        //Skrevet af Edgar
         public insertDB()
         {
 
@@ -23,6 +22,7 @@ namespace TrashMaster.Frames
 
         }
 
+        //Skrevet af Tajs :P
         private void LinkValues()
         {
             switch (cmbAffaldskategori.SelectedItem)
@@ -64,11 +64,13 @@ namespace TrashMaster.Frames
             }
         }
 
+        //Skrevet af Edgar
         private void cmbAffaldskategori_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LinkValues();
         }
 
+        //Skrevet af Edgar
         private void Tilføj_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -94,6 +96,8 @@ namespace TrashMaster.Frames
 
         }
 
+
+        //Skrevet af Edgar
         //Kun tal og punktum i 'Mængde' box.
         private void textbox_Mængde_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
@@ -101,6 +105,7 @@ namespace TrashMaster.Frames
             e.Handled = Regex.IsMatch(e.Text, "[^0-9.]+");
         }
 
+        //Skrevet af Edgar
         //Kun tal i 'VirksomhedID' box.
         private void textbox_VirksomhedID_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
