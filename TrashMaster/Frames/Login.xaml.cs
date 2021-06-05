@@ -22,6 +22,8 @@ namespace TrashMaster.Frames
 
         public static string loginTime;
 
+        public static bool isLoggedIn;
+
         public Login()
         {
             InitializeComponent();
@@ -57,6 +59,7 @@ namespace TrashMaster.Frames
                     {
                         //log tidspunkt for login
                         loginTime = DateTime.Now.ToString();
+                        isLoggedIn = true;
 
                         this.Dispatcher.Invoke(() =>
                         {
@@ -68,6 +71,7 @@ namespace TrashMaster.Frames
                     else
                     {
                         MessageBox.Show("Forkert brugernavn eller adgangskode");
+                        isLoggedIn = false;
                     }
 
                     this.Dispatcher.Invoke(() =>
@@ -93,7 +97,7 @@ namespace TrashMaster.Frames
                 Directory.CreateDirectory(userLogFolder);
                 using (StreamWriter outputFile = new StreamWriter(Path.Combine(userLogFolder, fileName)))
                 {
-                    outputFile.WriteLine("Login\t\t\t" + "  Logud\t\t\t" + "\tBruger\n");
+                    outputFile.WriteLine("Login\t\t\t" + "  Logud\t\t\t" + "Bruger\n");
                 }
             }
 

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrashMaster"
         mc:Ignorable="d"
+        Closing="Window_Closing"
         Title="MainWindow" Height="720" Width="1280" ResizeMode="NoResize" Background="#e8e8e8">
     <Grid>
         <StackPanel Orientation="Vertical">
@@ -44,6 +45,14 @@
                             <Image Source="/Icons/LogOut_Icon.png" Height="35" Width="30" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" Margin="0,8,0,2"/>
                             <TextBlock Text="Log ud" Margin="2,7,0,0" FontWeight="Bold" FontSize="16"/>
                         </StackPanel>
+                        <Button.ContextMenu>
+
+                            <ContextMenu>
+                                <MenuItem Header="Åben log" Click="ÅbenLog_Click" />
+                            </ContextMenu>
+
+                        </Button.ContextMenu>
+
                     </Button>
                 </DockPanel>
 
