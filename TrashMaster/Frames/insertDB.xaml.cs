@@ -45,8 +45,6 @@ namespace TrashMaster.Frames
                 };
 
                 SQL_Handle.AddToDB(dbInsert, "Trash", false);
-                MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
-
             }
             catch (Exception ex)
             {

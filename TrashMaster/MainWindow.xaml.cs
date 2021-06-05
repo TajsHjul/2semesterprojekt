@@ -89,9 +89,9 @@ namespace TrashMaster
             //start-side
             MainNavigationFrame.Content = new Login();
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
-            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
             //Sætter formateringen for datetime
+            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
             CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
             newCulture.DateTimeFormat.ShortDatePattern = "";
             newCulture.DateTimeFormat.LongTimePattern = "yyyy:MM:dd HH:mm";

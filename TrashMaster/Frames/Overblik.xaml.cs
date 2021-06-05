@@ -139,7 +139,7 @@ namespace TrashMaster.Frames
                     LoadingCircle.Visibility = Visibility.Collapsed;
                 });
 
-                return SQL_Handle.QueryToSource("SELECT * FROM dbo." + tableName); 
+                return SQL_Handle.QueryToSource("SELECT * FROM dbo." + tableName);
 
             });
 
