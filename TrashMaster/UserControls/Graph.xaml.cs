@@ -37,11 +37,9 @@ namespace TrashMaster.UserControls
         int xlabl = 0;
         int ylabl = 0;
         string NaughtyID = "";
-        bool clickbool;
 
         public Graph()
         {
-            bool clickbool = false;
             InitializeComponent();
             xmax = canGraph.Width - margin;
             ymin = canGraph.Height - margin;
