@@ -33,9 +33,18 @@ namespace TrashMaster.Frames
         {
             try
             {
+                
                 foreach (Trash item in Filhåndtering_GRID.SelectedItems)
                 {
-                    SQL_Handle.AddToDB(item, "Trash", true);
+                    if (constraintOK(item) == true)
+                    {
+                        SQL_Handle.AddToDB(item, "Trash", true);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Affaldspostering "+item.Id+" overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori...");
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -52,7 +61,15 @@ namespace TrashMaster.Frames
 
                 foreach (Trash item in Filhåndtering_GRID.SelectedItems)
                 {
-                    SQL_Handle.AddToDB(item, "Trash", true);
+                    if (constraintOK(item) == true)
+                    {
+                        SQL_Handle.AddToDB(item, "Trash", true);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Affaldspostering " + item.Id + " overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori...");
+                    }
+
                 }
             }
             catch (Exception ex)
@@ -114,6 +131,73 @@ namespace TrashMaster.Frames
 
                 menuitem_TilføjAlleRækker.IsEnabled = true;
                 menuitem_TilføjValgteRækker.IsEnabled = true;
+            }
+        }
+
+        private static bool constraintOK(Trash junk)
+        {
+            switch(junk.Affaldskategori)
+            {
+                case Trash.affaldskategori.Batterier:
+                case Trash.affaldskategori.Elektronikaffald:
+                case Trash.affaldskategori.ImprægneretTræ:
+                case Trash.affaldskategori.Plastemballager:
+                case Trash.affaldskategori.PVC:
+                    {
+                        switch(junk.Måleenhed)
+                        {
+                            case Trash.måleenhed.Gram:
+                            case Trash.måleenhed.Kilogram:
+                            case Trash.måleenhed.Ton:
+                                {
+                                    return true;
+                                }
+                            default:
+                                {
+                                    return false;
+                                }
+                        }
+                        
+                    }
+                
+
+                case Trash.affaldskategori.Inventar:
+                case Trash.affaldskategori.OrganiskAffald:
+                case Trash.affaldskategori.Papogpapir:
+                    {
+                        switch (junk.Måleenhed)
+                        {
+                            case Trash.måleenhed.Liter:
+                            case Trash.måleenhed.M3:
+                            case Trash.måleenhed.Hektoliter:
+                                {
+                                    return true;
+                                }
+                            default:
+                                {
+                                    return false;
+                                }
+                        }
+
+                    }
+                case Trash.affaldskategori.Biler:
+                    {
+                        switch (junk.Måleenhed)
+                        {
+                            case Trash.måleenhed.Stk:
+                            case Trash.måleenhed.Colli:
+                                {
+                                    return true;
+                                }
+                            default:
+                                {
+                                    return false;
+                                }
+                        }
+
+                    }
+                default:
+                    return false;
             }
         }
     }
