@@ -101,7 +101,7 @@ namespace TrashMaster.Frames
             //true for appendline (ny linje i samme fil)
             using (StreamWriter outputFile = new StreamWriter(Path.Combine(userLogFolder, fileName), true))
             {
-                outputFile.WriteLine("Login\t\t\t" + " Logud\t\t" + "\tBruger\n");
+                outputFile.WriteLine(loginTime + "  -  " + logouttime + "\t\t " + Username);
             }
         }
 
