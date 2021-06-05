@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
-    
+
     public partial class Filhåndtering : Page
     {
         private System.Collections.IList selectedItems;

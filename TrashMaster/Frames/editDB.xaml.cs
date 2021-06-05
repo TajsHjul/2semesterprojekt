@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
-    
+
     public partial class editDB : Page
     {
         //Gør felterne (textbox, combobox) i editDB tilgængelige med {get;). 

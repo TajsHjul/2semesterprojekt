@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
-  
+
     public partial class insertDB : Page
     {
         //Skrevet af Edgar
