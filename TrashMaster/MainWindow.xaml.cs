@@ -14,10 +14,12 @@ namespace TrashMaster
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
+
     {
         //Skrevet af Janus, Edgar og Tajs
         public MainWindow()
         {
+            Login.isLoggedIn = false;
             InitializeComponent();
 
             //hvis folder og .txt for connectionString ikke findes, lav begge dele
@@ -106,6 +108,7 @@ namespace TrashMaster
 
                     //log use
                     Login.LogUse(DateTime.Now.ToString());
+                    Login.isLoggedIn = false;
 
                     //naviger to login page
                     MainNavigationFrame.Content = new Login();
@@ -176,6 +179,36 @@ namespace TrashMaster
                 case MessageBoxResult.No:
                     break;
             }
+        }
+
+        //Log brug af appen hvis vinduet lukkes
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (Login.isLoggedIn == true)
+            {
+                MessageBoxResult result = MessageBox.Show("Log ud?\nHåndtering af affaldsdata vil blive utilgængeligt.", "Bekræft log ud", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+
+                        //log use
+                        Login.LogUse(DateTime.Now.ToString());
+
+                        //vis log-besked
+                        MessageBox.Show(@"Log gemt til: C:\userLog\UserLog.txt");
+                        break;
+
+                    //blankt pt
+                    case MessageBoxResult.No:
+                        break;
+                }
+            }
+        }
+
+        //Åben log
+        private void ÅbenLog_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(@"C:\userLog\UserLog.txt");
         }
     }
 }
