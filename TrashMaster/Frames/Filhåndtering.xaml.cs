@@ -40,7 +40,9 @@ namespace TrashMaster.Frames
                 }
                 else
                 {
-                    MessageBox.Show("Affaldspostering " + item.Id + " overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori...");
+                    MessageBox.Show("Affaldspostering " + item.Id + " overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori" + 
+                        ", og er derfor ikke tilføjet til databasen."
+                        );
                 }
             }
             MessageBox.Show("De valgte rækker er nu tilføjet til databasen.");

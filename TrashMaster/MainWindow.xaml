@@ -9,8 +9,7 @@
     <Grid>
         <StackPanel Orientation="Vertical">
 <!-- Skrevet af Edgar-->
-            
-            
+   
             <!-- MenuPunkter -->
             <StackPanel x:Name="MenuHeader" Orientation="Horizontal" Margin="10">
 
