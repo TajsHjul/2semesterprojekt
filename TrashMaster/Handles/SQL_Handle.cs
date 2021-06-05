@@ -13,7 +13,7 @@ namespace TrashMaster.Handles
     /// </summary>
     class SQL_Handle : Trash
     {
-        private static readonly string connectionString = File.ReadAllLines(System.Environment.
+        private static string connectionString = File.ReadAllLines(System.Environment.
                              GetFolderPath(
                                  Environment.SpecialFolder.CommonApplicationData
                              )
@@ -27,13 +27,23 @@ namespace TrashMaster.Handles
             //Test om connectionstring fra .txt er gyldig
             try
             {
+                //check for opdatering af connectionstring ved loginforsøg 
+                connectionString = File.ReadAllLines(System.Environment.
+                                 GetFolderPath(
+                                     Environment.SpecialFolder.CommonApplicationData
+                                 )
+                                 +
+                                 "/JETtm/connstring.txt").First();
+
+                //Test om connectionstring fra .txt er gyldig
                 SqlConnection connection = new SqlConnection(connectionString);
-                string fullSQLquery = "SELECT * FROM Users WHERE hcUsername = '" + username + "' AND hcPassword = '" + password + "'";
 
                 //Hvis connectionString er gyldig:
                 try
                 {
+
                     connection.Open();
+                    string fullSQLquery = "SELECT * FROM Users WHERE hcUsername = '" + username + "' AND hcPassword = '" + password + "'";
                     SqlDataAdapter sda = new SqlDataAdapter(fullSQLquery, connectionString);
                     DataTable dtbl = new DataTable();
                     sda.Fill(dtbl);
@@ -84,12 +94,12 @@ namespace TrashMaster.Handles
                 using (SqlDataReader reader = command.ExecuteReader()) { }
 
 
-                MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
+                
 
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
             else
-                MessageBox.Show("Indtast venligst et gyldigt virksomheds ID");
+                MessageBox.Show("VirksomhedsID er ikke gyldigt.");
 
         }
 

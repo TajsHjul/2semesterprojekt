@@ -15,11 +15,12 @@ namespace TrashMaster
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Skrevet af Janus, Edgar og Tajs
         public MainWindow()
         {
             InitializeComponent();
 
-            //Skrevet af Tajs
+            
             string introTekst = "Applikationen er ikke forbundet til en database. \n\nIndsæt venligst connectionstring for den ønskede database i det følgende dokument beliggende på: ";
             if (File.Exists(System.Environment.GetFolderPath(
                                  Environment.SpecialFolder.CommonApplicationData
@@ -63,7 +64,7 @@ namespace TrashMaster
 
                              )
                              +
-                             "/JETtm/connstring.txt"
+                             "/JETtm/connstring.txt" + "\n\nGenstart herefter applikationen."
                              );
 
 
@@ -73,7 +74,7 @@ namespace TrashMaster
 
                 //Åben connstring.txt
                 Process.Start(@"C:\ProgramData\JETtm\connstring.txt");
-
+                Application.Current.Shutdown();
 
             }
 
@@ -101,6 +102,7 @@ namespace TrashMaster
             Thread.CurrentThread.CurrentCulture = newCulture;
         }
 
+        //Skrevet af Edgar
         //Naviger til 'Overblik' siden, understreg menupunkt.
         private void Overblik_Click(object sender, RoutedEventArgs e)
         {
@@ -110,6 +112,7 @@ namespace TrashMaster
             textblock_Graf.TextDecorations = null;
         }
 
+        //Skrevet af Edgar
         //Naviger til 'Filhåndtering' siden, understreg menupunkt.
         private void Filhåndtering_Click(object sender, RoutedEventArgs e)
         {
@@ -119,6 +122,7 @@ namespace TrashMaster
             textblock_Graf.TextDecorations = null;
         }
 
+        //Skrevet af Edgar
         //Naviger til 'Graf' siden, understreg menupunkt.
         private void Graf_Click(object sender, RoutedEventArgs e)
         {
@@ -128,6 +132,7 @@ namespace TrashMaster
             textblock_Overblik.TextDecorations = null;
         }
 
+        //Skrevet af Edgar
         //Log ud
         private void LogUd_Click(object sender, RoutedEventArgs e)
         {
@@ -152,8 +157,8 @@ namespace TrashMaster
         }
 
 
-
-        public void FSWatcher() //Lavet af JBR
+        //Skrevet af Janus
+        public void FSWatcher() 
         {
             // Definerer vores mappe som der skal watches af appen
             string dropzoneFolder = @"C:\Dropzone";
@@ -182,6 +187,7 @@ namespace TrashMaster
             watcher.EnableRaisingEvents = true;
         }
 
+        //Skrevet af Edgar
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
             //Prompt bruger 'OnCreated' event

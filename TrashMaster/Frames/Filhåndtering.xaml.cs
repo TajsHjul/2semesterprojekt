@@ -11,16 +11,16 @@ using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
-    /// <summary>
-    /// Skrevet af: Edgar
-    /// </summary>
+    
     public partial class Filhåndtering : Page
     {
+        //Skrevet af Edgar
         public Filhåndtering()
         {
             InitializeComponent();
         }
 
+        //Skrevet af Edgar
         //Åben .csv fil
         private void Åben_Fil_Click(object sender, RoutedEventArgs e)
         {
@@ -28,61 +28,49 @@ namespace TrashMaster.Frames
             buttonsAvailable();
         }
 
-
+        //Skrevet af Edgar
         public void Tilføj_Valgte_Click(object sender, RoutedEventArgs e)
+        
         {
-            try
+            foreach (Trash item in Filhåndtering_GRID.SelectedItems)
             {
-                
-                foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+                if (constraintOK(item) == true)
                 {
-                    if (constraintOK(item) == true)
-                    {
-                        SQL_Handle.AddToDB(item, "Trash", true);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Affaldspostering "+item.Id+" overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori...");
-                    }
-                    
+                    SQL_Handle.AddToDB(item, "Trash", true);
+                }
+                else
+                {
+                    MessageBox.Show("Affaldspostering " + item.Id + " overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori...");
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            MessageBox.Show("De valgte rækker er nu tilføjet til databasen.");
         }
 
+        //Skrevet af Edgar
         public void Tilføj_Alle_Click(object sender, RoutedEventArgs e)
         {
-            try
+            Filhåndtering_GRID.SelectAllCells();
+            foreach (Trash item in Filhåndtering_GRID.SelectedItems)
             {
-                Filhåndtering_GRID.SelectAllCells();
-
-                foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+                if (constraintOK(item) == true)
                 {
-                    if (constraintOK(item) == true)
-                    {
-                        SQL_Handle.AddToDB(item, "Trash", true);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Affaldspostering " + item.Id + " overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori...");
-                    }
-
+                    SQL_Handle.AddToDB(item, "Trash", true);
+                }
+                else
+                {
+                    MessageBox.Show("Affaldspostering " + item.Id + " overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori...");
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            MessageBox.Show("De valgte rækker er nu tilføjet til databasen.");
         }
 
+        //Skrevet af Edgar
         private void Dropzone_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(@"c:\Dropzone");
         }
 
+        //Skrevet af Edgar
         //Gør 'Tilføj valgte rækker' tilgængelig når mindst én række er valgt.
         private void IsItemSelected(object sender, MouseButtonEventArgs e)
         {
@@ -92,6 +80,7 @@ namespace TrashMaster.Frames
             }
         }
 
+        //Skrevet af Edgar
         //Drag'n'drop
         private void DragAndDropCSV(object sender, DragEventArgs e)
         {
@@ -112,6 +101,7 @@ namespace TrashMaster.Frames
             }
         }
 
+        //Skrevet af Edgar
         //Formater DateTime når kolonnen genereres.
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -122,6 +112,7 @@ namespace TrashMaster.Frames
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "{0:0.00}";
         }
 
+        //Skrevet af Edgar
         private void buttonsAvailable()
         {
             //gør 'tilføj alle rækker' og 'gem til fil' tilgængelig, hvis en fil er blevet indlæst til datagrid.
@@ -134,6 +125,7 @@ namespace TrashMaster.Frames
             }
         }
 
+        //Skrevet af Tajs
         private static bool constraintOK(Trash junk)
         {
             switch(junk.Affaldskategori)
