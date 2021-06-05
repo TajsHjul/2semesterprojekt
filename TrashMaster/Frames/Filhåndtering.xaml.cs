@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,9 +8,12 @@ using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
-    
+
     public partial class Filhåndtering : Page
     {
+        private System.Collections.IList selectedItems;
+
+
         //Skrevet af Edgar
         public Filhåndtering()
         {
@@ -29,39 +29,78 @@ namespace TrashMaster.Frames
         }
 
         //Skrevet af Edgar
-        public void Tilføj_Valgte_Click(object sender, RoutedEventArgs e)
-        
+        public async void Tilføj_Valgte_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Trash item in Filhåndtering_GRID.SelectedItems)
+            await Task.Run(() =>
             {
-                if (constraintOK(item) == true)
+                this.Dispatcher.Invoke(() =>
                 {
-                    SQL_Handle.AddToDB(item, "Trash", true);
-                }
-                else
+                    Loadingcircle.Visibility = Visibility.Visible;
+                    Filhåndtering_GRID.Visibility = Visibility.Hidden;
+                });
+
+                this.Dispatcher.Invoke(() =>
                 {
-                    MessageBox.Show("Affaldspostering " + item.Id + " overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori...");
+                    selectedItems = Filhåndtering_GRID.SelectedItems;
+                });
+
+                foreach (Trash item in selectedItems)
+                {
+                    if (constraintOK(item) == true)
+                    {
+                        SQL_Handle.AddToDB(item, "Trash", true);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Affaldspostering tilhørende ID:  '" + item.Id + "' overholder ikke restriktioner på måleenheder for pågældende affaldskategori, og bliver derfor ikke tilføjet til databasen.");
+                    }
                 }
-            }
-            MessageBox.Show("De valgte rækker er nu tilføjet til databasen.");
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Loadingcircle.Visibility = Visibility.Collapsed;
+                    Filhåndtering_GRID.Visibility = Visibility.Visible;
+                });
+                MessageBox.Show("De valgte rækker er nu tilføjet til databasen.");
+            });
         }
 
         //Skrevet af Edgar
-        public void Tilføj_Alle_Click(object sender, RoutedEventArgs e)
+        private async void Tilføj_Alle_Click(object sender, RoutedEventArgs e)
         {
-            Filhåndtering_GRID.SelectAllCells();
-            foreach (Trash item in Filhåndtering_GRID.SelectedItems)
-            {
-                if (constraintOK(item) == true)
+            await Task.Run(() =>
                 {
-                    SQL_Handle.AddToDB(item, "Trash", true);
-                }
-                else
-                {
-                    MessageBox.Show("Affaldspostering " + item.Id + " overholder ikke dette program's\nrestriktioner på måleenheder for pågældende\naffaldskategori...");
-                }
-            }
-            MessageBox.Show("De valgte rækker er nu tilføjet til databasen.");
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Loadingcircle.Visibility = Visibility.Visible;
+                        Filhåndtering_GRID.Visibility = Visibility.Hidden;
+                    });
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Filhåndtering_GRID.SelectAllCells();
+                        selectedItems = Filhåndtering_GRID.SelectedItems;
+                    });
+
+                    foreach (Trash item in selectedItems)
+                         {
+                             if (constraintOK(item) == true)
+                             {
+                                 SQL_Handle.AddToDB(item, "Trash", true);
+                             }
+                             else
+                             {
+                            MessageBox.Show("Affaldspostering tilhørende ID:  '" + item.Id + "' overholder ikke restriktioner på måleenheder for pågældende affaldskategori, og bliver derfor ikke tilføjet til databasen.");
+                        }
+                         }
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Loadingcircle.Visibility = Visibility.Collapsed;
+                        Filhåndtering_GRID.Visibility = Visibility.Visible;
+                    });
+                    MessageBox.Show("Alle rækker er nu tilføjet til databasen.");
+                });
         }
 
         //Skrevet af Edgar
@@ -88,7 +127,6 @@ namespace TrashMaster.Frames
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    // Note that you can have more than one file.
                     string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                     var file = files[0];
                     DataContext = CSV_Handle.ReadCSVFile(file);

@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using TrashMaster.Frames;
 
 namespace TrashMaster.Handles
 {
@@ -13,12 +12,8 @@ namespace TrashMaster.Handles
     /// </summary>
     class SQL_Handle : Trash
     {
-        private static string connectionString = File.ReadAllLines(System.Environment.
-                             GetFolderPath(
-                                 Environment.SpecialFolder.CommonApplicationData
-                             )
-                             +
-                             "/JETtm/connstring.txt").First();
+        private static string connectionString = File.ReadAllLines(System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)
+                             + "/JETtm/connstring.txt").First();
 
 
         //Forsøg at logge ind med de givne parametre
@@ -28,12 +23,8 @@ namespace TrashMaster.Handles
             try
             {
                 //check for opdatering af connectionstring ved loginforsøg 
-                connectionString = File.ReadAllLines(System.Environment.
-                                 GetFolderPath(
-                                     Environment.SpecialFolder.CommonApplicationData
-                                 )
-                                 +
-                                 "/JETtm/connstring.txt").First();
+                connectionString = File.ReadAllLines(System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)
+                             + "/JETtm/connstring.txt").First();
 
                 //Test om connectionstring fra .txt er gyldig
                 SqlConnection connection = new SqlConnection(connectionString);
@@ -41,7 +32,6 @@ namespace TrashMaster.Handles
                 //Hvis connectionString er gyldig:
                 try
                 {
-
                     connection.Open();
                     string fullSQLquery = "SELECT * FROM Users WHERE hcUsername = '" + username + "' AND hcPassword = '" + password + "'";
                     SqlDataAdapter sda = new SqlDataAdapter(fullSQLquery, connectionString);
@@ -86,17 +76,31 @@ namespace TrashMaster.Handles
             string fullSQLquery = String.Format("INSERT INTO " + tablename + " (Mængde, Måleenhed, Affaldskategori, Affaldsbeskrivelse, Ansvarlig, VirksomhedID) " +
                 "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')", trash.Mængde, trash.Måleenhed, trash.Affaldskategori, trash.Affaldsbeskrivelse, trash.Ansvarlig, trash.VirksomhedID);
             if (SQL_Handle.CheckDetID(tablename, trash.VirksomhedID) == true)
-
             {
-                connection.Open();
+                try
+                {
+                    connection.Open();
 
-                SqlCommand command = new SqlCommand(fullSQLquery, connection);
-                using (SqlDataReader reader = command.ExecuteReader()) { }
+                    SqlCommand command = new SqlCommand(fullSQLquery, connection);
+                    using (SqlDataReader reader = command.ExecuteReader()) { }
 
-
-                
-
-                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+                    if (multiple == false)
+                    {
+                        MessageBox.Show("Affaldsregistreringen er nu tilføjet til databasen.");
+                    }
+                    else
+                    {
+                        //Hvis multiple er sat til true, tilføj manuelt messagebox for godkendt affaldsregistrering i den eksterne metode - for at undgå prompt for hver eneste tilføjelse //fx persistering af csv rækker
+                    }
+                }
+                catch (Exception splep)
+                {
+                    MessageBox.Show(Convert.ToString(splep));
+                }
+                finally
+                {
+                    if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+                }
             }
             else
                 MessageBox.Show("VirksomhedsID er ikke gyldigt.");
@@ -115,12 +119,22 @@ namespace TrashMaster.Handles
             if (SQL_Handle.CheckDetID(tablename, trash.VirksomhedID) == true)
 
             {
-                connection.Open();
+                try
+                {
+                    connection.Open();
 
-                SqlCommand command = new SqlCommand(fullSQLquery, connection);
-                using (SqlDataReader reader = command.ExecuteReader()) { }
-                MessageBox.Show("Dataen er nu redigeret og gemt til databasen.");
-                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+                    SqlCommand command = new SqlCommand(fullSQLquery, connection);
+                    using (SqlDataReader reader = command.ExecuteReader()) { }
+                    MessageBox.Show("Dataen er nu redigeret og gemt til databasen.");
+                }
+                catch (Exception splep)
+                {
+                    MessageBox.Show(Convert.ToString(splep));
+                }
+                finally
+                {
+                    if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+                }
             }
             else
                 MessageBox.Show("Indtast gyldigt virksomhedsID");
@@ -180,10 +194,7 @@ namespace TrashMaster.Handles
                         }
                     }
                 }
-
                 return dt.DefaultView;
-
-
             }
             catch (Exception ex)
             {
@@ -206,12 +217,10 @@ namespace TrashMaster.Handles
             //"id" på datagrid hedder "TrashID" i databasen.
             string fullSQLquery = String.Format("SELECT * FROM Virksomheder WHERE VirksomhedID= {0}", vID);
 
-
             connection.Open();
 
             SqlCommand command = new SqlCommand(fullSQLquery, connection);
             SqlDataReader reader = command.ExecuteReader();
-
 
             if (reader.HasRows == false)
             {
@@ -223,9 +232,6 @@ namespace TrashMaster.Handles
 
                 return true;
             }
-
-
-
         }
     }
 }

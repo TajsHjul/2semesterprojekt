@@ -20,53 +20,18 @@ namespace TrashMaster
         {
             InitializeComponent();
 
-            
-            string introTekst = "Applikationen er ikke forbundet til en database. \n\nIndsæt venligst connectionstring for den ønskede database i det følgende dokument beliggende på: ";
-            if (File.Exists(System.Environment.GetFolderPath(
-                                 Environment.SpecialFolder.CommonApplicationData
-                             )
-                             +
-                             "/JETtm/connstring.txt"
-                             ) == false)
+            //hvis folder og .txt for connectionString ikke findes, lav begge dele
+            if (File.Exists(System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "/JETtm/connstring.txt") == false)
             {
-                Directory.CreateDirectory(System.Environment.
-                             GetFolderPath(
-                                 Environment.SpecialFolder.CommonApplicationData
-
-                             )
-                             +
-                             "/JETtm");
-                File.Create(System.Environment.
-                             GetFolderPath(
-                                 Environment.SpecialFolder.CommonApplicationData
-
-                             )
-                             +
-                             "/JETtm/connstring.txt"
-                             );
-
-
-                //C:\ProgramData\JETm\connString.txt
+                Directory.CreateDirectory(System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "/JETtm"); 
+                File.Create(System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "/JETtm/connstring.txt");
             }
 
-            if (new FileInfo(System.Environment.
-                             GetFolderPath(
-                                 Environment.SpecialFolder.CommonApplicationData
-
-                             )
-                             +
-                             "/JETtm/connstring.txt"
-                             ).Length == 0)
+            //hvis connectionstring er tom, prompt dette og luk programmet
+            if (new FileInfo(System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "/JETtm/connstring.txt").Length == 0)
             {
-                MessageBox.Show(introTekst + System.Environment.
-                             GetFolderPath(
-                                 Environment.SpecialFolder.CommonApplicationData
-
-                             )
-                             +
-                             "/JETtm/connstring.txt" + "\n\nGenstart herefter applikationen."
-                             );
-
+                string introTekst = "Applikationen er ikke forbundet til en database. \n\nIndsæt venligst connectionstring for den ønskede database i det følgende dokument beliggende på: ";
+                MessageBox.Show(introTekst + System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "/JETtm/connstring.txt" + "\n\nGenstart herefter applikationen.");
 
                 //Gør skjulte filer synlig (Så applikationen kan åbne connstring.txt).
                 FileInfo file = new FileInfo(@"C:\ProgramData\JETtm\connstring.txt");
@@ -75,23 +40,17 @@ namespace TrashMaster
                 //Åben connstring.txt
                 Process.Start(@"C:\ProgramData\JETtm\connstring.txt");
                 Application.Current.Shutdown();
-
             }
-
-
-
-            //FileWatcher
-            FSWatcher();
-
-            //window placement
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             //start-side
             MainNavigationFrame.Content = new Login();
             textblock_Overblik.TextDecorations = TextDecorations.Underline;
-            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
+
+            //window placement
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             //Sætter formateringen for datetime
+            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
             CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
             newCulture.DateTimeFormat.ShortDatePattern = "";
             newCulture.DateTimeFormat.LongTimePattern = "yyyy:MM:dd HH:mm";
@@ -100,6 +59,10 @@ namespace TrashMaster
             //Decimal Seperator
             newCulture.NumberFormat.NumberDecimalSeparator = ".";
             Thread.CurrentThread.CurrentCulture = newCulture;
+
+            //FileWatcher
+            FSWatcher();
+
         }
 
         //Skrevet af Edgar

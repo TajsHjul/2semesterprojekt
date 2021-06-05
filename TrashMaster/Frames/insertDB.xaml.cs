@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TrashMaster.Handles;
 
 namespace TrashMaster.Frames
 {
-  
+
     public partial class insertDB : Page
     {
         //Skrevet af Edgar
@@ -21,6 +19,55 @@ namespace TrashMaster.Frames
             cmbMåleenhed.ItemsSource = Enum.GetValues(typeof(Trash.måleenhed));
 
         }
+
+        //Skrevet af Edgar
+        private void cmbAffaldskategori_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LinkValues();
+        }
+
+        //Skrevet af Edgar
+        private void Tilføj_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //Id tilføjes automatisk i DB - Dato har en standardvalue på DateTime.Now (sat i Trash klasse).
+                Trash dbInsert = new Trash
+                {
+                    Mængde = Convert.ToDecimal(textbox_Mængde.Text),
+                    Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), cmbMåleenhed.Text),
+                    Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), cmbAffaldskategori.Text),
+                    Affaldsbeskrivelse = textbox_Affaldsbeskrivelse.Text,
+                    Ansvarlig = textbox_Ansvarlig.Text,
+                    VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text),
+                };
+
+                SQL_Handle.AddToDB(dbInsert, "Trash", false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Udfyld venligst alle registreringskolonner.\n" + ex.Message);
+            }
+
+        }
+
+
+        //Skrevet af Edgar
+        //Kun tal og punktum i 'Mængde' box.
+        private void textbox_Mængde_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9.]+");
+        }
+
+        //Skrevet af Edgar
+        //Kun tal i 'VirksomhedID' box.
+        private void textbox_VirksomhedID_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
+
 
         //Skrevet af Tajs :P
         private void LinkValues()
@@ -50,7 +97,7 @@ namespace TrashMaster.Frames
                     cmbMåleenhed.ItemsSource = volumen;
                     break;
                 case Trash.affaldskategori.Biler:
-                
+
 
                     //Tillad kun Stk - ved at ekskludere de andre måleenheder - når Biler er valgt.
                     var antal = Enum.GetValues(typeof(Trash.måleenhed)).Cast<Trash.måleenhed>()
@@ -60,57 +107,8 @@ namespace TrashMaster.Frames
                     break;
 
                 default:
-                   break;
+                    break;
             }
-        }
-
-        //Skrevet af Edgar
-        private void cmbAffaldskategori_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LinkValues();
-        }
-
-        //Skrevet af Edgar
-        private void Tilføj_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                //Id tilføjes automatisk i DB - Dato har en standardvalue på DateTime.Now (sat i Trash klasse).
-                Trash dbInsert = new Trash
-                {
-                    Mængde = Convert.ToDecimal(textbox_Mængde.Text),
-                    Måleenhed = (Trash.måleenhed)Enum.Parse(typeof(Trash.måleenhed), cmbMåleenhed.Text),
-                    Affaldskategori = (Trash.affaldskategori)Enum.Parse(typeof(Trash.affaldskategori), cmbAffaldskategori.Text),
-                    Affaldsbeskrivelse = textbox_Affaldsbeskrivelse.Text,
-                    Ansvarlig = textbox_Ansvarlig.Text,
-                    VirksomhedID = Convert.ToInt32(textbox_VirksomhedID.Text),
-                };
-
-                SQL_Handle.AddToDB(dbInsert, "Trash", false);
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Udfyld venligst alle registreringskolonner.\n" + ex.Message);
-            }
-
-        }
-
-
-        //Skrevet af Edgar
-        //Kun tal og punktum i 'Mængde' box.
-        private void textbox_Mængde_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            e.Handled = Regex.IsMatch(e.Text, "[^0-9.]+");
-        }
-
-        //Skrevet af Edgar
-        //Kun tal i 'VirksomhedID' box.
-        private void textbox_VirksomhedID_OnlyNumbersPlease(object sender, System.Windows.Input.TextCompositionEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
 
     }

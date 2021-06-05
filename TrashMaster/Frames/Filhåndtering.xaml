@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:TrashMaster.Frames"
+      xmlns:local="clr-namespace:TrashMaster.Frames" xmlns:uc="clr-namespace:TrashMaster.Misc"
       mc:Ignorable="d" 
       Height="590" Width="1270"
       Title="Filhåndtering">
@@ -11,6 +11,13 @@
     <!-- THEGRID -->
     <Grid>
         <StackPanel Orientation="Vertical">
+
+            <!-- LoadingCircle-->
+            <StackPanel Orientation="Vertical" x:Name="Loadingcircle" Visibility="Collapsed">
+                <uc:LoadingCircle Visibility="Visible"/>
+                <TextBlock Text="Tilføjer rækker ... " HorizontalAlignment="Center"/>
+            </StackPanel>
+            <!-- LoadingCircle-->
 
             <DataGrid x:Name="Filhåndtering_GRID" Height="540" Width="1235" Margin="1"  Background="Transparent"            
                       SelectionMode="Extended"
