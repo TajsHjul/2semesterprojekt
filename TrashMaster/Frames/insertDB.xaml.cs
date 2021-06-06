@@ -69,7 +69,7 @@ namespace TrashMaster.Frames
         }
 
 
-        //Skrevet af Tajs :P
+        //Skrevet af Tajs 
         private void LinkValues()
         {
             switch (cmbAffaldskategori.SelectedItem)

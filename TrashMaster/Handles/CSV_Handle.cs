@@ -14,6 +14,7 @@ namespace TrashMaster.Handles
     /// </summary>
     class CSV_Handle
     {
+        /// Skrevet af Edgar
         public static List<Trash> ReadCSVFile(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -36,6 +37,7 @@ namespace TrashMaster.Handles
             return data.ToList();
         }
 
+        /// Skrevet af Edgar
         //Importerer valgt .csv fil til datagrid.
         //Metoden returnerer et objekt, så DataContext (bundet til DataGrid/'Overblik_GRID' kan sættes til resultatet af denne metode.
         public static object ImportCSV()
@@ -69,6 +71,7 @@ namespace TrashMaster.Handles
             }
         }
 
+        /// Skrevet af Edgar
         //Eksporter datagrid til .csv fil
         public static void ExportCSV(DataGrid gridName)
         {
@@ -139,6 +142,7 @@ namespace TrashMaster.Handles
             }
         }
 
+        /// Skrevet af Edgar
         //custom error.
         public static string csvStructError()
         {

@@ -27,6 +27,8 @@ namespace TrashMaster.UserControls
                              )
                              +
                              "/JETtm/connstring.txt").First();
+
+        //Skrevet af Tajs
         public void GenerateDatapoints(string kategori, int vid)
         {
             //Skal måske bruge til at sortere indkommende data til brug i GivePointValue()
@@ -77,6 +79,8 @@ namespace TrashMaster.UserControls
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
         }
+
+        //Skrevet af Tajs
         public string HoAxisLabel(int xnotch)
         {
             if (snupDato.Count() != 0)
@@ -92,19 +96,21 @@ namespace TrashMaster.UserControls
             }
             else
             {
-                return "_nodata_";
+                return "no data";
             }
             
-            //Metode til generering af X-akse labels. Ved ikke helt om den er nødvendig
+            //Metode til generering af X-akse labels. 
             
         }
 
+        //Skrevet af Tajs
         public string VertAxisLabel(int ynotch)
         {
             //Metode til generering af Y-akse labels. Ved ikke helt om den er nødvendig
             return null;
         }
 
+        //Skrevet af Tajs
         public double GivePointValue(int dataset, double xvalue)
         {
 
@@ -144,6 +150,7 @@ namespace TrashMaster.UserControls
 
         }
 
+        //Skrevet af Tajs
         public int SnupdataLength()
         {
             return snupData.Count();

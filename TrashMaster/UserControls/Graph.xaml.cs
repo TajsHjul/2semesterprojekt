@@ -19,7 +19,7 @@ namespace TrashMaster.UserControls
     /// <summary>
     /// Interaction logic for Graph.xaml
     /// </summary>
-    /// Skrevet af Tajs Hjulmann Mølgård
+    /// Klasse skrevet af Tajs Hjulmann Mølgård
     public partial class Graph : UserControl
     {
         string kategori;
@@ -82,9 +82,7 @@ namespace TrashMaster.UserControls
                 affaldskategori8.IsEnabled = false;
                 affaldskategori9.IsEnabled = false;
                 DrawYAxis("Colli ( ͡° ͜ʖ ͡°)", 0);
-                ImageBrush hmm = new ImageBrush();
                 
-                canGraph.Background = hmm;
             }
             
 
@@ -118,7 +116,7 @@ namespace TrashMaster.UserControls
                 
                 canGraph.Children.Clear();
                 affaldskategori1.IsEnabled = false;
-                affaldskategori2.IsEnabled = false;
+                
                 affaldskategori3.IsEnabled = false;
                 affaldskategori4.IsEnabled = false;
                 affaldskategori5.IsEnabled = false;
@@ -164,15 +162,13 @@ namespace TrashMaster.UserControls
             {
                 
                 canGraph.Children.Clear();
-                affaldskategori1.IsEnabled = false;
+                
                 affaldskategori2.IsEnabled = false;
-                affaldskategori3.IsEnabled = false;
-                affaldskategori4.IsEnabled = false;
+                
                 affaldskategori5.IsEnabled = false;
                 affaldskategori6.IsEnabled = false;
                 affaldskategori7.IsEnabled = false;
-                affaldskategori8.IsEnabled = false;
-                affaldskategori9.IsEnabled = false;
+                
 
                 affaldskategori1.IsEnabled = true;
                 affaldskategori3.IsEnabled = true;
@@ -216,9 +212,7 @@ namespace TrashMaster.UserControls
                 affaldskategori2.IsEnabled = false;
                 affaldskategori3.IsEnabled = false;
                 affaldskategori4.IsEnabled = false;
-                affaldskategori5.IsEnabled = false;
-                affaldskategori6.IsEnabled = false;
-                affaldskategori7.IsEnabled = false;
+                
                 affaldskategori8.IsEnabled = false;
                 affaldskategori9.IsEnabled = false;
 
@@ -256,7 +250,7 @@ namespace TrashMaster.UserControls
         private void visElektronik_Click(object sender, RoutedEventArgs e)
         {
             kategori = "Elektronikaffald";
-            //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
+            //Der instantieres et nyt GraphLogic object, og der genereres datapoints
             GraphLogic Elektro = new GraphLogic();
             Elektro.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Elektro, 3);
@@ -267,7 +261,7 @@ namespace TrashMaster.UserControls
         private void visImpreg_Click(object sender, RoutedEventArgs e)
         {
             kategori = "ImprægneretTræ";
-            //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
+            //Der instantieres et nyt GraphLogic object, og der genereres datapoints
             GraphLogic Woody = new GraphLogic();
             Woody.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Woody, 4);
@@ -278,7 +272,7 @@ namespace TrashMaster.UserControls
         private void visInventar_Click(object sender, RoutedEventArgs e)
         {
             kategori = "Inventar";
-            //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
+            //Der instantieres et nyt GraphLogic object, og der genereres datapoints
             GraphLogic Inventa = new GraphLogic();
             Inventa.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Inventa, 5);
@@ -289,7 +283,7 @@ namespace TrashMaster.UserControls
         private void visOrganisk_Click(object sender, RoutedEventArgs e)
         {
             kategori = "OrganiskAffald";
-            //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
+            //Der instantieres et nyt GraphLogic object, og der genereres datapoints
             GraphLogic Anima = new GraphLogic();
             Anima.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Anima, 6);
@@ -300,7 +294,7 @@ namespace TrashMaster.UserControls
         private void visPapPapir_Click(object sender, RoutedEventArgs e)
         {
             kategori = "Papogpapir";
-            //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
+            //Der instantieres et nyt GraphLogic object, og der genereres datapoints
             GraphLogic Pappapir = new GraphLogic();
             Pappapir.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Pappapir, 7);
@@ -311,7 +305,7 @@ namespace TrashMaster.UserControls
         private void visPlast_Click(object sender, RoutedEventArgs e)
         {
             kategori = "Plastemballager";
-            //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
+            //Der instantieres et nyt GraphLogic object, og der genereres datapoints
             GraphLogic Plastique = new GraphLogic();
             Plastique.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Plastique, 8);
@@ -322,7 +316,7 @@ namespace TrashMaster.UserControls
         private void visPVC_Click(object sender, RoutedEventArgs e)
         {
             kategori = "PVC";
-            //Der instantieres et nyt GraphLogic object kaldet Bob, og der genereres datapoints
+            //Der instantieres et nyt GraphLogic object, og der genereres datapoints
             GraphLogic Pvc = new GraphLogic();
             Pvc.GenerateDatapoints(kategori, Convert.ToInt32(VirksomhedsIDinput.Text));
             DrawGraph(Pvc, 9);
@@ -417,6 +411,7 @@ namespace TrashMaster.UserControls
             if (angle != 0)
                 textBlock.LayoutTransform = new RotateTransform(angle);
         }
+        //Label metode. Var nødvendig da y-akse tekst blev slettet ved Clear()
         private void Labelle(double x, double y, string text, Color color, double angle)
         {
 
@@ -431,7 +426,7 @@ namespace TrashMaster.UserControls
             Canvas.SetTop(labl, y);
 
             canGraph.Children.Add(labl);
-            // Rotate if desired.
+            
             if (angle != 0)
                 labl.LayoutTransform = new RotateTransform(angle);
         }
@@ -451,7 +446,7 @@ namespace TrashMaster.UserControls
                 Labelle(xmin - 3.5 * margin, ymin - y, ylabl.ToString(), Color.FromRgb(255, 255, 255), 0);
                 ylabl += 1 * yaxismultiplier;
             }
-            Text(xmin, ymax - 30, yheader, Color.FromRgb(255, 255, 255), 0);
+            Labelle(xmin, ymax - 30, yheader, Color.FromRgb(255, 255, 255), 0);
             //Til slut tegnes der en sort linie baseret på ovenstående punkter
             Path yaxis_path = new Path();
             

@@ -21,6 +21,7 @@ namespace TrashMaster.Frames
     /// </summary>
     public partial class showGraph : Page
     {
+        /// Skrevet af Tajs
         public showGraph()
         {
             InitializeComponent();
