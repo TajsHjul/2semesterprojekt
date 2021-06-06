@@ -8,14 +8,14 @@ using System.Windows;
 namespace TrashMaster.Handles
 {
     /// <summary>
-    /// Skrevet af Edgar
+    
     /// </summary>
     class SQL_Handle : Trash
     {
         private static string connectionString = File.ReadAllLines(System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)
                              + "/JETtm/connstring.txt").First();
 
-
+        /// Skrevet af Edgar
         //Forsøg at logge ind med de givne parametre
         public static bool TryLogin(string username, string password)
         {
@@ -67,7 +67,7 @@ namespace TrashMaster.Handles
         }
 
         // Tilføj til db med 'Trash' som parameter.
-
+        /// Skrevet af Edgar
         public static void AddToDB(Trash trash, string tablename, bool multiple)
         {
 
@@ -107,7 +107,7 @@ namespace TrashMaster.Handles
 
         }
 
-
+        /// Skrevet af Edgar
         public static void EditDB(Trash trash, string tablename, int rowId)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -142,6 +142,7 @@ namespace TrashMaster.Handles
 
         }
 
+        /// Skrevet af Edgar
         //Fjern fra DB med ID (unik) parameter
         public static void RemoveFromDB(int id, string tablename)
         {
@@ -174,6 +175,7 @@ namespace TrashMaster.Handles
 
         }
 
+        /// Skrevet af Edgar
         //Tager SQL query som første parameter og returnerer resultatet som DataTable.DefaultView (kan bruges som Datacontext7Itemssource etc).
         public static object QueryToSource(string fullSQLquery)
         {

@@ -181,6 +181,7 @@ namespace TrashMaster
             }
         }
 
+        //Skrevet af Edgar
         //Log brug af appen hvis vinduet lukkes
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -205,6 +206,7 @@ namespace TrashMaster
             }
         }
 
+        //Skrevet af Edgar
         //Åben log
         private void ÅbenLog_Click(object sender, RoutedEventArgs e)
         {

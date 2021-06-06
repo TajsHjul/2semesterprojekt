@@ -15,6 +15,7 @@ namespace TrashMaster.Frames
     /// 
     public partial class Overblik : Page
     {
+        /// Skrevet af Edgar
         public Overblik()
         {
             InitializeComponent();
@@ -23,6 +24,7 @@ namespace TrashMaster.Frames
             UpdateGrid(Overblik_GRID, "Trash");
         }
 
+        /// Skrevet af Edgar
         //Sætter insertDB som frame content.
         private void Tilføj_Click(object sender, RoutedEventArgs e)
         {
@@ -30,6 +32,7 @@ namespace TrashMaster.Frames
             ((MainWindow)Application.Current.MainWindow).MainNavigationFrame.Content = idb; 
         }
 
+        /// Skrevet af Edgar
         //Sætter editDB som frame content med værdierne fra den valgte række
         private void Rediger_Click(object sender, RoutedEventArgs e)
         {
@@ -75,6 +78,7 @@ namespace TrashMaster.Frames
             }
         }
 
+        /// Skrevet af Edgar
         //Slet valgte række
         private void Slet_Click(object sender, RoutedEventArgs e)
         {
@@ -104,18 +108,21 @@ namespace TrashMaster.Frames
             }
         }
 
+        /// Skrevet af Edgar
         //Eksporter alt i datagrid til .csv fil med CSV_Handle.ExportCSV(tablename) metode.
         private void Gem_Fil_Click(object sender, RoutedEventArgs e)
         {
             CSV_Handle.ExportCSV(Overblik_GRID);
         }
 
+        /// Skrevet af Edgar
         //Åben .csv fil
         private void Åben_Fil_Click(object sender, RoutedEventArgs e)
         {
             DataContext = CSV_Handle.ImportCSV();
         }
 
+        /// Skrevet af Edgar
         //Threading for opdatering af grid.
         //Vis LoadingCircle 
         private async void UpdateGrid(DataGrid gridName, string tableName)
@@ -145,6 +152,7 @@ namespace TrashMaster.Frames
             }
         }
 
+        /// Skrevet af Edgar
         //Gør rediger+slet knapperne utilgængelige hvis en række ikke er valgt.
         private void IsItemSelected(object sender, MouseButtonEventArgs e)
         {
@@ -155,6 +163,7 @@ namespace TrashMaster.Frames
             }
         }
 
+        /// Skrevet af Edgar
         //Formater DateTime når kolonnen genereres.
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
